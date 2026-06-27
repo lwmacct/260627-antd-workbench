@@ -265,8 +265,32 @@ select {
   border-bottom-color: var(--app-accent) !important;
 }
 
-.wb-header__nav-mobile {
+.wb-header__nav-mobile.ant-btn {
   display: none;
+  border-color: var(--app-border) !important;
+  background: var(--app-card-bg) !important;
+  color: var(--app-text-strong) !important;
+  box-shadow: none !important;
+}
+
+.wb-header__nav-mobile.ant-btn:hover,
+.wb-header__nav-mobile.ant-btn:focus-visible {
+  border-color: var(--app-accent-hover) !important;
+  background: var(--app-hover-bg) !important;
+  color: var(--app-text-strong) !important;
+}
+
+.wb-header__nav-mobile.ant-btn:active,
+.wb-header__nav-mobile.ant-btn.ant-dropdown-open,
+.wb-header__nav-mobile.ant-btn[aria-expanded="true"] {
+  border-color: var(--app-accent) !important;
+  background: var(--app-active-bg) !important;
+  color: var(--app-text-strong) !important;
+}
+
+.wb-header__nav-mobile.ant-btn .ant-btn-icon,
+.wb-header__nav-mobile.ant-btn .anticon {
+  color: inherit !important;
 }
 
 .wb-section {
