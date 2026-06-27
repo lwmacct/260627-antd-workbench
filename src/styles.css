@@ -393,6 +393,10 @@ select {
   margin: 0;
 }
 
+.wb-section__mobile-trigger.ant-btn {
+  flex: 0 0 auto;
+}
+
 .wb-section__drawer-menu {
   border-inline-end: none !important;
   background: transparent;

@@ -1,4 +1,4 @@
-import { DownOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Space, Typography, type MenuProps } from "antd";
 import { useState, type ReactNode } from "react";
 import { cx } from "../utils/cx";
@@ -9,9 +9,7 @@ export interface WorkbenchSectionLayoutProps<Key extends string = string> {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
-  drawerTitle?: ReactNode;
   menuItems: MenuProps["items"];
-  mobileActionLabel?: ReactNode;
   siderWidth?: number;
   onChange(key: Key): void;
 }
@@ -21,9 +19,7 @@ export function WorkbenchSectionLayout<Key extends string = string>({
   children,
   className,
   contentClassName,
-  drawerTitle = "切换分区",
   menuItems,
-  mobileActionLabel = "切换分区",
   siderWidth = 208,
   onChange,
 }: WorkbenchSectionLayoutProps<Key>) {
@@ -58,9 +54,14 @@ export function WorkbenchSectionLayout<Key extends string = string>({
               <Typography.Text strong>{currentItem?.label ?? activeKey}</Typography.Text>
             </Space>
           </div>
-          <Button icon={<DownOutlined />} onClick={() => setMobileOpen(true)}>
-            {mobileActionLabel}
-          </Button>
+          <Button
+            aria-label="分区导航"
+            className="wb-section__mobile-trigger"
+            icon={<MenuOutlined />}
+            shape="circle"
+            type="text"
+            onClick={() => setMobileOpen(true)}
+          />
         </div>
         {children}
       </Layout.Content>
@@ -71,7 +72,7 @@ export function WorkbenchSectionLayout<Key extends string = string>({
         open={mobileOpen}
         placement="bottom"
         size="default"
-        title={drawerTitle}
+        title="分区导航"
       >
         <Menu
           className="wb-section__drawer-menu"
