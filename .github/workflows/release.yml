@@ -33,6 +33,7 @@ jobs:
 
       - name: Pack
         run: |
+          mkdir -p tmp/npm
           npm pack --pack-destination tmp/npm
           mv tmp/npm/*.tgz tmp/npm/workbench.tgz
 
