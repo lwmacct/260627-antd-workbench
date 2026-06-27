@@ -14,6 +14,7 @@ export { WorkbenchShell } from "./shell/WorkbenchShell";
 export { WorkbenchSectionLayout } from "./section/WorkbenchSectionLayout";
 export { WorkbenchPage } from "./page/WorkbenchPage";
 export { WorkbenchCenterState } from "./state/WorkbenchCenterState";
+export { WorkbenchThemeToggle } from "./theme/WorkbenchThemeToggle";
 export { WorkbenchUserMenu } from "./user/WorkbenchUserMenu";
 export { cx } from "./utils/cx";
 export { findMenuItem, getMenuItemLabel } from "./utils/menu";
@@ -35,6 +36,10 @@ export type { WorkbenchShellProps } from "./shell/WorkbenchShell";
 export type { WorkbenchSectionLayoutProps } from "./section/WorkbenchSectionLayout";
 export type { WorkbenchPageProps } from "./page/WorkbenchPage";
 export type { WorkbenchCenterStateProps } from "./state/WorkbenchCenterState";
+export type {
+  WorkbenchThemeToggleLabels,
+  WorkbenchThemeToggleProps,
+} from "./theme/WorkbenchThemeToggle";
 export type {
   WorkbenchUserMenuLabels,
   WorkbenchUserMenuProps,

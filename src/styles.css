@@ -188,6 +188,7 @@ select {
 
 .wb-header__brand {
   flex: 0 0 auto;
+  gap: 12px;
 }
 
 .wb-header__brand-mark {
@@ -454,10 +455,6 @@ select {
 @media (max-width: 768px) {
   .wb-header__nav-full {
     display: none;
-  }
-
-  .wb-header__brand {
-    gap: 0;
   }
 
   .wb-header__nav {
