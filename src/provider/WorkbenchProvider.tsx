@@ -103,6 +103,10 @@ export function useWorkbenchTheme(): WorkbenchThemeContextValue {
   return context;
 }
 
+export function useWorkbenchThemeMode(): WorkbenchThemeContextValue {
+  return useWorkbenchTheme();
+}
+
 function resolveInitialThemeMode(
   defaultThemeMode: WorkbenchThemeMode,
   storageKey: false | string,
