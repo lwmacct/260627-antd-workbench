@@ -106,7 +106,7 @@ export function createWorkbenchTheme(
       colorBgLayout: palette.bg,
       colorBgContainer: palette.panel,
       colorBgElevated: palette.panelElevated,
-      colorBgSpotlight: palette.panelMuted,
+      colorBgSpotlight: dark ? palette.panelMuted : palette.textStrong,
       colorBorder: palette.border,
       colorBorderSecondary: palette.borderSoft,
       colorError: palette.danger,
