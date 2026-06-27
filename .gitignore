@@ -14,7 +14,6 @@
 # 构建输出
 bin-*
 bin/
-dist/
 build/
 out/
 .next/
