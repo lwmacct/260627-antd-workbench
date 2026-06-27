@@ -378,36 +378,23 @@ select {
   display: none;
 }
 
-.wb-section__mobile-breadcrumb-trigger {
+.wb-section__mobile-current {
+  min-width: 0;
+}
+
+.wb-section__mobile-current .ant-space {
+  min-width: 0;
+}
+
+.wb-section__mobile-current .ant-typography {
   display: inline-flex;
-  max-width: 100%;
-  min-width: 0;
   align-items: center;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-}
-
-.wb-section__mobile-breadcrumb-trigger .ant-space {
-  max-width: 100%;
   min-width: 0;
+  margin: 0;
 }
 
-.wb-section__mobile-breadcrumb-label {
-  min-width: 0;
-  overflow: hidden;
-  color: var(--app-text-strong);
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.wb-section__mobile-breadcrumb-icon {
+.wb-section__mobile-trigger.ant-btn {
   flex: 0 0 auto;
-  color: var(--app-text-muted);
 }
 
 .wb-section__drawer-menu {
@@ -509,10 +496,15 @@ select {
   }
 
   .wb-section__mobile-nav {
-    display: block;
-    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     margin-bottom: 10px;
-    padding: 2px 2px 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--app-border);
+    border-radius: 6px;
+    background: var(--app-card-bg);
   }
 
   .wb-section__content {
