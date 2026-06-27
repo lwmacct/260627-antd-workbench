@@ -60,13 +60,13 @@ export function WorkbenchHeader<Key extends string = string>({
           selectedKeys={selectedKeys}
         />
         <Dropdown
-          classNames={{ root: "wb-header__dropdown wb-header__nav-mobile-popup" }}
           menu={{
             items: navItems,
             onClick: ({ key }) => onNavigate(key as Key),
             selectedKeys,
           }}
           placement="bottom"
+          styles={{ root: { minWidth: "min(240px, calc(100vw - 24px))" } }}
           trigger={["click"]}
         >
           <Button className="wb-header__nav-mobile" icon={<DownOutlined />}>

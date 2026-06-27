@@ -133,8 +133,12 @@ export function createWorkbenchTheme(
       colorTextTertiary: palette.textMuted,
       colorWarning: palette.warning,
       controlItemBgActive: palette.accentSoft,
+      controlItemBgActiveHover: palette.accentSoft,
       controlItemBgHover: palette.hover,
       controlOutline: palette.accentActive,
+      boxShadowSecondary: dark
+        ? "0 8px 24px rgba(0, 0, 0, 0.32)"
+        : "0 8px 24px rgba(31, 35, 40, 0.12)",
       fontFamily,
       ...overrides?.token,
     },
@@ -156,6 +160,17 @@ export function createWorkbenchTheme(
       Drawer: {
         colorBgElevated: palette.panelElevated,
         colorSplit: palette.border,
+      },
+      Dropdown: {
+        colorBgElevated: palette.panelElevated,
+        colorPrimary: palette.accentHover,
+        colorSplit: palette.borderSoft,
+        colorText: palette.text,
+        colorTextDisabled: palette.textMuted,
+        controlItemBgActive: palette.accentSoft,
+        controlItemBgActiveHover: palette.accentSoft,
+        controlItemBgHover: palette.hover,
+        paddingBlock: 5,
       },
       Input: {
         activeBg: palette.input,
