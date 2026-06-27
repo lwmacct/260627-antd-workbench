@@ -1,6 +1,6 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Button, Drawer, Layout, Menu, Space, Typography, type MenuProps } from "antd";
-import { useState, type ReactNode } from "react";
+import { Button, Dropdown, Layout, Menu, Space, Typography, type MenuProps } from "antd";
+import type { ReactNode } from "react";
 import { cx } from "../utils/cx";
 import { findMenuItem } from "../utils/menu";
 
@@ -9,7 +9,6 @@ export interface WorkbenchSectionLayoutProps<Key extends string = string> {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
-  drawerTitle?: ReactNode;
   menuItems: MenuProps["items"];
   mobileActionLabel?: ReactNode;
   siderWidth?: number;
@@ -21,18 +20,15 @@ export function WorkbenchSectionLayout<Key extends string = string>({
   children,
   className,
   contentClassName,
-  drawerTitle = "切换分区",
   menuItems,
   mobileActionLabel = "切换分区",
   siderWidth = 208,
   onChange,
 }: WorkbenchSectionLayoutProps<Key>) {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const currentItem = findMenuItem(menuItems, activeKey);
 
   function handleChange(key: string) {
     onChange(key as Key);
-    setMobileOpen(false);
   }
 
   return (
@@ -58,29 +54,21 @@ export function WorkbenchSectionLayout<Key extends string = string>({
               <Typography.Text strong>{currentItem?.label ?? activeKey}</Typography.Text>
             </Space>
           </div>
-          <Button icon={<DownOutlined />} onClick={() => setMobileOpen(true)}>
-            {mobileActionLabel}
-          </Button>
+          <Dropdown
+            menu={{
+              items: menuItems,
+              onClick: ({ key }) => handleChange(key),
+              selectedKeys: [activeKey],
+            }}
+            placement="bottomRight"
+            styles={{ root: { minWidth: 220 } }}
+            trigger={["click"]}
+          >
+            <Button icon={<DownOutlined />}>{mobileActionLabel}</Button>
+          </Dropdown>
         </div>
         {children}
       </Layout.Content>
-      <Drawer
-        className="wb-section__drawer"
-        closable
-        onClose={() => setMobileOpen(false)}
-        open={mobileOpen}
-        placement="bottom"
-        size="default"
-        title={drawerTitle}
-      >
-        <Menu
-          className="wb-section__drawer-menu"
-          items={menuItems}
-          mode="inline"
-          selectedKeys={[activeKey]}
-          onClick={({ key }) => handleChange(key)}
-        />
-      </Drawer>
     </Layout>
   );
 }

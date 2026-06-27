@@ -393,21 +393,6 @@ select {
   margin: 0;
 }
 
-.wb-section__drawer-menu {
-  border-inline-end: none !important;
-  background: transparent;
-}
-
-.wb-section__drawer-menu .ant-menu-item-group-title {
-  padding-inline: 0;
-}
-
-.wb-section__drawer .ant-drawer-content,
-.wb-section__drawer .ant-drawer-header,
-.wb-section__drawer .ant-drawer-body {
-  background: var(--app-card-elevated-bg);
-}
-
 .wb-page {
   min-width: 0;
 }
