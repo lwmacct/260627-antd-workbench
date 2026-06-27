@@ -71,7 +71,12 @@ export function WorkbenchUserMenu({
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
+    <Dropdown
+      classNames={{ root: "wb-header__dropdown wb-header__user-menu-popup" }}
+      menu={{ items }}
+      placement="bottomRight"
+      trigger={["click"]}
+    >
       <Button aria-label="用户菜单" shape="circle" type="text">
         <Avatar size={28} style={{ background: "var(--app-accent)" }}>
           {initial}

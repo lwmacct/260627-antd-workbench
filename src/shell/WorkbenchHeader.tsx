@@ -60,6 +60,7 @@ export function WorkbenchHeader<Key extends string = string>({
           selectedKeys={selectedKeys}
         />
         <Dropdown
+          classNames={{ root: "wb-header__dropdown wb-header__nav-mobile-popup" }}
           menu={{
             items: navItems,
             onClick: ({ key }) => onNavigate(key as Key),
