@@ -33,7 +33,10 @@ export type {
   WorkbenchHeaderProps,
 } from "./shell/WorkbenchHeader";
 export type { WorkbenchShellProps } from "./shell/WorkbenchShell";
-export type { WorkbenchSectionLayoutProps } from "./section/WorkbenchSectionLayout";
+export type {
+  WorkbenchSectionLayoutLabels,
+  WorkbenchSectionLayoutProps,
+} from "./section/WorkbenchSectionLayout";
 export type { WorkbenchPageProps } from "./page/WorkbenchPage";
 export type { WorkbenchCenterStateProps } from "./state/WorkbenchCenterState";
 export type {

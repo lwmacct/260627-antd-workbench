@@ -9,9 +9,15 @@ export interface WorkbenchSectionLayoutProps<Key extends string = string> {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
+  labels?: WorkbenchSectionLayoutLabels;
   menuItems: MenuProps["items"];
   siderWidth?: number;
   onChange(key: Key): void;
+}
+
+export interface WorkbenchSectionLayoutLabels {
+  mobileNavigation?: string;
+  openNavigation?: string;
 }
 
 export function WorkbenchSectionLayout<Key extends string = string>({
@@ -19,12 +25,17 @@ export function WorkbenchSectionLayout<Key extends string = string>({
   children,
   className,
   contentClassName,
+  labels,
   menuItems,
   siderWidth = 208,
   onChange,
 }: WorkbenchSectionLayoutProps<Key>) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const currentItem = findMenuItem(menuItems, activeKey);
+  const labelText = {
+    mobileNavigation: labels?.mobileNavigation ?? "分区导航",
+    openNavigation: labels?.openNavigation ?? "分区导航",
+  };
 
   function handleChange(key: string) {
     onChange(key as Key);
@@ -55,7 +66,7 @@ export function WorkbenchSectionLayout<Key extends string = string>({
             </Space>
           </div>
           <Button
-            aria-label="分区导航"
+            aria-label={labelText.openNavigation}
             className="wb-section__mobile-trigger"
             icon={<MenuOutlined />}
             shape="circle"
@@ -72,7 +83,7 @@ export function WorkbenchSectionLayout<Key extends string = string>({
         open={mobileOpen}
         placement="bottom"
         size="default"
-        title="分区导航"
+        title={labelText.mobileNavigation}
       >
         <Menu
           className="wb-section__drawer-menu"
