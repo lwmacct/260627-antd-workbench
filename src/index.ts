@@ -13,6 +13,7 @@ export { WorkbenchHeader } from "./shell/WorkbenchHeader";
 export { WorkbenchShell } from "./shell/WorkbenchShell";
 export { WorkbenchSectionLayout } from "./section/WorkbenchSectionLayout";
 export { WorkbenchPage } from "./page/WorkbenchPage";
+export { WorkbenchCenterState } from "./state/WorkbenchCenterState";
 export { WorkbenchUserMenu } from "./user/WorkbenchUserMenu";
 export { cx } from "./utils/cx";
 export { findMenuItem, getMenuItemLabel } from "./utils/menu";
@@ -33,6 +34,7 @@ export type {
 export type { WorkbenchShellProps } from "./shell/WorkbenchShell";
 export type { WorkbenchSectionLayoutProps } from "./section/WorkbenchSectionLayout";
 export type { WorkbenchPageProps } from "./page/WorkbenchPage";
+export type { WorkbenchCenterStateProps } from "./state/WorkbenchCenterState";
 export type {
   WorkbenchUserMenuLabels,
   WorkbenchUserMenuProps,
