@@ -35,9 +35,9 @@ jobs:
         run: |
           mkdir -p tmp/npm
           npm pack --pack-destination tmp/npm
-          mv tmp/npm/*.tgz tmp/npm/workbench.tgz
+          mv tmp/npm/*.tgz tmp/npm/package.tar.gz
 
       - name: Publish Release Asset
         uses: softprops/action-gh-release@v2
         with:
-          files: tmp/npm/workbench.tgz
+          files: tmp/npm/package.tar.gz
