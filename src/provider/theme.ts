@@ -144,11 +144,14 @@ export function createWorkbenchTheme(
     },
     components: {
       Button: {
+        defaultActiveBg: palette.active,
+        defaultActiveBorderColor: palette.border,
+        defaultActiveColor: palette.textStrong,
         defaultBg: palette.panelMuted,
         defaultBorderColor: palette.border,
         defaultColor: palette.text,
         defaultHoverBg: palette.hover,
-        defaultHoverBorderColor: palette.accentHover,
+        defaultHoverBorderColor: palette.border,
         defaultHoverColor: palette.textStrong,
         primaryShadow: "none",
       },
