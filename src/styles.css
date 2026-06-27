@@ -465,7 +465,7 @@ select {
     overflow: visible;
   }
 
-  .wb-header__nav-mobile {
+  .wb-header__nav-mobile.ant-btn {
     display: inline-flex;
     max-width: 100%;
   }
