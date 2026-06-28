@@ -13,8 +13,8 @@ export interface WorkbenchThemeToggleProps {
 }
 
 export function WorkbenchThemeToggle({ labels }: WorkbenchThemeToggleProps) {
-  const { appearance, toggleThemeMode } = useWorkbenchAppearance();
-  const dark = appearance.mode === "dark";
+  const { resolvedMode, toggleThemeMode } = useWorkbenchAppearance();
+  const dark = resolvedMode === "dark";
   const title = dark
     ? labels?.switchToLight || "切换浅色模式"
     : labels?.switchToDark || "切换深色模式";

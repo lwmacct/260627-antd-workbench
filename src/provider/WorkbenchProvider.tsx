@@ -13,8 +13,10 @@ import {
   createWorkbenchTheme,
   defaultWorkbenchAppearance,
   normalizeWorkbenchAppearance,
+  resolveWorkbenchThemeMode,
   type WorkbenchAppearance,
   type WorkbenchPalette,
+  type WorkbenchResolvedThemeMode,
   type WorkbenchThemeMode,
 } from "./theme";
 
@@ -23,6 +25,7 @@ export interface WorkbenchAppearanceContextValue {
   palette: WorkbenchPalette;
   patchAppearance(patch: Partial<WorkbenchAppearance>): void;
   resetAppearance(): void;
+  resolvedMode: WorkbenchResolvedThemeMode;
   setAppearance(appearance: WorkbenchAppearance): void;
   setThemeMode(themeMode: WorkbenchThemeMode): void;
   toggleThemeMode(): void;
@@ -54,10 +57,15 @@ export function WorkbenchProvider({
   const [appearance, setLocalAppearance] = useState<WorkbenchAppearance>(() =>
     resolveInitialAppearance(resolvedDefaultAppearance, storageKey),
   );
-  const palette = useMemo(() => createWorkbenchPalette(appearance), [appearance]);
+  const [systemMode, setSystemMode] = useState<WorkbenchResolvedThemeMode>(getSystemThemeMode);
+  const resolvedMode = resolveWorkbenchThemeMode(appearance.mode, systemMode);
+  const palette = useMemo(
+    () => createWorkbenchPalette(appearance, resolvedMode),
+    [appearance, resolvedMode],
+  );
   const antdTheme = useMemo(
-    () => createWorkbenchTheme(appearance, palette),
-    [appearance, palette],
+    () => createWorkbenchTheme(appearance, palette, resolvedMode),
+    [appearance, palette, resolvedMode],
   );
 
   const contextValue = useMemo<WorkbenchAppearanceContextValue>(
@@ -70,6 +78,7 @@ export function WorkbenchProvider({
       resetAppearance() {
         setLocalAppearance(resolvedDefaultAppearance);
       },
+      resolvedMode,
       setAppearance(nextAppearance) {
         setLocalAppearance(normalizeWorkbenchAppearance(nextAppearance));
       },
@@ -80,13 +89,31 @@ export function WorkbenchProvider({
         setLocalAppearance((current) =>
           normalizeWorkbenchAppearance({
             ...current,
-            mode: current.mode === "dark" ? "light" : "dark",
+            mode: resolveWorkbenchThemeMode(current.mode, systemMode) === "dark" ? "light" : "dark",
           }),
         );
       },
     }),
-    [appearance, palette, resolvedDefaultAppearance],
+    [appearance, palette, resolvedDefaultAppearance, resolvedMode, systemMode],
   );
+
+  useEffect(() => {
+    const query = globalThis.matchMedia?.("(prefers-color-scheme: dark)");
+    if (!query) {
+      return;
+    }
+
+    const handleChange = () => {
+      setSystemMode(query.matches ? "dark" : "light");
+    };
+
+    handleChange();
+    query.addEventListener("change", handleChange);
+
+    return () => {
+      query.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (storageKey !== false) {
@@ -102,8 +129,9 @@ export function WorkbenchProvider({
       return;
     }
 
-    target.setAttribute("data-theme", appearance.mode);
-    target.setAttribute("data-workbench-theme", appearance.mode);
+    target.setAttribute("data-theme", resolvedMode);
+    target.setAttribute("data-workbench-mode", appearance.mode);
+    target.setAttribute("data-workbench-theme", resolvedMode);
     target.setAttribute("data-workbench-density", appearance.density);
 
     const cssVars = createWorkbenchCssVars(palette);
@@ -114,13 +142,14 @@ export function WorkbenchProvider({
 
     return () => {
       target.removeAttribute("data-workbench-density");
+      target.removeAttribute("data-workbench-mode");
       target.removeAttribute("data-workbench-theme");
       Object.keys(cssVars).forEach((name) => {
         target.style.removeProperty(name);
       });
       target.style.removeProperty("--app-control-radius");
     };
-  }, [appearance.density, appearance.mode, appearance.radius, palette, rootElement]);
+  }, [appearance.density, appearance.mode, appearance.radius, palette, resolvedMode, rootElement]);
 
   const content = withAntdApp ? <AntdApp component="div">{children}</AntdApp> : children;
 
@@ -166,4 +195,13 @@ function resolveInitialAppearance(
 }
 
 export { defaultWorkbenchAppearance };
-export type { WorkbenchAppearance, WorkbenchDensity, WorkbenchThemeMode } from "./theme";
+export type {
+  WorkbenchAppearance,
+  WorkbenchDensity,
+  WorkbenchResolvedThemeMode,
+  WorkbenchThemeMode,
+} from "./theme";
+
+function getSystemThemeMode(): WorkbenchResolvedThemeMode {
+  return globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}

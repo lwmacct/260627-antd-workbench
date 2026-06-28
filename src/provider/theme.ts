@@ -1,13 +1,26 @@
 import { theme, type ThemeConfig } from "antd";
 
-export type WorkbenchThemeMode = "dark" | "light";
-export type WorkbenchDensity = "compact" | "comfortable";
+export type WorkbenchThemeMode = "dark" | "light" | "system";
+export type WorkbenchResolvedThemeMode = "dark" | "light";
+export type WorkbenchDensity = "compact" | "comfortable" | "spacious";
+export type WorkbenchSchemeName =
+  | "carbon"
+  | "graphite"
+  | "midnight"
+  | "mist"
+  | "paper"
+  | "porcelain"
+  | "warm"
+  | "zinc";
+export type WorkbenchSurfaceTone = "black" | "deep" | "soft" | "tinted";
 
 export interface WorkbenchAppearance {
   accent: string;
   density: WorkbenchDensity;
   mode: WorkbenchThemeMode;
   radius: number;
+  scheme: WorkbenchSchemeName;
+  surface: WorkbenchSurfaceTone;
 }
 
 export interface WorkbenchPalette {
@@ -43,6 +56,18 @@ type BasePalette = Omit<
   "accent" | "accentActive" | "accentHover" | "accentSoft" | "accentSofter"
 >;
 
+interface WorkbenchScheme {
+  dark: BasePalette;
+  light: BasePalette;
+  label: string;
+  name: WorkbenchSchemeName;
+}
+
+interface WorkbenchSurfaceToneDefinition {
+  label: string;
+  name: WorkbenchSurfaceTone;
+}
+
 const fontFamily =
   'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
@@ -51,6 +76,8 @@ export const defaultWorkbenchAppearance: WorkbenchAppearance = {
   density: "comfortable",
   mode: "dark",
   radius: 6,
+  scheme: "graphite",
+  surface: "deep",
 };
 
 export const workbenchAccentPresets = [
@@ -62,52 +89,63 @@ export const workbenchAccentPresets = [
   { label: "Violet", value: "#8b7cf6" },
 ] as const;
 
-export const workbenchBasePalettes: Record<WorkbenchThemeMode, BasePalette> = {
-  dark: {
-    active: "#343d49",
-    bg: "#101214",
-    border: "#424c59",
-    borderSoft: "#303843",
-    danger: "#ff7f73",
-    header: "#1c2026",
-    hover: "#2b323c",
-    input: "#252b34",
-    panel: "#1f242b",
-    panelElevated: "#262c35",
-    panelMuted: "#2d3540",
-    sidebar: "#15181d",
-    success: "#57d68d",
-    text: "#e3e7ed",
-    textMuted: "#9da8b7",
-    textSecondary: "#c2cad6",
-    textStrong: "#fbfcfe",
-    textSubtle: "#7b8797",
-    warning: "#e7b84f",
-    workbench: "#171a1f",
+export const workbenchSurfaceTones: WorkbenchSurfaceToneDefinition[] = [
+  { label: "黑", name: "black" },
+  { label: "深", name: "deep" },
+  { label: "柔", name: "soft" },
+  { label: "染", name: "tinted" },
+];
+
+export const workbenchSchemes: WorkbenchScheme[] = [
+  {
+    label: "Graphite",
+    name: "graphite",
+    dark: createNeutralBase("#101214", "#171a1f", "#1c2026", "#1f242b", "#15181d"),
+    light: createNeutralBase("#f4f6f8", "#ffffff", "#ffffff", "#ffffff", "#f8fafc"),
   },
-  light: {
-    active: "#ddeeff",
-    bg: "#f4f6f8",
-    border: "#c8d2df",
-    borderSoft: "#dfe6ef",
-    danger: "#d92d20",
-    header: "#ffffff",
-    hover: "#eef3f8",
-    input: "#ffffff",
-    panel: "#ffffff",
-    panelElevated: "#ffffff",
-    panelMuted: "#f1f5f9",
-    sidebar: "#f8fafc",
-    success: "#178248",
-    text: "#1f2937",
-    textMuted: "#667085",
-    textSecondary: "#475569",
-    textStrong: "#0f172a",
-    textSubtle: "#8a94a6",
-    warning: "#a86700",
-    workbench: "#ffffff",
+  {
+    label: "Midnight",
+    name: "midnight",
+    dark: createNeutralBase("#0b1020", "#111827", "#172033", "#1b2538", "#0f172a"),
+    light: createNeutralBase("#f3f7fb", "#ffffff", "#ffffff", "#ffffff", "#f6f9fc"),
   },
-};
+  {
+    label: "Carbon",
+    name: "carbon",
+    dark: createNeutralBase("#08090b", "#101216", "#171a20", "#1b1f27", "#0d0f13"),
+    light: createNeutralBase("#f5f5f6", "#ffffff", "#ffffff", "#ffffff", "#fafafa"),
+  },
+  {
+    label: "Zinc",
+    name: "zinc",
+    dark: createNeutralBase("#111113", "#18181b", "#202024", "#232329", "#161618"),
+    light: createNeutralBase("#f6f6f7", "#ffffff", "#ffffff", "#ffffff", "#fafafa"),
+  },
+  {
+    label: "Paper",
+    name: "paper",
+    dark: createNeutralBase("#111214", "#17191d", "#1d2025", "#20242a", "#15171b"),
+    light: createNeutralBase("#f7f8fa", "#ffffff", "#ffffff", "#ffffff", "#fbfcfd"),
+  },
+  {
+    label: "Mist",
+    name: "mist",
+    dark: createNeutralBase("#0f1418", "#172025", "#1e2930", "#223039", "#131b20"),
+    light: createNeutralBase("#eef3f7", "#fbfdff", "#ffffff", "#ffffff", "#f5f9fc"),
+  },
+  {
+    label: "Porcelain",
+    name: "porcelain",
+    dark: createNeutralBase("#101418", "#182129", "#1d2832", "#22303b", "#141c23"),
+    light: createNeutralBase("#f1f6fb", "#ffffff", "#ffffff", "#ffffff", "#f7fbff"),
+  },
+  {
+    label: "Warm",
+    name: "warm",
+    dark: createNeutralBase("#151210", "#1d1915", "#252019", "#29241d", "#191510"),
+    light: createNeutralBase("#f8f7f4", "#ffffff", "#ffffff", "#ffffff", "#fbfaf7"),
+  },
+];
 
 export function normalizeWorkbenchAppearance(
   value?: Partial<WorkbenchAppearance>,
@@ -119,15 +157,36 @@ export function normalizeWorkbenchAppearance(
 
   return {
     accent: normalizeHexColor(next.accent, defaultWorkbenchAppearance.accent),
-    density: next.density === "compact" ? "compact" : "comfortable",
-    mode: next.mode === "light" ? "light" : "dark",
+    density: normalizeDensity(next.density),
+    mode: normalizeThemeMode(next.mode),
     radius: clamp(Math.round(Number(next.radius) || defaultWorkbenchAppearance.radius), 0, 12),
+    scheme: normalizeScheme(next.scheme),
+    surface: normalizeSurface(next.surface),
   };
 }
 
-export function createWorkbenchPalette(appearance: WorkbenchAppearance): WorkbenchPalette {
-  const base = workbenchBasePalettes[appearance.mode];
-  const dark = appearance.mode === "dark";
+export function resolveWorkbenchThemeMode(
+  mode: WorkbenchThemeMode,
+  systemMode: WorkbenchResolvedThemeMode = "dark",
+): WorkbenchResolvedThemeMode {
+  return mode === "system" ? systemMode : mode;
+}
+
+export function createWorkbenchBasePalette(
+  appearance: WorkbenchAppearance,
+  resolvedMode = resolveWorkbenchThemeMode(appearance.mode),
+): BasePalette {
+  const scheme = getWorkbenchScheme(appearance.scheme);
+  const base = scheme[resolvedMode];
+  return applySurfaceTone(base, appearance.surface, resolvedMode, appearance.accent);
+}
+
+export function createWorkbenchPalette(
+  appearance: WorkbenchAppearance,
+  resolvedMode = resolveWorkbenchThemeMode(appearance.mode),
+): WorkbenchPalette {
+  const base = createWorkbenchBasePalette(appearance, resolvedMode);
+  const dark = resolvedMode === "dark";
   const accent = normalizeHexColor(appearance.accent, defaultWorkbenchAppearance.accent);
 
   return {
@@ -174,9 +233,11 @@ export function createWorkbenchCssVars(palette: WorkbenchPalette): Record<string
 export function createWorkbenchTheme(
   appearance: WorkbenchAppearance,
   palette = createWorkbenchPalette(appearance),
+  resolvedMode = resolveWorkbenchThemeMode(appearance.mode),
 ): ThemeConfig {
-  const dark = appearance.mode === "dark";
+  const dark = resolvedMode === "dark";
   const compact = appearance.density === "compact";
+  const spacious = appearance.density === "spacious";
 
   return {
     algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
@@ -212,9 +273,9 @@ export function createWorkbenchTheme(
       colorTextSecondary: palette.textSecondary,
       colorTextTertiary: palette.textMuted,
       colorWarning: palette.warning,
-      controlHeight: compact ? 30 : 34,
-      controlHeightLG: compact ? 36 : 40,
-      controlHeightSM: compact ? 24 : 28,
+      controlHeight: compact ? 30 : spacious ? 38 : 34,
+      controlHeightLG: compact ? 36 : spacious ? 44 : 40,
+      controlHeightSM: compact ? 24 : spacious ? 30 : 28,
       controlItemBgActive: palette.accentSoft,
       controlItemBgActiveHover: palette.accentSoft,
       controlItemBgHover: palette.hover,
@@ -312,7 +373,7 @@ export function createWorkbenchTheme(
       },
       Table: {
         borderColor: palette.border,
-        cellPaddingBlock: compact ? 10 : 16,
+        cellPaddingBlock: compact ? 10 : spacious ? 18 : 16,
         colorBgContainer: palette.workbench,
         footerBg: palette.panel,
         headerBg: palette.panel,
@@ -334,6 +395,88 @@ export function createWorkbenchTheme(
   };
 }
 
+function createNeutralBase(
+  bg: string,
+  workbench: string,
+  header: string,
+  panel: string,
+  sidebar: string,
+): BasePalette {
+  const dark = relativeLuminance(bg) < 0.5;
+
+  return {
+    active: dark ? mixHex(panel, "#ffffff", 0.12) : mixHex("#ddeeff", bg, 0.16),
+    bg,
+    border: dark ? mixHex(panel, "#ffffff", 0.22) : "#c8d2df",
+    borderSoft: dark ? mixHex(panel, "#ffffff", 0.11) : "#dfe6ef",
+    danger: dark ? "#ff7f73" : "#d92d20",
+    header,
+    hover: dark ? mixHex(panel, "#ffffff", 0.08) : "#eef3f8",
+    input: dark ? mixHex(panel, "#ffffff", 0.04) : "#ffffff",
+    panel,
+    panelElevated: dark ? mixHex(panel, "#ffffff", 0.06) : "#ffffff",
+    panelMuted: dark ? mixHex(panel, "#ffffff", 0.11) : "#f1f5f9",
+    sidebar,
+    success: dark ? "#57d68d" : "#178248",
+    text: dark ? "#e3e7ed" : "#1f2937",
+    textMuted: dark ? "#9da8b7" : "#667085",
+    textSecondary: dark ? "#c2cad6" : "#475569",
+    textStrong: dark ? "#fbfcfe" : "#0f172a",
+    textSubtle: dark ? "#7b8797" : "#8a94a6",
+    warning: dark ? "#e7b84f" : "#a86700",
+    workbench,
+  };
+}
+
+function applySurfaceTone(
+  base: BasePalette,
+  surface: WorkbenchSurfaceTone,
+  mode: WorkbenchResolvedThemeMode,
+  accent: string,
+): BasePalette {
+  const dark = mode === "dark";
+  const tint = surface === "tinted" ? normalizeHexColor(accent, defaultWorkbenchAppearance.accent) : "";
+  const target = surface === "tinted" ? tint : dark ? "#000000" : "#ffffff";
+  const amount = surfaceAmount(surface, dark);
+
+  if (amount === 0) {
+    return base;
+  }
+
+  return {
+    ...base,
+    active: mixHex(base.active, target, amount * 0.36),
+    bg: mixHex(base.bg, target, amount),
+    border: mixHex(base.border, target, amount * 0.3),
+    borderSoft: mixHex(base.borderSoft, target, amount * 0.26),
+    header: mixHex(base.header, target, amount * 0.74),
+    hover: mixHex(base.hover, target, amount * 0.35),
+    input: mixHex(base.input, target, amount * 0.42),
+    panel: mixHex(base.panel, target, amount * 0.55),
+    panelElevated: mixHex(base.panelElevated, target, amount * 0.48),
+    panelMuted: mixHex(base.panelMuted, target, amount * 0.38),
+    sidebar: mixHex(base.sidebar, target, amount * 0.72),
+    workbench: mixHex(base.workbench, target, amount * 0.64),
+  };
+}
+
+function surfaceAmount(surface: WorkbenchSurfaceTone, dark: boolean): number {
+  if (surface === "black") {
+    return dark ? 0.28 : 0;
+  }
+  if (surface === "soft") {
+    return dark ? -0.08 : 0.18;
+  }
+  if (surface === "tinted") {
+    return dark ? 0.13 : 0.06;
+  }
+  return 0;
+}
+
+function getWorkbenchScheme(name: WorkbenchSchemeName): WorkbenchScheme {
+  return workbenchSchemes.find((scheme) => scheme.name === name) ?? workbenchSchemes[0];
+}
+
 function normalizeHexColor(value: string, fallback: string): string {
   const normalized = value.trim().toLowerCase();
   const short = /^#([0-9a-f]{3})$/i.exec(normalized);
@@ -348,18 +491,47 @@ function normalizeHexColor(value: string, fallback: string): string {
   return /^#[0-9a-f]{6}$/i.test(normalized) ? normalized : fallback;
 }
 
+function normalizeDensity(value: string): WorkbenchDensity {
+  if (value === "compact" || value === "spacious") {
+    return value;
+  }
+  return "comfortable";
+}
+
+function normalizeScheme(value: string): WorkbenchSchemeName {
+  return workbenchSchemes.some((scheme) => scheme.name === value)
+    ? (value as WorkbenchSchemeName)
+    : defaultWorkbenchAppearance.scheme;
+}
+
+function normalizeSurface(value: string): WorkbenchSurfaceTone {
+  return workbenchSurfaceTones.some((surface) => surface.name === value)
+    ? (value as WorkbenchSurfaceTone)
+    : defaultWorkbenchAppearance.surface;
+}
+
+function normalizeThemeMode(value: string): WorkbenchThemeMode {
+  return value === "light" || value === "system" ? value : "dark";
+}
+
 function alphaHex(hex: string, alpha: number): string {
   const rgb = hexToRgb(hex);
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
 }
 
 function mixHex(from: string, to: string, amount: number): string {
+  const safeAmount = clamp(amount, -1, 1);
+
+  if (safeAmount < 0) {
+    return mixHex(from, relativeLuminance(from) < 0.5 ? "#ffffff" : "#000000", -safeAmount);
+  }
+
   const a = hexToRgb(from);
   const b = hexToRgb(to);
   const mix = {
-    r: Math.round(a.r + (b.r - a.r) * amount),
-    g: Math.round(a.g + (b.g - a.g) * amount),
-    b: Math.round(a.b + (b.b - a.b) * amount),
+    r: Math.round(a.r + (b.r - a.r) * safeAmount),
+    g: Math.round(a.g + (b.g - a.g) * safeAmount),
+    b: Math.round(a.b + (b.b - a.b) * safeAmount),
   };
   return rgbToHex(mix);
 }
@@ -377,6 +549,17 @@ function rgbToHex(rgb: { b: number; g: number; r: number }): string {
   return `#${[rgb.r, rgb.g, rgb.b]
     .map((value) => clamp(value, 0, 255).toString(16).padStart(2, "0"))
     .join("")}`;
+}
+
+function relativeLuminance(hex: string): number {
+  const rgb = hexToRgb(hex);
+  const channel = (value: number) => {
+    const normalized = value / 255;
+    return normalized <= 0.03928
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * channel(rgb.r) + 0.7152 * channel(rgb.g) + 0.0722 * channel(rgb.b);
 }
 
 function clamp(value: number, min: number, max: number): number {

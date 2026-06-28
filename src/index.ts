@@ -10,8 +10,10 @@ export {
   createWorkbenchPalette,
   createWorkbenchTheme,
   normalizeWorkbenchAppearance,
+  resolveWorkbenchThemeMode,
   workbenchAccentPresets,
-  workbenchBasePalettes,
+  workbenchSchemes,
+  workbenchSurfaceTones,
 } from "./provider/theme";
 export { WorkbenchAppearanceSettings } from "./appearance/WorkbenchAppearanceSettings";
 export { WorkbenchHeader } from "./shell/WorkbenchHeader";
@@ -29,10 +31,13 @@ export type {
   WorkbenchAppearanceContextValue,
   WorkbenchDensity,
   WorkbenchProviderProps,
+  WorkbenchResolvedThemeMode,
   WorkbenchThemeMode,
 } from "./provider/WorkbenchProvider";
 export type {
   WorkbenchPalette,
+  WorkbenchSchemeName,
+  WorkbenchSurfaceTone,
 } from "./provider/theme";
 export type {
   WorkbenchAppearanceSettingsLabels,
