@@ -1,4 +1,4 @@
-import { App as AntdApp, ConfigProvider, type ThemeConfig } from "antd";
+import { App as AntdApp, ConfigProvider } from "antd";
 import {
   createContext,
   useContext,
@@ -7,114 +7,163 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { createWorkbenchTheme, type WorkbenchPaletteName } from "./theme";
+import {
+  createWorkbenchCssVars,
+  createWorkbenchPalette,
+  createWorkbenchTheme,
+  defaultWorkbenchAppearance,
+  normalizeWorkbenchAppearance,
+  type WorkbenchAppearance,
+  type WorkbenchPalette,
+  type WorkbenchThemeMode,
+} from "./theme";
 
-export type WorkbenchThemeMode = WorkbenchPaletteName;
-
-export interface WorkbenchThemeContextValue {
+export interface WorkbenchAppearanceContextValue {
+  appearance: WorkbenchAppearance;
+  palette: WorkbenchPalette;
+  patchAppearance(patch: Partial<WorkbenchAppearance>): void;
+  resetAppearance(): void;
+  setAppearance(appearance: WorkbenchAppearance): void;
   setThemeMode(themeMode: WorkbenchThemeMode): void;
-  themeMode: WorkbenchThemeMode;
   toggleThemeMode(): void;
 }
 
 export interface WorkbenchProviderProps {
   children: ReactNode;
-  defaultThemeMode?: WorkbenchThemeMode;
+  defaultAppearance?: Partial<WorkbenchAppearance>;
   rootElement?: HTMLElement | null;
   storageKey?: false | string;
-  theme?: ThemeConfig;
-  themeMode?: WorkbenchThemeMode;
   withAntdApp?: boolean;
-  onThemeModeChange?(themeMode: WorkbenchThemeMode): void;
+  onAppearanceChange?(appearance: WorkbenchAppearance): void;
 }
 
-const WorkbenchThemeContext = createContext<WorkbenchThemeContextValue | null>(null);
+const WorkbenchAppearanceContext = createContext<WorkbenchAppearanceContextValue | null>(null);
 
 export function WorkbenchProvider({
   children,
-  defaultThemeMode = "dark",
+  defaultAppearance,
   rootElement,
-  storageKey = "workbench.theme",
-  theme,
-  themeMode,
+  storageKey = "workbench.appearance",
   withAntdApp = true,
-  onThemeModeChange,
+  onAppearanceChange,
 }: WorkbenchProviderProps) {
-  const [localThemeMode, setLocalThemeMode] = useState<WorkbenchThemeMode>(() =>
-    resolveInitialThemeMode(defaultThemeMode, storageKey),
+  const resolvedDefaultAppearance = useMemo(
+    () => normalizeWorkbenchAppearance(defaultAppearance),
+    [defaultAppearance],
   );
-  const currentThemeMode = themeMode ?? localThemeMode;
+  const [appearance, setLocalAppearance] = useState<WorkbenchAppearance>(() =>
+    resolveInitialAppearance(resolvedDefaultAppearance, storageKey),
+  );
+  const palette = useMemo(() => createWorkbenchPalette(appearance), [appearance]);
+  const antdTheme = useMemo(
+    () => createWorkbenchTheme(appearance, palette),
+    [appearance, palette],
+  );
 
-  const contextValue = useMemo<WorkbenchThemeContextValue>(
+  const contextValue = useMemo<WorkbenchAppearanceContextValue>(
     () => ({
-      setThemeMode(nextThemeMode) {
-        if (themeMode === undefined) {
-          setLocalThemeMode(nextThemeMode);
-        }
-        onThemeModeChange?.(nextThemeMode);
+      appearance,
+      palette,
+      patchAppearance(patch) {
+        setLocalAppearance((current) => normalizeWorkbenchAppearance({ ...current, ...patch }));
       },
-      themeMode: currentThemeMode,
+      resetAppearance() {
+        setLocalAppearance(resolvedDefaultAppearance);
+      },
+      setAppearance(nextAppearance) {
+        setLocalAppearance(normalizeWorkbenchAppearance(nextAppearance));
+      },
+      setThemeMode(themeMode) {
+        setLocalAppearance((current) => normalizeWorkbenchAppearance({ ...current, mode: themeMode }));
+      },
       toggleThemeMode() {
-        const nextThemeMode = currentThemeMode === "dark" ? "light" : "dark";
-        if (themeMode === undefined) {
-          setLocalThemeMode(nextThemeMode);
-        }
-        onThemeModeChange?.(nextThemeMode);
+        setLocalAppearance((current) =>
+          normalizeWorkbenchAppearance({
+            ...current,
+            mode: current.mode === "dark" ? "light" : "dark",
+          }),
+        );
       },
     }),
-    [currentThemeMode, onThemeModeChange, themeMode],
+    [appearance, palette, resolvedDefaultAppearance],
   );
 
   useEffect(() => {
     if (storageKey !== false) {
-      globalThis.localStorage?.setItem(storageKey, currentThemeMode);
+      globalThis.localStorage?.setItem(storageKey, JSON.stringify(appearance));
     }
 
+    onAppearanceChange?.(appearance);
+  }, [appearance, onAppearanceChange, storageKey]);
+
+  useEffect(() => {
     const target = rootElement ?? globalThis.document?.documentElement;
-    target?.setAttribute("data-theme", currentThemeMode);
-    target?.setAttribute("data-workbench-theme", currentThemeMode);
+    if (!target) {
+      return;
+    }
+
+    target.setAttribute("data-theme", appearance.mode);
+    target.setAttribute("data-workbench-theme", appearance.mode);
+    target.setAttribute("data-workbench-density", appearance.density);
+
+    const cssVars = createWorkbenchCssVars(palette);
+    Object.entries(cssVars).forEach(([name, value]) => {
+      target.style.setProperty(name, value);
+    });
+    target.style.setProperty("--app-control-radius", `${appearance.radius}px`);
 
     return () => {
-      target?.removeAttribute("data-workbench-theme");
+      target.removeAttribute("data-workbench-density");
+      target.removeAttribute("data-workbench-theme");
+      Object.keys(cssVars).forEach((name) => {
+        target.style.removeProperty(name);
+      });
+      target.style.removeProperty("--app-control-radius");
     };
-  }, [currentThemeMode, rootElement, storageKey]);
-
-  const antdTheme = useMemo(
-    () => createWorkbenchTheme(currentThemeMode, theme),
-    [currentThemeMode, theme],
-  );
+  }, [appearance.density, appearance.mode, appearance.radius, palette, rootElement]);
 
   const content = withAntdApp ? <AntdApp component="div">{children}</AntdApp> : children;
 
   return (
-    <WorkbenchThemeContext value={contextValue}>
+    <WorkbenchAppearanceContext value={contextValue}>
       <ConfigProvider theme={antdTheme}>{content}</ConfigProvider>
-    </WorkbenchThemeContext>
+    </WorkbenchAppearanceContext>
   );
 }
 
-export function useWorkbenchTheme(): WorkbenchThemeContextValue {
-  const context = useContext(WorkbenchThemeContext);
+export function useWorkbenchAppearance(): WorkbenchAppearanceContextValue {
+  const context = useContext(WorkbenchAppearanceContext);
 
   if (!context) {
-    throw new Error("useWorkbenchTheme must be used within WorkbenchProvider.");
+    throw new Error("useWorkbenchAppearance must be used within WorkbenchProvider.");
   }
 
   return context;
 }
 
-export function useWorkbenchThemeMode(): WorkbenchThemeContextValue {
-  return useWorkbenchTheme();
-}
-
-function resolveInitialThemeMode(
-  defaultThemeMode: WorkbenchThemeMode,
+function resolveInitialAppearance(
+  defaultAppearance: WorkbenchAppearance,
   storageKey: false | string,
-): WorkbenchThemeMode {
+): WorkbenchAppearance {
   if (storageKey === false) {
-    return defaultThemeMode;
+    return defaultAppearance;
   }
 
   const stored = globalThis.localStorage?.getItem(storageKey);
-  return stored === "dark" || stored === "light" ? stored : defaultThemeMode;
+
+  if (!stored) {
+    return defaultAppearance;
+  }
+
+  try {
+    return normalizeWorkbenchAppearance({
+      ...defaultAppearance,
+      ...(JSON.parse(stored) as Partial<WorkbenchAppearance>),
+    });
+  } catch {
+    return defaultAppearance;
+  }
 }
+
+export { defaultWorkbenchAppearance };
+export type { WorkbenchAppearance, WorkbenchDensity, WorkbenchThemeMode } from "./theme";

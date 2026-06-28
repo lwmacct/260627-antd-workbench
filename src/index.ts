@@ -2,13 +2,18 @@ import "./styles.css";
 
 export {
   WorkbenchProvider,
-  useWorkbenchThemeMode,
-  useWorkbenchTheme,
+  defaultWorkbenchAppearance,
+  useWorkbenchAppearance,
 } from "./provider/WorkbenchProvider";
 export {
+  createWorkbenchCssVars,
+  createWorkbenchPalette,
   createWorkbenchTheme,
-  workbenchPalettes,
+  normalizeWorkbenchAppearance,
+  workbenchAccentPresets,
+  workbenchBasePalettes,
 } from "./provider/theme";
+export { WorkbenchAppearanceSettings } from "./appearance/WorkbenchAppearanceSettings";
 export { WorkbenchHeader } from "./shell/WorkbenchHeader";
 export { WorkbenchShell } from "./shell/WorkbenchShell";
 export { WorkbenchSectionLayout } from "./section/WorkbenchSectionLayout";
@@ -20,14 +25,20 @@ export { cx } from "./utils/cx";
 export { findMenuItem, getMenuItemLabel } from "./utils/menu";
 
 export type {
+  WorkbenchAppearance,
+  WorkbenchAppearanceContextValue,
+  WorkbenchDensity,
   WorkbenchProviderProps,
-  WorkbenchThemeContextValue,
   WorkbenchThemeMode,
 } from "./provider/WorkbenchProvider";
 export type {
   WorkbenchPalette,
-  WorkbenchPaletteName,
 } from "./provider/theme";
+export type {
+  WorkbenchAppearanceSettingsLabels,
+  WorkbenchAppearanceSettingsProps,
+  WorkbenchAppearanceSettingsSection,
+} from "./appearance/WorkbenchAppearanceSettings";
 export type {
   WorkbenchBrand,
   WorkbenchHeaderProps,

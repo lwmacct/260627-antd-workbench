@@ -1,6 +1,14 @@
 import { theme, type ThemeConfig } from "antd";
 
-export type WorkbenchPaletteName = "dark" | "light";
+export type WorkbenchThemeMode = "dark" | "light";
+export type WorkbenchDensity = "compact" | "comfortable";
+
+export interface WorkbenchAppearance {
+  accent: string;
+  density: WorkbenchDensity;
+  mode: WorkbenchThemeMode;
+  radius: number;
+}
 
 export interface WorkbenchPalette {
   accent: string;
@@ -30,16 +38,32 @@ export interface WorkbenchPalette {
   workbench: string;
 }
 
+type BasePalette = Omit<
+  WorkbenchPalette,
+  "accent" | "accentActive" | "accentHover" | "accentSoft" | "accentSofter"
+>;
+
 const fontFamily =
   'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
-export const workbenchPalettes: Record<WorkbenchPaletteName, WorkbenchPalette> = {
+export const defaultWorkbenchAppearance: WorkbenchAppearance = {
+  accent: "#2388ff",
+  density: "comfortable",
+  mode: "dark",
+  radius: 6,
+};
+
+export const workbenchAccentPresets = [
+  { label: "Blue", value: "#2388ff" },
+  { label: "Cyan", value: "#13b8d8" },
+  { label: "Green", value: "#2fbf71" },
+  { label: "Amber", value: "#d99118" },
+  { label: "Rose", value: "#e85d75" },
+  { label: "Violet", value: "#8b7cf6" },
+] as const;
+
+export const workbenchBasePalettes: Record<WorkbenchThemeMode, BasePalette> = {
   dark: {
-    accent: "#2388ff",
-    accentActive: "#145da8",
-    accentHover: "#65adff",
-    accentSoft: "rgba(35, 136, 255, 0.24)",
-    accentSofter: "rgba(35, 136, 255, 0.14)",
     active: "#343d49",
     bg: "#101214",
     border: "#424c59",
@@ -62,11 +86,6 @@ export const workbenchPalettes: Record<WorkbenchPaletteName, WorkbenchPalette> =
     workbench: "#171a1f",
   },
   light: {
-    accent: "#0b70d7",
-    accentActive: "#d8ebff",
-    accentHover: "#0759b8",
-    accentSoft: "rgba(11, 112, 215, 0.13)",
-    accentSofter: "rgba(11, 112, 215, 0.08)",
     active: "#ddeeff",
     bg: "#f4f6f8",
     border: "#c8d2df",
@@ -90,18 +109,79 @@ export const workbenchPalettes: Record<WorkbenchPaletteName, WorkbenchPalette> =
   },
 };
 
-export function createWorkbenchTheme(
-  themeMode: WorkbenchPaletteName,
-  overrides?: ThemeConfig,
-): ThemeConfig {
-  const dark = themeMode === "dark";
-  const palette = workbenchPalettes[themeMode];
+export function normalizeWorkbenchAppearance(
+  value?: Partial<WorkbenchAppearance>,
+): WorkbenchAppearance {
+  const next = {
+    ...defaultWorkbenchAppearance,
+    ...value,
+  };
 
   return {
-    ...overrides,
-    algorithm: overrides?.algorithm ?? (dark ? theme.darkAlgorithm : theme.defaultAlgorithm),
+    accent: normalizeHexColor(next.accent, defaultWorkbenchAppearance.accent),
+    density: next.density === "compact" ? "compact" : "comfortable",
+    mode: next.mode === "light" ? "light" : "dark",
+    radius: clamp(Math.round(Number(next.radius) || defaultWorkbenchAppearance.radius), 0, 12),
+  };
+}
+
+export function createWorkbenchPalette(appearance: WorkbenchAppearance): WorkbenchPalette {
+  const base = workbenchBasePalettes[appearance.mode];
+  const dark = appearance.mode === "dark";
+  const accent = normalizeHexColor(appearance.accent, defaultWorkbenchAppearance.accent);
+
+  return {
+    ...base,
+    accent,
+    accentActive: dark ? mixHex(accent, "#000000", 0.34) : mixHex(accent, "#ffffff", 0.82),
+    accentHover: dark ? mixHex(accent, "#ffffff", 0.26) : mixHex(accent, "#000000", 0.16),
+    accentSoft: alphaHex(accent, dark ? 0.24 : 0.13),
+    accentSofter: alphaHex(accent, dark ? 0.14 : 0.08),
+  };
+}
+
+export function createWorkbenchCssVars(palette: WorkbenchPalette): Record<string, string> {
+  return {
+    "--app-active-bg": palette.active,
+    "--app-accent": palette.accent,
+    "--app-accent-active": palette.accentActive,
+    "--app-accent-hover": palette.accentHover,
+    "--app-accent-soft": palette.accentSoft,
+    "--app-accent-softer": palette.accentSofter,
+    "--app-bg": palette.bg,
+    "--app-border": palette.border,
+    "--app-border-soft": palette.borderSoft,
+    "--app-card-bg": palette.panel,
+    "--app-card-elevated-bg": palette.panelElevated,
+    "--app-card-muted-bg": palette.panelMuted,
+    "--app-danger": palette.danger,
+    "--app-header-bg": palette.header,
+    "--app-hover-bg": palette.hover,
+    "--app-input-bg": palette.input,
+    "--app-panel-muted-bg": palette.panelMuted,
+    "--app-sidebar-bg": palette.sidebar,
+    "--app-success": palette.success,
+    "--app-text": palette.text,
+    "--app-text-muted": palette.textMuted,
+    "--app-text-secondary": palette.textSecondary,
+    "--app-text-strong": palette.textStrong,
+    "--app-text-subtle": palette.textSubtle,
+    "--app-warning": palette.warning,
+    "--app-workbench-bg": palette.workbench,
+  };
+}
+
+export function createWorkbenchTheme(
+  appearance: WorkbenchAppearance,
+  palette = createWorkbenchPalette(appearance),
+): ThemeConfig {
+  const dark = appearance.mode === "dark";
+  const compact = appearance.density === "compact";
+
+  return {
+    algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: {
-      borderRadius: 6,
+      borderRadius: appearance.radius,
       colorBgBase: palette.bg,
       colorBgLayout: palette.bg,
       colorBgContainer: palette.panel,
@@ -132,6 +212,9 @@ export function createWorkbenchTheme(
       colorTextSecondary: palette.textSecondary,
       colorTextTertiary: palette.textMuted,
       colorWarning: palette.warning,
+      controlHeight: compact ? 30 : 34,
+      controlHeightLG: compact ? 36 : 40,
+      controlHeightSM: compact ? 24 : 28,
       controlItemBgActive: palette.accentSoft,
       controlItemBgActiveHover: palette.accentSoft,
       controlItemBgHover: palette.hover,
@@ -140,7 +223,6 @@ export function createWorkbenchTheme(
         ? "0 14px 34px rgba(0, 0, 0, 0.38)"
         : "0 12px 28px rgba(15, 23, 42, 0.12)",
       fontFamily,
-      ...overrides?.token,
     },
     components: {
       Button: {
@@ -180,16 +262,16 @@ export function createWorkbenchTheme(
         activeBg: palette.input,
         activeBorderColor: palette.accentHover,
         addonBg: palette.panelMuted,
-        colorBorder: palette.border,
         colorBgContainer: palette.input,
+        colorBorder: palette.border,
         hoverBg: palette.input,
         hoverBorderColor: palette.accent,
       },
       InputNumber: {
         activeBg: palette.input,
         activeBorderColor: palette.accentHover,
-        colorBorder: palette.border,
         colorBgContainer: palette.input,
+        colorBorder: palette.border,
         hoverBg: palette.input,
         hoverBorderColor: palette.accent,
       },
@@ -221,15 +303,16 @@ export function createWorkbenchTheme(
       Select: {
         activeBorderColor: palette.accentHover,
         clearBg: palette.input,
-        colorBorder: palette.border,
         colorBgContainer: palette.input,
         colorBgElevated: palette.panelElevated,
+        colorBorder: palette.border,
         optionActiveBg: palette.hover,
         optionSelectedBg: palette.accentSoft,
         optionSelectedColor: palette.textStrong,
       },
       Table: {
         borderColor: palette.border,
+        cellPaddingBlock: compact ? 10 : 16,
         colorBgContainer: palette.workbench,
         footerBg: palette.panel,
         headerBg: palette.panel,
@@ -247,7 +330,55 @@ export function createWorkbenchTheme(
         defaultBg: palette.panelMuted,
         defaultColor: palette.text,
       },
-      ...overrides?.components,
     },
   };
+}
+
+function normalizeHexColor(value: string, fallback: string): string {
+  const normalized = value.trim().toLowerCase();
+  const short = /^#([0-9a-f]{3})$/i.exec(normalized);
+
+  if (short) {
+    return `#${short[1]
+      .split("")
+      .map((char) => `${char}${char}`)
+      .join("")}`;
+  }
+
+  return /^#[0-9a-f]{6}$/i.test(normalized) ? normalized : fallback;
+}
+
+function alphaHex(hex: string, alpha: number): string {
+  const rgb = hexToRgb(hex);
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+}
+
+function mixHex(from: string, to: string, amount: number): string {
+  const a = hexToRgb(from);
+  const b = hexToRgb(to);
+  const mix = {
+    r: Math.round(a.r + (b.r - a.r) * amount),
+    g: Math.round(a.g + (b.g - a.g) * amount),
+    b: Math.round(a.b + (b.b - a.b) * amount),
+  };
+  return rgbToHex(mix);
+}
+
+function hexToRgb(hex: string): { b: number; g: number; r: number } {
+  const value = hex.replace("#", "");
+  return {
+    r: Number.parseInt(value.slice(0, 2), 16),
+    g: Number.parseInt(value.slice(2, 4), 16),
+    b: Number.parseInt(value.slice(4, 6), 16),
+  };
+}
+
+function rgbToHex(rgb: { b: number; g: number; r: number }): string {
+  return `#${[rgb.r, rgb.g, rgb.b]
+    .map((value) => clamp(value, 0, 255).toString(16).padStart(2, "0"))
+    .join("")}`;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
 }
