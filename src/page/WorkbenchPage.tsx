@@ -27,7 +27,7 @@ export function WorkbenchPage({
     <section className={cx("wb-page", className)}>
       {hasHeader ? (
         <Flex className="wb-page__header" align="flex-start" justify="space-between" gap={12}>
-          <Space className="wb-page__title-group" direction="vertical" size={2}>
+          <Space className="wb-page__title-group" orientation="vertical" size={2}>
             {title ? (
               <Typography.Title level={3} className="wb-page__title">
                 {title}
