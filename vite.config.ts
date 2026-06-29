@@ -11,11 +11,15 @@ export default defineConfig({
     }),
   ],
   build: {
+    cssCodeSplit: true,
     lib: {
-      entry: "src/index.ts",
+      entry: {
+        global: "src/styles/global.css",
+        index: "src/index.ts",
+        styles: "src/styles/styles.css",
+      },
       formats: ["es"],
-      fileName: "index",
-      cssFileName: "styles",
+      fileName: (_, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
       external: [

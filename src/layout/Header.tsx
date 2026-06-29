@@ -1,8 +1,10 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Menu, type MenuProps } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import type { ReactNode } from "react";
-import { cx } from "../utils/cx";
-import { getMenuItemLabel } from "../utils/menu";
+import { cx } from "../internal/cx";
+import { getNavItemLabel } from "../navigation/find";
+import type { WorkbenchNavEntry } from "../navigation/model";
+import { toAntdMenuItems } from "../navigation/toAntdMenu";
 
 export interface WorkbenchBrand {
   ariaLabel?: string;
@@ -12,32 +14,33 @@ export interface WorkbenchBrand {
   version?: string;
 }
 
-export interface WorkbenchHeaderProps<Key extends string = string> {
+export interface HeaderProps {
   actions?: ReactNode;
-  activeNavKey?: Key;
-  activeNavKeys?: Key[];
   brand: WorkbenchBrand;
   className?: string;
   mobileNavFallback?: ReactNode;
+  nav: WorkbenchNavEntry[];
   navAriaLabel?: string;
-  navItems: MenuProps["items"];
-  onNavigate(key: Key): void;
+  selectedNavKey?: string;
+  selectedNavKeys?: string[];
+  onSelectNav(key: string): void;
 }
 
-export function WorkbenchHeader<Key extends string = string>({
+export function Header({
   actions,
-  activeNavKey,
-  activeNavKeys,
   brand,
   className,
   mobileNavFallback = "导航",
+  nav,
   navAriaLabel = "主导航",
-  navItems,
-  onNavigate,
-}: WorkbenchHeaderProps<Key>) {
-  const selectedKeys = activeNavKeys ?? (activeNavKey ? [activeNavKey] : []);
+  selectedNavKey,
+  selectedNavKeys,
+  onSelectNav,
+}: HeaderProps) {
+  const selectedKeys = selectedNavKeys ?? (selectedNavKey ? [selectedNavKey] : []);
   const selectedKey = selectedKeys[0] ?? "";
-  const activeNavLabel = getMenuItemLabel(navItems, selectedKey, mobileNavFallback);
+  const menuItems = toAntdMenuItems(nav);
+  const activeNavLabel = getNavItemLabel(nav, selectedKey, mobileNavFallback);
   const subtitle = brand.subtitle ?? shortenVersion(brand.version);
 
   return (
@@ -54,16 +57,16 @@ export function WorkbenchHeader<Key extends string = string>({
         <Menu
           className="wb-header__nav-full"
           disabledOverflow
-          items={navItems}
+          items={menuItems}
           mode="horizontal"
-          onClick={({ key }) => onNavigate(key as Key)}
           selectedKeys={selectedKeys}
+          onClick={({ key }) => onSelectNav(key)}
         />
         <Dropdown
           menu={{
-            items: navItems,
-            onClick: ({ key }) => onNavigate(key as Key),
+            items: menuItems,
             selectedKeys,
+            onClick: ({ key }) => onSelectNav(key),
           }}
           placement="bottom"
           styles={{ root: { minWidth: "min(240px, calc(100vw - 24px))" } }}
@@ -92,3 +95,4 @@ function asText(value: ReactNode): string {
 function shortenVersion(version: string | undefined): string | undefined {
   return version?.split(/[+-]/, 1)[0];
 }
+

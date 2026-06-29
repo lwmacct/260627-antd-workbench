@@ -1,0 +1,33 @@
+import type { WorkbenchPalette } from "./model";
+
+export function createWorkbenchCssVars(palette: WorkbenchPalette): Record<string, string> {
+  return {
+    "--app-active-bg": palette.active,
+    "--app-accent": palette.accent,
+    "--app-accent-active": palette.accentActive,
+    "--app-accent-hover": palette.accentHover,
+    "--app-accent-soft": palette.accentSoft,
+    "--app-accent-softer": palette.accentSofter,
+    "--app-bg": palette.bg,
+    "--app-border": palette.border,
+    "--app-border-soft": palette.borderSoft,
+    "--app-card-bg": palette.panel,
+    "--app-card-elevated-bg": palette.panelElevated,
+    "--app-card-muted-bg": palette.panelMuted,
+    "--app-danger": palette.danger,
+    "--app-header-bg": palette.header,
+    "--app-hover-bg": palette.hover,
+    "--app-input-bg": palette.input,
+    "--app-panel-muted-bg": palette.panelMuted,
+    "--app-sidebar-bg": palette.sidebar,
+    "--app-success": palette.success,
+    "--app-text": palette.text,
+    "--app-text-muted": palette.textMuted,
+    "--app-text-secondary": palette.textSecondary,
+    "--app-text-strong": palette.textStrong,
+    "--app-text-subtle": palette.textSubtle,
+    "--app-warning": palette.warning,
+    "--app-workbench-bg": palette.workbench,
+  };
+}
+

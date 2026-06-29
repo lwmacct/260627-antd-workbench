@@ -1,44 +1,47 @@
 import { MenuOutlined } from "@ant-design/icons";
-import { Button, Drawer, Layout, Menu, Space, Typography, type MenuProps } from "antd";
-import { useState, type ReactNode } from "react";
-import { cx } from "../utils/cx";
-import { findMenuItem } from "../utils/menu";
+import { Button, Drawer, Layout, Menu, Space, Typography } from "antd";
+import { useMemo, useState, type ReactNode } from "react";
+import { cx } from "../internal/cx";
+import { findNavItem } from "../navigation/find";
+import type { WorkbenchNavEntry } from "../navigation/model";
+import { toAntdMenuItems } from "../navigation/toAntdMenu";
 
-export interface WorkbenchSectionLayoutProps<Key extends string = string> {
-  activeKey: Key;
+export interface SectionLayoutProps {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
-  labels?: WorkbenchSectionLayoutLabels;
-  menuItems: MenuProps["items"];
+  labels?: SectionLayoutLabels;
+  nav: WorkbenchNavEntry[];
+  selectedKey: string;
   siderWidth?: number;
-  onChange(key: Key): void;
+  onSelect(key: string): void;
 }
 
-export interface WorkbenchSectionLayoutLabels {
+export interface SectionLayoutLabels {
   mobileNavigation?: string;
   openNavigation?: string;
 }
 
-export function WorkbenchSectionLayout<Key extends string = string>({
-  activeKey,
+export function SectionLayout({
   children,
   className,
   contentClassName,
   labels,
-  menuItems,
+  nav,
+  selectedKey,
   siderWidth = 208,
-  onChange,
-}: WorkbenchSectionLayoutProps<Key>) {
+  onSelect,
+}: SectionLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const currentItem = findMenuItem(menuItems, activeKey);
+  const menuItems = useMemo(() => toAntdMenuItems(nav), [nav]);
+  const currentItem = findNavItem(nav, selectedKey);
   const labelText = {
     mobileNavigation: labels?.mobileNavigation ?? "分区导航",
     openNavigation: labels?.openNavigation ?? "分区导航",
   };
 
-  function handleChange(key: string) {
-    onChange(key as Key);
+  function handleSelect(key: string) {
+    onSelect(key);
     setMobileOpen(false);
   }
 
@@ -46,15 +49,14 @@ export function WorkbenchSectionLayout<Key extends string = string>({
     <Layout className={cx("wb-section", className)}>
       <Layout.Sider
         className="wb-section__sider wb-section__sider--desktop"
-        theme="dark"
         width={siderWidth}
       >
         <Menu
           className="wb-section__menu"
           items={menuItems}
           mode="inline"
-          selectedKeys={[activeKey]}
-          onClick={({ key }) => handleChange(key)}
+          selectedKeys={[selectedKey]}
+          onClick={({ key }) => handleSelect(key)}
         />
       </Layout.Sider>
       <Layout.Content className={cx("wb-section__content", contentClassName)}>
@@ -62,7 +64,7 @@ export function WorkbenchSectionLayout<Key extends string = string>({
           <div className="wb-section__mobile-current">
             <Space size={8}>
               {currentItem?.icon}
-              <Typography.Text strong>{currentItem?.label ?? activeKey}</Typography.Text>
+              <Typography.Text strong>{currentItem?.label ?? selectedKey}</Typography.Text>
             </Space>
           </div>
           <Button
@@ -89,10 +91,11 @@ export function WorkbenchSectionLayout<Key extends string = string>({
           className="wb-section__drawer-menu"
           items={menuItems}
           mode="inline"
-          selectedKeys={[activeKey]}
-          onClick={({ key }) => handleChange(key)}
+          selectedKeys={[selectedKey]}
+          onClick={({ key }) => handleSelect(key)}
         />
       </Drawer>
     </Layout>
   );
 }
+

@@ -1,66 +1,64 @@
-import "./styles.css";
-
 export {
-  WorkbenchProvider,
-  defaultWorkbenchAppearance,
-  useWorkbenchAppearance,
-} from "./provider/WorkbenchProvider";
-export {
-  createWorkbenchCssVars,
-  createWorkbenchPalette,
-  createWorkbenchTheme,
-  normalizeWorkbenchAppearance,
+  WorkbenchRoot,
   resolveWorkbenchThemeMode,
+  useWorkbenchAppearance,
+} from "./appearance/AppearanceProvider";
+export {
+  defaultWorkbenchAppearance,
   workbenchAccentPresets,
-  workbenchSchemes,
   workbenchSurfaceTones,
-} from "./provider/theme";
-export { WorkbenchAppearanceSettings } from "./appearance/WorkbenchAppearanceSettings";
-export { WorkbenchHeader } from "./shell/WorkbenchHeader";
-export { WorkbenchShell } from "./shell/WorkbenchShell";
-export { WorkbenchSectionLayout } from "./section/WorkbenchSectionLayout";
-export { WorkbenchPage } from "./page/WorkbenchPage";
-export { WorkbenchCenterState } from "./state/WorkbenchCenterState";
-export { WorkbenchThemeToggle } from "./theme/WorkbenchThemeToggle";
-export { WorkbenchUserMenu } from "./user/WorkbenchUserMenu";
-export { cx } from "./utils/cx";
-export { findMenuItem, getMenuItemLabel } from "./utils/menu";
+} from "./appearance/defaults";
+export { AppearanceSettings } from "./appearance/AppearanceSettings";
+export { normalizeWorkbenchAppearance } from "./appearance/normalize";
+export { AppShell } from "./layout/AppShell";
+export { CenterState } from "./layout/CenterState";
+export { Header } from "./layout/Header";
+export { Page } from "./layout/Page";
+export { SectionLayout } from "./layout/SectionLayout";
+export { UserMenu } from "./account/UserMenu";
+export { ThemeToggle } from "./controls/ThemeToggle";
+export { findNavItem, getNavItemLabel } from "./navigation/find";
+export { toAntdMenuItems } from "./navigation/toAntdMenu";
+export { createWorkbenchTheme } from "./theme/antd";
+export { createWorkbenchCssVars } from "./theme/cssVars";
+export { createWorkbenchPalette } from "./theme/palette";
+export { workbenchSchemes } from "./theme/schemes";
 
+export type {
+  WorkbenchAppearanceContextValue,
+  WorkbenchAppearanceOptions,
+  WorkbenchRootProps,
+} from "./appearance/AppearanceProvider";
 export type {
   WorkbenchAppearance,
-  WorkbenchAppearanceContextValue,
+  WorkbenchAppearancePatch,
   WorkbenchDensity,
-  WorkbenchProviderProps,
   WorkbenchResolvedThemeMode,
-  WorkbenchThemeMode,
-} from "./provider/WorkbenchProvider";
-export type {
-  WorkbenchPalette,
   WorkbenchSchemeName,
   WorkbenchSurfaceTone,
-} from "./provider/theme";
+  WorkbenchThemeMode,
+} from "./appearance/model";
 export type {
-  WorkbenchAppearanceSettingsLabels,
-  WorkbenchAppearanceSettingsProps,
-  WorkbenchAppearanceSettingsSection,
-} from "./appearance/WorkbenchAppearanceSettings";
+  AppearanceSettingsLabels,
+  AppearanceSettingsProps,
+  AppearanceSettingsSection,
+} from "./appearance/AppearanceSettings";
+export type { AppShellProps } from "./layout/AppShell";
+export type { CenterStateProps } from "./layout/CenterState";
+export type { HeaderProps, WorkbenchBrand } from "./layout/Header";
+export type { PageProps } from "./layout/Page";
 export type {
-  WorkbenchBrand,
-  WorkbenchHeaderProps,
-} from "./shell/WorkbenchHeader";
-export type { WorkbenchShellProps } from "./shell/WorkbenchShell";
+  SectionLayoutLabels,
+  SectionLayoutProps,
+} from "./layout/SectionLayout";
+export type { UserMenuLabels, UserMenuProps } from "./account/UserMenu";
+export type { ThemeToggleLabels, ThemeToggleProps } from "./controls/ThemeToggle";
 export type {
-  WorkbenchSectionLayoutLabels,
-  WorkbenchSectionLayoutProps,
-} from "./section/WorkbenchSectionLayout";
-export type { WorkbenchPageProps } from "./page/WorkbenchPage";
-export type { WorkbenchCenterStateProps } from "./state/WorkbenchCenterState";
+  WorkbenchNavEntry,
+  WorkbenchNavGroup,
+  WorkbenchNavItem,
+} from "./navigation/model";
 export type {
-  WorkbenchThemeToggleLabels,
-  WorkbenchThemeToggleProps,
-} from "./theme/WorkbenchThemeToggle";
-export type {
-  WorkbenchUserMenuLabels,
-  WorkbenchUserMenuProps,
-} from "./user/WorkbenchUserMenu";
-export type { WorkbenchMenuItem } from "./utils/menu";
+  WorkbenchBasePalette,
+  WorkbenchPalette,
+} from "./theme/model";

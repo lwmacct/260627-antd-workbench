@@ -1,6 +1,6 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.30.260629",
+  "version": "0.31.260629",
   "private": false,
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
   "type": "module",
@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./global.css": "./dist/global.css",
     "./styles.css": "./dist/styles.css"
   },
   "files": [
@@ -20,6 +21,7 @@
   ],
   "sideEffects": [
     "*.css",
+    "./dist/global.css",
     "./dist/styles.css"
   ],
   "repository": {

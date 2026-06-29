@@ -6,25 +6,25 @@ import {
 import { Avatar, Button, Dropdown, type MenuProps } from "antd";
 import type { ReactNode } from "react";
 
-export interface WorkbenchUserMenuLabels {
+export interface UserMenuLabels {
   logout?: ReactNode;
   settings?: ReactNode;
   unnamedUser?: ReactNode;
 }
 
-export interface WorkbenchUserMenuProps {
-  labels?: WorkbenchUserMenuLabels;
+export interface UserMenuProps {
+  labels?: UserMenuLabels;
   username?: string;
   onLogout(): void;
   onOpenAccount?(): void;
 }
 
-export function WorkbenchUserMenu({
+export function UserMenu({
   labels,
   username,
   onLogout,
   onOpenAccount,
-}: WorkbenchUserMenuProps) {
+}: UserMenuProps) {
   const initial = (username || "?").trim().slice(0, 1).toUpperCase();
   const items: MenuProps["items"] = [
     {
@@ -60,3 +60,4 @@ export function WorkbenchUserMenu({
     </Dropdown>
   );
 }
+

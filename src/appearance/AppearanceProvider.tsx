@@ -7,52 +7,56 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  createWorkbenchCssVars,
-  createWorkbenchPalette,
-  createWorkbenchTheme,
-  defaultWorkbenchAppearance,
-  normalizeWorkbenchAppearance,
-  resolveWorkbenchThemeMode,
-  type WorkbenchAppearance,
-  type WorkbenchPalette,
-  type WorkbenchResolvedThemeMode,
-  type WorkbenchThemeMode,
-} from "./theme";
+import type {
+  WorkbenchAppearance,
+  WorkbenchAppearancePatch,
+  WorkbenchResolvedThemeMode,
+  WorkbenchThemeMode,
+} from "./model";
+import { normalizeWorkbenchAppearance } from "./normalize";
+import { resolveInitialAppearance, writeStoredAppearance } from "./storage";
+import { createWorkbenchTheme } from "../theme/antd";
+import { createWorkbenchCssVars } from "../theme/cssVars";
+import type { WorkbenchPalette } from "../theme/model";
+import { createWorkbenchPalette } from "../theme/palette";
+
+export interface WorkbenchAppearanceOptions {
+  defaultValue?: WorkbenchAppearancePatch;
+  rootElement?: HTMLElement | null;
+  storageKey?: false | string;
+  onChange?(appearance: WorkbenchAppearance): void;
+}
+
+export interface WorkbenchRootProps {
+  appearance?: WorkbenchAppearanceOptions;
+  children: ReactNode;
+  withAntdApp?: boolean;
+}
 
 export interface WorkbenchAppearanceContextValue {
   appearance: WorkbenchAppearance;
+  defaultAppearance: WorkbenchAppearance;
   palette: WorkbenchPalette;
-  patchAppearance(patch: Partial<WorkbenchAppearance>): void;
+  patchAppearance(patch: WorkbenchAppearancePatch): void;
   resetAppearance(): void;
   resolvedMode: WorkbenchResolvedThemeMode;
-  setAppearance(appearance: WorkbenchAppearance): void;
+  setAppearance(appearance: WorkbenchAppearancePatch): void;
   setThemeMode(themeMode: WorkbenchThemeMode): void;
   toggleThemeMode(): void;
 }
 
-export interface WorkbenchProviderProps {
-  children: ReactNode;
-  defaultAppearance?: Partial<WorkbenchAppearance>;
-  rootElement?: HTMLElement | null;
-  storageKey?: false | string;
-  withAntdApp?: boolean;
-  onAppearanceChange?(appearance: WorkbenchAppearance): void;
-}
-
 const WorkbenchAppearanceContext = createContext<WorkbenchAppearanceContextValue | null>(null);
 
-export function WorkbenchProvider({
+export function WorkbenchRoot({
+  appearance: appearanceOptions,
   children,
-  defaultAppearance,
-  rootElement,
-  storageKey = "workbench.appearance",
   withAntdApp = true,
-  onAppearanceChange,
-}: WorkbenchProviderProps) {
+}: WorkbenchRootProps) {
+  const storageKey = appearanceOptions?.storageKey ?? "workbench.appearance";
+  const rootElement = appearanceOptions?.rootElement;
   const resolvedDefaultAppearance = useMemo(
-    () => normalizeWorkbenchAppearance(defaultAppearance),
-    [defaultAppearance],
+    () => normalizeWorkbenchAppearance(appearanceOptions?.defaultValue),
+    [appearanceOptions?.defaultValue],
   );
   const [appearance, setLocalAppearance] = useState<WorkbenchAppearance>(() =>
     resolveInitialAppearance(resolvedDefaultAppearance, storageKey),
@@ -71,6 +75,7 @@ export function WorkbenchProvider({
   const contextValue = useMemo<WorkbenchAppearanceContextValue>(
     () => ({
       appearance,
+      defaultAppearance: resolvedDefaultAppearance,
       palette,
       patchAppearance(patch) {
         setLocalAppearance((current) => normalizeWorkbenchAppearance({ ...current, ...patch }));
@@ -116,12 +121,9 @@ export function WorkbenchProvider({
   }, []);
 
   useEffect(() => {
-    if (storageKey !== false) {
-      globalThis.localStorage?.setItem(storageKey, JSON.stringify(appearance));
-    }
-
-    onAppearanceChange?.(appearance);
-  }, [appearance, onAppearanceChange, storageKey]);
+    writeStoredAppearance(storageKey, appearance);
+    appearanceOptions?.onChange?.(appearance);
+  }, [appearance, appearanceOptions, storageKey]);
 
   useEffect(() => {
     const target = rootElement ?? globalThis.document?.documentElement;
@@ -129,7 +131,6 @@ export function WorkbenchProvider({
       return;
     }
 
-    target.setAttribute("data-theme", resolvedMode);
     target.setAttribute("data-workbench-mode", appearance.mode);
     target.setAttribute("data-workbench-theme", resolvedMode);
     target.setAttribute("data-workbench-density", appearance.density);
@@ -164,43 +165,18 @@ export function useWorkbenchAppearance(): WorkbenchAppearanceContextValue {
   const context = useContext(WorkbenchAppearanceContext);
 
   if (!context) {
-    throw new Error("useWorkbenchAppearance must be used within WorkbenchProvider.");
+    throw new Error("useWorkbenchAppearance must be used within WorkbenchRoot.");
   }
 
   return context;
 }
 
-function resolveInitialAppearance(
-  defaultAppearance: WorkbenchAppearance,
-  storageKey: false | string,
-): WorkbenchAppearance {
-  if (storageKey === false) {
-    return defaultAppearance;
-  }
-
-  const stored = globalThis.localStorage?.getItem(storageKey);
-
-  if (!stored) {
-    return defaultAppearance;
-  }
-
-  try {
-    return normalizeWorkbenchAppearance({
-      ...defaultAppearance,
-      ...(JSON.parse(stored) as Partial<WorkbenchAppearance>),
-    });
-  } catch {
-    return defaultAppearance;
-  }
+export function resolveWorkbenchThemeMode(
+  mode: WorkbenchThemeMode,
+  systemMode: WorkbenchResolvedThemeMode = "dark",
+): WorkbenchResolvedThemeMode {
+  return mode === "system" ? systemMode : mode;
 }
-
-export { defaultWorkbenchAppearance };
-export type {
-  WorkbenchAppearance,
-  WorkbenchDensity,
-  WorkbenchResolvedThemeMode,
-  WorkbenchThemeMode,
-} from "./theme";
 
 function getSystemThemeMode(): WorkbenchResolvedThemeMode {
   return globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";

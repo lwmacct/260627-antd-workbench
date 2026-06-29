@@ -1,18 +1,18 @@
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { Button, Tooltip } from "antd";
 import type { ReactNode } from "react";
-import { useWorkbenchAppearance } from "../provider/WorkbenchProvider";
+import { useWorkbenchAppearance } from "../appearance/AppearanceProvider";
 
-export interface WorkbenchThemeToggleLabels {
+export interface ThemeToggleLabels {
   switchToDark?: ReactNode;
   switchToLight?: ReactNode;
 }
 
-export interface WorkbenchThemeToggleProps {
-  labels?: WorkbenchThemeToggleLabels;
+export interface ThemeToggleProps {
+  labels?: ThemeToggleLabels;
 }
 
-export function WorkbenchThemeToggle({ labels }: WorkbenchThemeToggleProps) {
+export function ThemeToggle({ labels }: ThemeToggleProps) {
   const { resolvedMode, toggleThemeMode } = useWorkbenchAppearance();
   const dark = resolvedMode === "dark";
   const title = dark
@@ -31,3 +31,4 @@ export function WorkbenchThemeToggle({ labels }: WorkbenchThemeToggleProps) {
     </Tooltip>
   );
 }
+

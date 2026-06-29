@@ -1,43 +1,43 @@
 import { Layout } from "antd";
-import type { MenuProps } from "antd";
 import type { ReactNode } from "react";
-import { cx } from "../utils/cx";
-import { WorkbenchHeader, type WorkbenchBrand } from "./WorkbenchHeader";
+import { cx } from "../internal/cx";
+import type { WorkbenchNavEntry } from "../navigation/model";
+import { Header, type WorkbenchBrand } from "./Header";
 
-export interface WorkbenchShellProps<Key extends string = string> {
+export interface AppShellProps {
   actions?: ReactNode;
-  activeNavKey?: Key;
-  activeNavKeys?: Key[];
   brand: WorkbenchBrand;
   children: ReactNode;
   className?: string;
   contentClassName?: string;
   flushContent?: boolean;
-  navItems: MenuProps["items"];
-  onNavigate(key: Key): void;
+  nav: WorkbenchNavEntry[];
+  selectedNavKey?: string;
+  selectedNavKeys?: string[];
+  onSelectNav(key: string): void;
 }
 
-export function WorkbenchShell<Key extends string = string>({
+export function AppShell({
   actions,
-  activeNavKey,
-  activeNavKeys,
   brand,
   children,
   className,
   contentClassName,
   flushContent = false,
-  navItems,
-  onNavigate,
-}: WorkbenchShellProps<Key>) {
+  nav,
+  selectedNavKey,
+  selectedNavKeys,
+  onSelectNav,
+}: AppShellProps) {
   return (
     <Layout className={cx("wb-shell", className)}>
-      <WorkbenchHeader
+      <Header
         actions={actions}
-        activeNavKey={activeNavKey}
-        activeNavKeys={activeNavKeys}
         brand={brand}
-        navItems={navItems}
-        onNavigate={onNavigate}
+        nav={nav}
+        selectedNavKey={selectedNavKey}
+        selectedNavKeys={selectedNavKeys}
+        onSelectNav={onSelectNav}
       />
       <Layout.Content
         className={cx(
@@ -51,3 +51,4 @@ export function WorkbenchShell<Key extends string = string>({
     </Layout>
   );
 }
+

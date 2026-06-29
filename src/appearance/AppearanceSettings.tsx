@@ -2,37 +2,37 @@ import { CheckOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Flex, Segmented, Slider, Space, Typography } from "antd";
 import type { ReactNode } from "react";
 import {
-  useWorkbenchAppearance,
-  type WorkbenchAppearance,
-} from "../provider/WorkbenchProvider";
-import {
   defaultWorkbenchAppearance,
   workbenchAccentPresets,
-  workbenchSchemes,
   workbenchSurfaceTones,
-  type WorkbenchDensity,
-  type WorkbenchSurfaceTone,
-  type WorkbenchThemeMode,
-} from "../provider/theme";
-import { cx } from "../utils/cx";
+} from "./defaults";
+import type {
+  WorkbenchAppearance,
+  WorkbenchDensity,
+  WorkbenchSurfaceTone,
+  WorkbenchThemeMode,
+} from "./model";
+import { useWorkbenchAppearance } from "./AppearanceProvider";
+import { cx } from "../internal/cx";
+import { workbenchSchemes } from "../theme/schemes";
 
-export type WorkbenchAppearanceSettingsSection =
+export type AppearanceSettingsSection =
   | "accent"
   | "density"
   | "mode"
   | "preview"
+  | "radius"
   | "scheme"
-  | "surface"
-  | "radius";
+  | "surface";
 
-export interface WorkbenchAppearanceSettingsLabels {
+export interface AppearanceSettingsLabels {
   accent?: ReactNode;
   black?: ReactNode;
   compact?: ReactNode;
   comfortable?: ReactNode;
   customAccent?: string;
-  deep?: ReactNode;
   dark?: ReactNode;
+  deep?: ReactNode;
   density?: ReactNode;
   light?: ReactNode;
   mode?: ReactNode;
@@ -47,13 +47,13 @@ export interface WorkbenchAppearanceSettingsLabels {
   tinted?: ReactNode;
 }
 
-export interface WorkbenchAppearanceSettingsProps {
+export interface AppearanceSettingsProps {
   className?: string;
-  labels?: WorkbenchAppearanceSettingsLabels;
-  sections?: WorkbenchAppearanceSettingsSection[];
+  labels?: AppearanceSettingsLabels;
+  sections?: AppearanceSettingsSection[];
 }
 
-const allSections: WorkbenchAppearanceSettingsSection[] = [
+const allSections: AppearanceSettingsSection[] = [
   "mode",
   "scheme",
   "surface",
@@ -63,11 +63,11 @@ const allSections: WorkbenchAppearanceSettingsSection[] = [
   "preview",
 ];
 
-export function WorkbenchAppearanceSettings({
+export function AppearanceSettings({
   className,
   labels,
   sections = allSections,
-}: WorkbenchAppearanceSettingsProps) {
+}: AppearanceSettingsProps) {
   const { appearance, palette, patchAppearance, resetAppearance, resolvedMode } =
     useWorkbenchAppearance();
   const visibleSections = new Set(sections);
@@ -245,7 +245,7 @@ function AppearanceField({
 
 function surfaceLabel(
   surface: WorkbenchSurfaceTone,
-  labels?: WorkbenchAppearanceSettingsLabels,
+  labels?: AppearanceSettingsLabels,
 ): ReactNode {
   if (surface === "black") {
     return labels?.black ?? "黑";
@@ -261,3 +261,4 @@ function surfaceLabel(
 
 export type { WorkbenchAppearance };
 export { defaultWorkbenchAppearance };
+
