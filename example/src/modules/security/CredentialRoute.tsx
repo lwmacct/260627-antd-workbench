@@ -19,7 +19,7 @@ export function CredentialRoute({ mode }: { mode: WorkbenchCredentialMode }) {
   const [error, setError] = useState("");
 
   async function submit(values: WorkbenchCredentialSubmitValues) {
-    if (values.challenge.provider !== "image") {
+    if (!values.challenge || values.challenge.provider !== "image") {
       setError(text.security.challengeTypeError);
       return;
     }
@@ -42,6 +42,16 @@ export function CredentialRoute({ mode }: { mode: WorkbenchCredentialMode }) {
 
   return (
     <WorkbenchCredentialScreen
+      config={{
+        challenge: { provider: "image" },
+        local: { loginEnabled: true, registrationEnabled: true },
+        oauth: {
+          providers: [
+            { label: "GitHub", provider: "github" },
+            { label: "Google", provider: "google" },
+          ],
+        },
+      }}
       createImageChallenge={createImageChallenge}
       error={error}
       labels={text.security.credentialLabels}
@@ -60,6 +70,7 @@ export function CredentialRoute({ mode }: { mode: WorkbenchCredentialMode }) {
         <Link to={`/security/${targetMode}`}>{children}</Link>
       )}
       onModeChange={(nextMode) => navigate(`/security/${nextMode}`)}
+      onOAuthLogin={() => navigate(examplePaths.dashboard)}
       onSubmit={submit}
     />
   );

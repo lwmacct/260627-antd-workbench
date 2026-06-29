@@ -2,26 +2,27 @@ import type { ReactNode } from "react";
 
 export type WorkbenchCredentialMode = "login" | "register";
 
-export type WorkbenchChallengeProvider = "image" | "hcaptcha" | "turnstile";
+export type WorkbenchChallengeProvider = "hcaptcha" | "image" | "recaptcha" | "turnstile";
 
-export interface WorkbenchCredentialChallengeConfig {
+export interface WorkbenchChallengeConfig {
   provider: WorkbenchChallengeProvider;
   sitekey?: string;
 }
 
 export interface WorkbenchOAuthProvider {
+  disabled?: boolean;
+  icon?: ReactNode;
   label: ReactNode;
   provider: string;
 }
 
 export interface WorkbenchCredentialConfig {
-  challenge: WorkbenchCredentialChallengeConfig;
-  local: {
-    loginEnabled: boolean;
-    registrationEnabled: boolean;
+  challenge?: false | WorkbenchChallengeConfig;
+  local?: false | {
+    loginEnabled?: boolean;
+    registrationEnabled?: boolean;
   };
-  oauth: {
-    enabled: boolean;
+  oauth?: false | {
     providers: WorkbenchOAuthProvider[];
   };
 }
@@ -33,13 +34,14 @@ export interface WorkbenchImageChallenge {
   provider: "image";
 }
 
-export type WorkbenchCredentialChallengeResponse =
+export type WorkbenchChallengeResponse =
   | { answer: string; challengeId: string; provider: "image" }
   | { provider: "hcaptcha"; token: string }
+  | { provider: "recaptcha"; token: string }
   | { provider: "turnstile"; token: string };
 
 export interface WorkbenchCredentialSubmitValues {
-  challenge: WorkbenchCredentialChallengeResponse;
+  challenge?: WorkbenchChallengeResponse;
   mode: WorkbenchCredentialMode;
   password: string;
   username: string;
@@ -73,8 +75,8 @@ export interface WorkbenchVerificationSubmitValues {
   rememberForMinutes?: number;
 }
 
-export const defaultWorkbenchCredentialConfig: WorkbenchCredentialConfig = {
+export const defaultWorkbenchCredentialConfig: Required<WorkbenchCredentialConfig> = {
   challenge: { provider: "image" },
   local: { loginEnabled: true, registrationEnabled: true },
-  oauth: { enabled: false, providers: [] },
+  oauth: { providers: [] },
 };

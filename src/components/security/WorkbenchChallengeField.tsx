@@ -1,31 +1,31 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { WorkbenchCredentialLabels } from "./labels";
-import { defaultWorkbenchCredentialLabels } from "./labels";
+import type { WorkbenchChallengeFieldLabels } from "./labels";
+import { defaultWorkbenchChallengeFieldLabels } from "./labels";
 import type {
-  WorkbenchCredentialChallengeConfig,
-  WorkbenchCredentialChallengeResponse,
+  WorkbenchChallengeConfig,
+  WorkbenchChallengeResponse,
   WorkbenchImageChallenge,
 } from "./model";
 
 export interface WorkbenchRemoteChallengeRenderProps {
-  config: WorkbenchCredentialChallengeConfig;
+  config: WorkbenchChallengeConfig;
   disabled?: boolean;
-  onChange(challenge?: WorkbenchCredentialChallengeResponse): void;
+  onChange(challenge?: WorkbenchChallengeResponse): void;
   onError(message: string): void;
   resetKey: number;
 }
 
 export interface WorkbenchChallengeFieldProps {
-  config: WorkbenchCredentialChallengeConfig;
-  createImageChallenge(): Promise<WorkbenchImageChallenge>;
+  config: WorkbenchChallengeConfig;
+  createImageChallenge?: () => Promise<WorkbenchImageChallenge>;
   disabled?: boolean;
-  labels?: WorkbenchCredentialLabels;
+  labels?: WorkbenchChallengeFieldLabels;
   renderRemoteChallenge?(props: WorkbenchRemoteChallengeRenderProps): ReactNode;
-  resetKey: number;
-  onChange(challenge?: WorkbenchCredentialChallengeResponse): void;
-  onError(message: string): void;
+  resetKey?: number;
+  onChange(challenge?: WorkbenchChallengeResponse): void;
+  onError?(message: string): void;
 }
 
 export function WorkbenchChallengeField({
@@ -38,7 +38,12 @@ export function WorkbenchChallengeField({
   onChange,
   onError,
 }: WorkbenchChallengeFieldProps) {
-  const mergedLabels = { ...defaultWorkbenchCredentialLabels, ...labels };
+  const mergedLabels = { ...defaultWorkbenchChallengeFieldLabels, ...labels };
+  const resolvedResetKey = resetKey ?? 0;
+
+  const handleError = useCallback((message: string) => {
+    onError?.(message);
+  }, [onError]);
 
   if (config.provider !== "image") {
     if (renderRemoteChallenge) {
@@ -46,8 +51,8 @@ export function WorkbenchChallengeField({
         config,
         disabled,
         onChange,
-        onError,
-        resetKey,
+        onError: handleError,
+        resetKey: resolvedResetKey,
       });
     }
 
@@ -60,14 +65,18 @@ export function WorkbenchChallengeField({
     );
   }
 
+  if (!createImageChallenge) {
+    return <div className="wb-security__remote-challenge">{mergedLabels.captchaCreateFailed}</div>;
+  }
+
   return (
     <ImageChallengeField
       createImageChallenge={createImageChallenge}
       disabled={disabled}
       labels={mergedLabels}
       onChange={onChange}
-      onError={onError}
-      resetKey={resetKey}
+      onError={handleError}
+      resetKey={resolvedResetKey}
     />
   );
 }
@@ -75,9 +84,9 @@ export function WorkbenchChallengeField({
 interface ImageChallengeFieldProps {
   createImageChallenge(): Promise<WorkbenchImageChallenge>;
   disabled?: boolean;
-  labels: Required<WorkbenchCredentialLabels>;
+  labels: Required<WorkbenchChallengeFieldLabels>;
   resetKey: number;
-  onChange(challenge?: WorkbenchCredentialChallengeResponse): void;
+  onChange(challenge?: WorkbenchChallengeResponse): void;
   onError(message: string): void;
 }
 
@@ -138,6 +147,7 @@ function ImageChallengeField({
         className="wb-security__captcha-button"
         disabled={disabled || loading}
         htmlType="button"
+        aria-label={String(labels.refresh)}
         onClick={() => void refresh()}
       >
         {challenge ? <img alt={String(labels.captcha)} src={challenge.image} /> : null}

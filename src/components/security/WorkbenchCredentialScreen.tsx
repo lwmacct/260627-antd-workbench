@@ -1,18 +1,13 @@
-import {
-  GithubOutlined,
-  GoogleOutlined,
-  LockOutlined,
-  LoginOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Card, Divider, Form, Input, Space, Typography } from "antd";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./WorkbenchChallengeField";
+import { WorkbenchOAuthButtons } from "./WorkbenchOAuthButtons";
 import { defaultWorkbenchCredentialLabels, type WorkbenchCredentialLabels } from "./labels";
 import {
   defaultWorkbenchCredentialConfig,
-  type WorkbenchCredentialChallengeResponse,
+  type WorkbenchChallengeResponse,
   type WorkbenchCredentialMode,
   type WorkbenchCredentialConfig,
   type WorkbenchCredentialSubmitValues,
@@ -34,12 +29,12 @@ export interface WorkbenchCredentialModeSwitchRenderProps {
 export interface WorkbenchCredentialScreenProps {
   className?: string;
   config?: WorkbenchCredentialConfig;
-  createImageChallenge(): Promise<WorkbenchImageChallenge>;
+  createImageChallenge?: () => Promise<WorkbenchImageChallenge>;
   error?: ReactNode;
   labels?: WorkbenchCredentialLabels;
   loading?: boolean;
   mode: WorkbenchCredentialMode;
-  oauthIcons?: Record<string, ReactNode>;
+  oauthLoadingProvider?: string;
   panelClassName?: string;
   panelExtra?: ReactNode;
   renderModeSwitch?(props: WorkbenchCredentialModeSwitchRenderProps): ReactNode;
@@ -57,7 +52,7 @@ export function WorkbenchCredentialScreen({
   labels,
   loading = false,
   mode,
-  oauthIcons,
+  oauthLoadingProvider,
   panelClassName,
   panelExtra,
   renderModeSwitch,
@@ -67,14 +62,31 @@ export function WorkbenchCredentialScreen({
   onSubmit,
 }: WorkbenchCredentialScreenProps) {
   const [form] = Form.useForm<CredentialFormValues>();
-  const [challenge, setChallenge] = useState<WorkbenchCredentialChallengeResponse>();
+  const [challenge, setChallenge] = useState<WorkbenchChallengeResponse>();
   const [challengeError, setChallengeError] = useState("");
   const [challengeResetKey, setChallengeResetKey] = useState(0);
-  const mergedLabels = { ...defaultWorkbenchCredentialLabels, ...labels };
+  const mergedLabels = {
+    ...defaultWorkbenchCredentialLabels,
+    ...labels,
+    challenge: {
+      ...defaultWorkbenchCredentialLabels.challenge,
+      ...labels?.challenge,
+    },
+    oauth: {
+      ...defaultWorkbenchCredentialLabels.oauth,
+      ...labels?.oauth,
+    },
+  };
+  const localConfig = config.local === undefined ? defaultWorkbenchCredentialConfig.local : config.local;
+  const oauthConfig = config.oauth === undefined ? defaultWorkbenchCredentialConfig.oauth : config.oauth;
+  const challengeConfig =
+    config.challenge === undefined ? defaultWorkbenchCredentialConfig.challenge : config.challenge;
   const isRegister = mode === "register";
-  const localLoginEnabled = config.local.loginEnabled;
-  const registrationEnabled = config.local.registrationEnabled;
-  const oauthProviders = config.oauth.enabled ? config.oauth.providers : [];
+  const localEnabled = localConfig !== false;
+  const localLoginEnabled = localConfig !== false && localConfig.loginEnabled !== false;
+  const registrationEnabled = localConfig !== false && localConfig.registrationEnabled !== false;
+  const oauthProviders = oauthConfig === false ? [] : oauthConfig.providers;
+  const resolvedChallengeConfig = challengeConfig === false ? undefined : challengeConfig;
   const visibleError = challengeError || error;
 
   const resetChallenge = useCallback(() => {
@@ -89,7 +101,7 @@ export function WorkbenchCredentialScreen({
   }, [form, mode, resetChallenge]);
 
   async function submit(values: CredentialFormValues) {
-    if (!challenge || loading) {
+    if (loading || (resolvedChallengeConfig && !challenge)) {
       return;
     }
 
@@ -149,91 +161,90 @@ export function WorkbenchCredentialScreen({
           <Alert className="wb-security__alert" showIcon title={visibleError} type="error" />
         ) : null}
 
-        {oauthProviders.length > 0 ? (
-          <Space orientation="vertical" className="wb-security__oauth-buttons">
-            {oauthProviders.map((provider) => (
-              <Button
-                key={provider.provider}
-                block
-                icon={oauthIcons?.[provider.provider] ?? defaultOAuthIcon(provider.provider)}
-                onClick={() => onOAuthLogin?.(provider)}
-              >
-                {mergedLabels.oauthLogin(provider.label)}
-              </Button>
-            ))}
-          </Space>
-        ) : null}
+        <WorkbenchOAuthButtons
+          disabled={loading}
+          labels={mergedLabels.oauth}
+          loadingProvider={oauthLoadingProvider}
+          providers={oauthProviders}
+          onSelect={(provider) => onOAuthLogin?.(provider)}
+        />
 
         {oauthProviders.length > 0 && localLoginEnabled ? <Divider plain>或</Divider> : null}
 
-        <Form<CredentialFormValues>
-          form={form}
-          layout="vertical"
-          requiredMark={false}
-          onFinish={(values) => void submit(values)}
-          disabled={!localLoginEnabled}
-        >
-          <Form.Item
-            label={mergedLabels.username}
-            name="username"
-            rules={[{ required: true, message: mergedLabels.usernameRequired }]}
+        {localEnabled ? (
+          <Form<CredentialFormValues>
+            form={form}
+            layout="vertical"
+            requiredMark={false}
+            onFinish={(values) => void submit(values)}
+            disabled={!localLoginEnabled}
           >
-            <Input autoComplete="username" prefix={<UserOutlined />} />
-          </Form.Item>
-          <Form.Item
-            label={mergedLabels.password}
-            name="password"
-            rules={[{ validator: validatePassword }]}
-          >
-            <Input.Password
-              autoComplete={isRegister ? "new-password" : "current-password"}
-              prefix={<LockOutlined />}
-            />
-          </Form.Item>
-          {isRegister ? (
             <Form.Item
-              label={mergedLabels.confirmPassword}
-              name="confirmPassword"
-              rules={[{ required: true, message: mergedLabels.confirmPasswordRequired }]}
+              label={mergedLabels.username}
+              name="username"
+              rules={[{ required: true, message: mergedLabels.usernameRequired }]}
+            >
+              <Input autoComplete="username" prefix={<UserOutlined />} />
+            </Form.Item>
+            <Form.Item
+              label={mergedLabels.password}
+              name="password"
+              rules={[{ validator: validatePassword }]}
             >
               <Input.Password
-                autoComplete="new-password"
-                aria-label={String(mergedLabels.confirmPassword)}
+                autoComplete={isRegister ? "new-password" : "current-password"}
                 prefix={<LockOutlined />}
               />
             </Form.Item>
-          ) : null}
-          <Form.Item label={mergedLabels.captcha} required>
-            <WorkbenchChallengeField
-              config={config.challenge}
-              createImageChallenge={createImageChallenge}
-              disabled={loading}
-              labels={mergedLabels}
-              onChange={setChallenge}
-              onError={setChallengeError}
-              renderRemoteChallenge={renderRemoteChallenge}
-              resetKey={challengeResetKey}
-            />
-          </Form.Item>
-          <Button
-            block
-            disabled={!challenge || (isRegister && !registrationEnabled)}
-            htmlType="submit"
-            loading={loading}
-            type="primary"
-          >
-            {isRegister ? mergedLabels.registerSubmit : mergedLabels.loginSubmit}
-          </Button>
-        </Form>
+            {isRegister ? (
+              <Form.Item
+                label={mergedLabels.confirmPassword}
+                name="confirmPassword"
+                rules={[{ required: true, message: mergedLabels.confirmPasswordRequired }]}
+              >
+                <Input.Password
+                  autoComplete="new-password"
+                  aria-label={String(mergedLabels.confirmPassword)}
+                  prefix={<LockOutlined />}
+                />
+              </Form.Item>
+            ) : null}
+            {resolvedChallengeConfig ? (
+              <Form.Item label={mergedLabels.challenge.captcha} required>
+                <WorkbenchChallengeField
+                  config={resolvedChallengeConfig}
+                  createImageChallenge={createImageChallenge}
+                  disabled={loading}
+                  labels={mergedLabels.challenge}
+                  onChange={setChallenge}
+                  onError={setChallengeError}
+                  renderRemoteChallenge={renderRemoteChallenge}
+                  resetKey={challengeResetKey}
+                />
+              </Form.Item>
+            ) : null}
+            <Button
+              block
+              disabled={(Boolean(resolvedChallengeConfig) && !challenge) || (isRegister && !registrationEnabled)}
+              htmlType="submit"
+              loading={loading}
+              type="primary"
+            >
+              {isRegister ? mergedLabels.registerSubmit : mergedLabels.loginSubmit}
+            </Button>
+          </Form>
+        ) : null}
 
-        {renderStatusOrModeSwitch({
-          isRegister,
-          localLoginEnabled,
-          registrationEnabled,
-          labels: mergedLabels,
-          onModeChange,
-          renderModeSwitch,
-        })}
+        {localEnabled
+          ? renderStatusOrModeSwitch({
+              isRegister,
+              localLoginEnabled,
+              registrationEnabled,
+              labels: mergedLabels,
+              onModeChange,
+              renderModeSwitch,
+            })
+          : null}
       </Card>
     </main>
   );
@@ -287,14 +298,4 @@ function renderStatusOrModeSwitch({
       {switchControl}
     </Typography.Paragraph>
   );
-}
-
-function defaultOAuthIcon(provider: string): ReactNode {
-  if (provider === "github") {
-    return <GithubOutlined />;
-  }
-  if (provider === "google") {
-    return <GoogleOutlined />;
-  }
-  return <LoginOutlined />;
 }

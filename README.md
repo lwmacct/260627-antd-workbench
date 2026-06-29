@@ -83,7 +83,9 @@ import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
 import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
 import {
+  WorkbenchChallengeField,
   WorkbenchCredentialScreen,
+  WorkbenchOAuthButtons,
   WorkbenchVerificationScreen,
 } from "@lwmacct/260627-antd-workbench/security";
 ```
@@ -126,6 +128,8 @@ example/
 | `WorkbenchUserMenu` | 用户头像菜单。 |
 | `WorkbenchCredentialScreen` | 登录/注册身份入口，业务请求和路由由使用方注入。 |
 | `WorkbenchVerificationScreen` | 通用安全验证界面，可用于登录 2FA、重新认证和敏感操作确认。 |
+| `WorkbenchOAuthButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
+| `WorkbenchChallengeField` | 图片验证码和远程 challenge 的通用输入控件。 |
 
 ## 主题变量
 
