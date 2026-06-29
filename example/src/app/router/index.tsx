@@ -1,6 +1,6 @@
 import { Navigate, Outlet, createHashRouter } from "react-router-dom";
-import { authRoutes } from "../../modules/auth/routes";
 import { dashboardRoute } from "../../modules/dashboard/routes";
+import { securityRoutes } from "../../modules/security/routes";
 import { settingsRoutes } from "../../modules/settings/routes";
 import { workspaceRoutes } from "../../modules/workspace/routes";
 import { ExampleShell } from "../shell/ExampleShell";
@@ -15,7 +15,7 @@ export const router = createHashRouter([
         index: true,
         element: <Navigate to={examplePaths.dashboard} replace />,
       },
-      authRoutes,
+      securityRoutes,
       {
         element: <ExampleShell />,
         children: [

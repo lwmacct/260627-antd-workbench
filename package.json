@@ -12,10 +12,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./auth": {
-      "types": "./dist/auth.d.ts",
-      "import": "./dist/auth.js"
-    },
     "./global.css": "./dist/global.css",
     "./navigation": {
       "types": "./dist/navigation.d.ts",
@@ -24,6 +20,10 @@
     "./provider": {
       "types": "./dist/provider.d.ts",
       "import": "./dist/provider.js"
+    },
+    "./security": {
+      "types": "./dist/security.d.ts",
+      "import": "./dist/security.js"
     },
     "./theme": {
       "types": "./dist/theme.d.ts",

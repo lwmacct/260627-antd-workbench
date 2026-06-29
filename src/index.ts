@@ -10,10 +10,14 @@ export {
 } from "./appearance/defaults";
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
 export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
-export { WorkbenchAuthScreen } from "./components/auth/WorkbenchAuthScreen";
-export { WorkbenchChallengeField } from "./components/auth/WorkbenchChallengeField";
-export { defaultWorkbenchAuthLabels } from "./components/auth/labels";
-export { defaultWorkbenchAuthConfig } from "./components/auth/model";
+export { WorkbenchCredentialScreen } from "./components/security/WorkbenchCredentialScreen";
+export { WorkbenchVerificationScreen } from "./components/security/WorkbenchVerificationScreen";
+export { WorkbenchChallengeField } from "./components/security/WorkbenchChallengeField";
+export {
+  defaultWorkbenchCredentialLabels,
+  defaultWorkbenchVerificationLabels,
+} from "./components/security/labels";
+export { defaultWorkbenchCredentialConfig } from "./components/security/model";
 export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";
 export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
 export { WorkbenchCenterState } from "./components/layout/WorkbenchCenterState";
@@ -52,24 +56,32 @@ export type {
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
 export type {
-  WorkbenchAuthModeSwitchRenderProps,
-  WorkbenchAuthScreenProps,
-} from "./components/auth/WorkbenchAuthScreen";
+  WorkbenchCredentialModeSwitchRenderProps,
+  WorkbenchCredentialScreenProps,
+} from "./components/security/WorkbenchCredentialScreen";
+export type { WorkbenchVerificationScreenProps } from "./components/security/WorkbenchVerificationScreen";
 export type {
   WorkbenchChallengeFieldProps,
   WorkbenchRemoteChallengeRenderProps,
-} from "./components/auth/WorkbenchChallengeField";
-export type { WorkbenchAuthLabels } from "./components/auth/labels";
+} from "./components/security/WorkbenchChallengeField";
 export type {
-  WorkbenchAuthChallengeConfig,
-  WorkbenchAuthChallengeResponse,
-  WorkbenchAuthMode,
-  WorkbenchAuthPublicConfig,
-  WorkbenchAuthSubmitValues,
+  WorkbenchCredentialLabels,
+  WorkbenchVerificationLabels,
+} from "./components/security/labels";
+export type {
+  WorkbenchCredentialChallengeConfig,
+  WorkbenchCredentialChallengeResponse,
+  WorkbenchCredentialMode,
+  WorkbenchCredentialConfig,
+  WorkbenchCredentialSubmitValues,
   WorkbenchChallengeProvider,
   WorkbenchImageChallenge,
   WorkbenchOAuthProvider,
-} from "./components/auth/model";
+  WorkbenchVerificationMethod,
+  WorkbenchVerificationPurpose,
+  WorkbenchVerificationRememberOption,
+  WorkbenchVerificationSubmitValues,
+} from "./components/security/model";
 export type {
   WorkbenchLanguageToggleLabels,
   WorkbenchLanguageToggleProps,

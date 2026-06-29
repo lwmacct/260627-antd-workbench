@@ -17,6 +17,10 @@ export default defineConfig({
         replacement: resolve(import.meta.dirname, "src/styles/index.css"),
       },
       {
+        find: `${workbenchName}/security`,
+        replacement: resolve(import.meta.dirname, "src/security.ts"),
+      },
+      {
         find: workbenchName,
         replacement: resolve(import.meta.dirname, "src/index.ts"),
       },

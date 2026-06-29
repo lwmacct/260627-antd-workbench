@@ -5,9 +5,9 @@
     "rootDir": ".",
     "paths": {
       "@lwmacct/260627-antd-workbench": ["./src/index.ts"],
-      "@lwmacct/260627-antd-workbench/auth": ["./src/auth.ts"],
       "@lwmacct/260627-antd-workbench/navigation": ["./src/navigation.ts"],
       "@lwmacct/260627-antd-workbench/provider": ["./src/provider.ts"],
+      "@lwmacct/260627-antd-workbench/security": ["./src/security.ts"],
       "@lwmacct/260627-antd-workbench/theme": ["./src/theme.ts"]
     }
   },

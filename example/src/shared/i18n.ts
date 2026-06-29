@@ -1,13 +1,20 @@
 import {
   useWorkbenchLocale,
   type WorkbenchAppearanceSettingsLabels,
-  type WorkbenchAuthLabels,
+  type WorkbenchCredentialLabels,
+  type WorkbenchVerificationLabels,
 } from "@lwmacct/260627-antd-workbench";
 
 interface ExampleText {
-  auth: {
-    labels: WorkbenchAuthLabels;
+  security: {
+    back: string;
+    backToLogin: string;
     challengeTypeError: string;
+    credentialLabels: WorkbenchCredentialLabels;
+    sensitiveAction: string;
+    verificationDescription(subject?: string): string;
+    verificationLabels: WorkbenchVerificationLabels;
+    verificationRememberMinutes: number;
   };
   dashboard: {
     blocked: string;
@@ -43,8 +50,8 @@ interface ExampleText {
     role: string;
   };
   shell: {
-    auth: string;
     dashboard: string;
+    security: string;
     source: string;
     settings: string;
     workspace: string;
@@ -70,9 +77,23 @@ interface ExampleText {
 }
 
 const zh: ExampleText = {
-  auth: {
+  security: {
+    back: "返回总览",
+    backToLogin: "返回登录",
     challengeTypeError: "验证码类型不匹配",
-    labels: {},
+    credentialLabels: {},
+    sensitiveAction: "敏感操作验证",
+    verificationDescription: (subject) =>
+      subject ? `请输入 ${subject} 的安全验证码。` : "请输入安全验证码以继续操作。",
+    verificationLabels: {
+      code: "动态验证码",
+      codeInvalid: "请输入 6 位数字验证码",
+      codeRequired: "请输入 6 位动态验证码",
+      remember: (minutes) => `未来 ${minutes} 分钟内不再验证`,
+      submit: "验证并继续",
+      title: "安全验证",
+    },
+    verificationRememberMinutes: 30,
   },
   dashboard: {
     blocked: "阻塞",
@@ -108,8 +129,8 @@ const zh: ExampleText = {
     role: "角色",
   },
   shell: {
-    auth: "认证",
     dashboard: "总览",
+    security: "安全",
     settings: "设置",
     source: "源码",
     workspace: "工作区",
@@ -135,9 +156,11 @@ const zh: ExampleText = {
 };
 
 const en: ExampleText = {
-  auth: {
+  security: {
+    back: "Back to dashboard",
+    backToLogin: "Back to sign in",
     challengeTypeError: "Challenge type mismatch",
-    labels: {
+    credentialLabels: {
       captcha: "Captcha",
       captchaCreateFailed: "Failed to create challenge",
       confirmPassword: "Confirm password",
@@ -166,6 +189,20 @@ const en: ExampleText = {
       username: "Username",
       usernameRequired: "Enter your username",
     },
+    sensitiveAction: "Sensitive action verification",
+    verificationDescription: (subject) =>
+      subject
+        ? `Enter the security code for ${subject}.`
+        : "Enter a security code to continue.",
+    verificationLabels: {
+      code: "Authenticator code",
+      codeInvalid: "Enter a 6-digit numeric code",
+      codeRequired: "Enter a 6-digit authenticator code",
+      remember: (minutes) => `Do not ask again for ${minutes} minutes`,
+      submit: "Verify and continue",
+      title: "Security verification",
+    },
+    verificationRememberMinutes: 30,
   },
   dashboard: {
     blocked: "Blocked",
@@ -221,8 +258,8 @@ const en: ExampleText = {
     role: "Role",
   },
   shell: {
-    auth: "Auth",
     dashboard: "Dashboard",
+    security: "Security",
     settings: "Settings",
     source: "Source",
     workspace: "Workspace",

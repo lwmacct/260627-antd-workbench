@@ -82,7 +82,10 @@ import { WorkbenchProvider, WorkbenchShell } from "@lwmacct/260627-antd-workbenc
 import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
 import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
-import { WorkbenchAuthScreen } from "@lwmacct/260627-antd-workbench/auth";
+import {
+  WorkbenchCredentialScreen,
+  WorkbenchVerificationScreen,
+} from "@lwmacct/260627-antd-workbench/security";
 ```
 
 ## 目录结构
@@ -91,9 +94,9 @@ import { WorkbenchAuthScreen } from "@lwmacct/260627-antd-workbench/auth";
 src/
   components/
     account/
-    auth/
     controls/
     layout/
+    security/
     settings/
     shell/
   appearance/
@@ -121,7 +124,8 @@ example/
 | `WorkbenchThemeToggle` | 深浅色切换按钮。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 用户头像菜单。 |
-| `WorkbenchAuthScreen` | 登录/注册界面契约，业务请求和路由由使用方注入。 |
+| `WorkbenchCredentialScreen` | 登录/注册身份入口，业务请求和路由由使用方注入。 |
+| `WorkbenchVerificationScreen` | 通用安全验证界面，可用于登录 2FA、重新认证和敏感操作确认。 |
 
 ## 主题变量
 

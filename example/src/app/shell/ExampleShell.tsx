@@ -19,8 +19,8 @@ import { examplePaths, topNavFromPathname, type TopNavKey } from "../router/navi
 type ShellNav = WorkbenchShellProps["nav"];
 
 const navTargets: Record<TopNavKey, string> = {
-  auth: examplePaths.auth,
   dashboard: examplePaths.dashboard,
+  security: examplePaths.security,
   settings: examplePaths.settings,
   workspace: examplePaths.workspace,
 };
@@ -35,7 +35,7 @@ export function ExampleShell() {
     { icon: <AppstoreOutlined />, key: "dashboard", label: text.shell.dashboard },
     { icon: <ExperimentOutlined />, key: "workspace", label: text.shell.workspace },
     { icon: <SettingOutlined />, key: "settings", label: text.shell.settings },
-    { icon: <LoginOutlined />, key: "auth", label: text.shell.auth },
+    { icon: <LoginOutlined />, key: "security", label: text.shell.security },
   ];
 
   function handleSelectNav(key: string) {

@@ -9,48 +9,49 @@ import { Alert, Button, Card, Divider, Form, Input, Space, Typography } from "an
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./WorkbenchChallengeField";
-import { defaultWorkbenchAuthLabels, type WorkbenchAuthLabels } from "./labels";
+import { defaultWorkbenchCredentialLabels, type WorkbenchCredentialLabels } from "./labels";
 import {
-  defaultWorkbenchAuthConfig,
-  type WorkbenchAuthChallengeResponse,
-  type WorkbenchAuthMode,
-  type WorkbenchAuthPublicConfig,
-  type WorkbenchAuthSubmitValues,
+  defaultWorkbenchCredentialConfig,
+  type WorkbenchCredentialChallengeResponse,
+  type WorkbenchCredentialMode,
+  type WorkbenchCredentialConfig,
+  type WorkbenchCredentialSubmitValues,
   type WorkbenchImageChallenge,
   type WorkbenchOAuthProvider,
 } from "./model";
 
-interface AuthFormValues {
+interface CredentialFormValues {
   confirmPassword?: string;
   password: string;
   username: string;
 }
 
-export interface WorkbenchAuthModeSwitchRenderProps {
+export interface WorkbenchCredentialModeSwitchRenderProps {
   children: ReactNode;
-  targetMode: WorkbenchAuthMode;
+  targetMode: WorkbenchCredentialMode;
 }
 
-export interface WorkbenchAuthScreenProps {
+export interface WorkbenchCredentialScreenProps {
   className?: string;
-  config?: WorkbenchAuthPublicConfig;
+  config?: WorkbenchCredentialConfig;
   createImageChallenge(): Promise<WorkbenchImageChallenge>;
   error?: ReactNode;
-  labels?: WorkbenchAuthLabels;
+  labels?: WorkbenchCredentialLabels;
   loading?: boolean;
-  mode: WorkbenchAuthMode;
+  mode: WorkbenchCredentialMode;
   oauthIcons?: Record<string, ReactNode>;
   panelClassName?: string;
-  renderModeSwitch?(props: WorkbenchAuthModeSwitchRenderProps): ReactNode;
+  panelExtra?: ReactNode;
+  renderModeSwitch?(props: WorkbenchCredentialModeSwitchRenderProps): ReactNode;
   renderRemoteChallenge?(props: WorkbenchRemoteChallengeRenderProps): ReactNode;
-  onModeChange?(mode: WorkbenchAuthMode): void;
+  onModeChange?(mode: WorkbenchCredentialMode): void;
   onOAuthLogin?(provider: WorkbenchOAuthProvider): void;
-  onSubmit(values: WorkbenchAuthSubmitValues): Promise<void> | void;
+  onSubmit(values: WorkbenchCredentialSubmitValues): Promise<void> | void;
 }
 
-export function WorkbenchAuthScreen({
+export function WorkbenchCredentialScreen({
   className,
-  config = defaultWorkbenchAuthConfig,
+  config = defaultWorkbenchCredentialConfig,
   createImageChallenge,
   error,
   labels,
@@ -58,17 +59,18 @@ export function WorkbenchAuthScreen({
   mode,
   oauthIcons,
   panelClassName,
+  panelExtra,
   renderModeSwitch,
   renderRemoteChallenge,
   onModeChange,
   onOAuthLogin,
   onSubmit,
-}: WorkbenchAuthScreenProps) {
-  const [form] = Form.useForm<AuthFormValues>();
-  const [challenge, setChallenge] = useState<WorkbenchAuthChallengeResponse>();
+}: WorkbenchCredentialScreenProps) {
+  const [form] = Form.useForm<CredentialFormValues>();
+  const [challenge, setChallenge] = useState<WorkbenchCredentialChallengeResponse>();
   const [challengeError, setChallengeError] = useState("");
   const [challengeResetKey, setChallengeResetKey] = useState(0);
-  const mergedLabels = { ...defaultWorkbenchAuthLabels, ...labels };
+  const mergedLabels = { ...defaultWorkbenchCredentialLabels, ...labels };
   const isRegister = mode === "register";
   const localLoginEnabled = config.local.loginEnabled;
   const registrationEnabled = config.local.registrationEnabled;
@@ -86,7 +88,7 @@ export function WorkbenchAuthScreen({
     resetChallenge();
   }, [form, mode, resetChallenge]);
 
-  async function submit(values: AuthFormValues) {
+  async function submit(values: CredentialFormValues) {
     if (!challenge || loading) {
       return;
     }
@@ -130,9 +132,11 @@ export function WorkbenchAuthScreen({
   }
 
   return (
-    <main className={cx("wb-auth", className)}>
-      <Card className={cx("wb-auth__panel", panelClassName)}>
-        <Space orientation="vertical" size={4} className="wb-auth__header">
+    <main className={cx("wb-security", className)}>
+      <Card className={cx("wb-security__panel", panelClassName)}>
+        {panelExtra ? <div className="wb-security__panel-extra">{panelExtra}</div> : null}
+
+        <Space orientation="vertical" size={4} className="wb-security__header">
           <Typography.Title level={1}>
             {isRegister ? mergedLabels.registerTitle : mergedLabels.loginTitle}
           </Typography.Title>
@@ -142,11 +146,11 @@ export function WorkbenchAuthScreen({
         </Space>
 
         {visibleError ? (
-          <Alert className="wb-auth__alert" showIcon title={visibleError} type="error" />
+          <Alert className="wb-security__alert" showIcon title={visibleError} type="error" />
         ) : null}
 
         {oauthProviders.length > 0 ? (
-          <Space orientation="vertical" className="wb-auth__oauth-buttons">
+          <Space orientation="vertical" className="wb-security__oauth-buttons">
             {oauthProviders.map((provider) => (
               <Button
                 key={provider.provider}
@@ -162,7 +166,7 @@ export function WorkbenchAuthScreen({
 
         {oauthProviders.length > 0 && localLoginEnabled ? <Divider plain>或</Divider> : null}
 
-        <Form<AuthFormValues>
+        <Form<CredentialFormValues>
           form={form}
           layout="vertical"
           requiredMark={false}
@@ -244,15 +248,15 @@ function renderStatusOrModeSwitch({
   onModeChange,
 }: {
   isRegister: boolean;
-  labels: Required<WorkbenchAuthLabels>;
+  labels: Required<WorkbenchCredentialLabels>;
   localLoginEnabled: boolean;
   registrationEnabled: boolean;
-  renderModeSwitch?: (props: WorkbenchAuthModeSwitchRenderProps) => ReactNode;
-  onModeChange?: (mode: WorkbenchAuthMode) => void;
+  renderModeSwitch?: (props: WorkbenchCredentialModeSwitchRenderProps) => ReactNode;
+  onModeChange?: (mode: WorkbenchCredentialMode) => void;
 }) {
   if (!localLoginEnabled) {
     return (
-      <Typography.Paragraph className="wb-auth__mode-switch" type="secondary">
+      <Typography.Paragraph className="wb-security__mode-switch" type="secondary">
         {labels.disabledLocalLogin}
       </Typography.Paragraph>
     );
@@ -260,13 +264,13 @@ function renderStatusOrModeSwitch({
 
   if (!registrationEnabled) {
     return (
-      <Typography.Paragraph className="wb-auth__mode-switch" type="secondary">
+      <Typography.Paragraph className="wb-security__mode-switch" type="secondary">
         {labels.disabledRegistration}
       </Typography.Paragraph>
     );
   }
 
-  const targetMode: WorkbenchAuthMode = isRegister ? "login" : "register";
+  const targetMode: WorkbenchCredentialMode = isRegister ? "login" : "register";
   const prefix = isRegister ? labels.modeSwitchLoginPrefix : labels.modeSwitchRegisterPrefix;
   const children = isRegister ? labels.modeSwitchLogin : labels.modeSwitchRegister;
   const switchControl = renderModeSwitch ? (
@@ -278,7 +282,7 @@ function renderStatusOrModeSwitch({
   );
 
   return (
-    <Typography.Paragraph className="wb-auth__mode-switch">
+    <Typography.Paragraph className="wb-security__mode-switch">
       {prefix}
       {switchControl}
     </Typography.Paragraph>

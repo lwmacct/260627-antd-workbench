@@ -14,11 +14,11 @@ export default defineConfig({
     cssCodeSplit: true,
     lib: {
       entry: {
-        auth: "src/auth.ts",
         global: "src/styles/global.css",
         index: "src/index.ts",
         navigation: "src/navigation.ts",
         provider: "src/provider.ts",
+        security: "src/security.ts",
         styles: "src/styles/index.css",
         theme: "src/theme.ts",
       },

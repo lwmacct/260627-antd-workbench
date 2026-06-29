@@ -10,7 +10,7 @@
   background: var(--wb-bg);
 }
 
-.wb-auth {
+.wb-security {
   display: grid;
   height: 100vh;
   height: 100dvh;
@@ -22,43 +22,49 @@
   background: var(--wb-bg);
 }
 
-.wb-auth__panel {
+.wb-security__panel {
   width: min(420px, 100%);
   border-color: var(--wb-border);
   background: var(--wb-card-elevated-bg);
 }
 
-.wb-auth__header {
+.wb-security__panel-extra {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.wb-security__header {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.wb-auth__header h1 {
+.wb-security__header h1 {
   margin: 0;
   font-size: 24px;
 }
 
-.wb-auth__alert {
+.wb-security__alert {
   margin-bottom: 16px;
 }
 
-.wb-auth__oauth-buttons {
+.wb-security__oauth-buttons {
   width: 100%;
   margin-bottom: 16px;
 }
 
-.wb-auth__mode-switch {
+.wb-security__mode-switch {
   margin: 16px 0 0;
   text-align: center;
 }
 
-.wb-auth__mode-switch a,
-.wb-auth__mode-switch .ant-btn-link {
+.wb-security__mode-switch a,
+.wb-security__mode-switch .ant-btn-link {
   margin-left: 6px;
   padding: 0;
 }
 
-.wb-auth__captcha-row {
+.wb-security__captcha-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 150px;
   overflow: hidden;
@@ -67,21 +73,21 @@
   background: var(--wb-card-elevated-bg);
 }
 
-.wb-auth__captcha-row:focus-within {
+.wb-security__captcha-row:focus-within {
   border-color: var(--wb-accent);
 }
 
-.wb-auth__captcha-input {
+.wb-security__captcha-input {
   min-width: 0;
   border: 0;
   border-radius: 0 !important;
 }
 
-.wb-auth__captcha-input .ant-input {
+.wb-security__captcha-input .ant-input {
   border: 0;
 }
 
-.wb-auth__captcha-button {
+.wb-security__captcha-button {
   width: 150px;
   height: 32px;
   padding: 0;
@@ -91,15 +97,14 @@
   background: var(--wb-panel-muted-bg, var(--wb-card-muted-bg));
 }
 
-.wb-auth__captcha-button img {
+.wb-security__captcha-button img {
   display: block;
   width: 100%;
   height: 32px;
   object-fit: cover;
 }
 
-.wb-auth__remote-challenge {
+.wb-security__remote-challenge {
   min-height: 32px;
   color: var(--wb-text-muted);
 }
-

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export interface WorkbenchAuthLabels {
+export interface WorkbenchCredentialLabels {
   captcha?: ReactNode;
   captchaCreateFailed?: string;
   confirmPassword?: ReactNode;
@@ -30,7 +30,20 @@ export interface WorkbenchAuthLabels {
   usernameRequired?: string;
 }
 
-export const defaultWorkbenchAuthLabels: Required<WorkbenchAuthLabels> = {
+export interface WorkbenchVerificationLabels {
+  back?: ReactNode;
+  code?: ReactNode;
+  codeInvalid?: string;
+  codeRequired?: string;
+  description?: ReactNode;
+  remember?: ReactNode | ((minutes: number) => ReactNode);
+  submit?: ReactNode;
+  title?: ReactNode;
+  useAnotherMethod?: ReactNode;
+  useRecoveryCode?: ReactNode;
+}
+
+export const defaultWorkbenchCredentialLabels: Required<WorkbenchCredentialLabels> = {
   captcha: "验证码",
   captchaCreateFailed: "认证挑战生成失败",
   confirmPassword: "确认密码",
@@ -58,4 +71,17 @@ export const defaultWorkbenchAuthLabels: Required<WorkbenchAuthLabels> = {
   remoteChallengeUnsupported: "远程验证码需要业务应用提供适配器",
   username: "用户名",
   usernameRequired: "请输入用户名",
+};
+
+export const defaultWorkbenchVerificationLabels: Required<WorkbenchVerificationLabels> = {
+  back: "返回",
+  code: "验证码",
+  codeInvalid: "请输入有效验证码",
+  codeRequired: "请输入验证码",
+  description: "请输入安全验证码以继续操作。",
+  remember: (minutes) => `未来 ${minutes} 分钟内不再验证`,
+  submit: "验证并继续",
+  title: "安全验证",
+  useAnotherMethod: "使用其他验证方式",
+  useRecoveryCode: "使用恢复码",
 };

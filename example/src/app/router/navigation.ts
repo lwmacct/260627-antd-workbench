@@ -1,15 +1,15 @@
 export const examplePaths = {
-  auth: "/auth/login",
   dashboard: "/dashboard",
+  security: "/security/login",
   settings: "/settings/appearance",
   workspace: "/workspace/services",
 } as const;
 
-export type TopNavKey = "auth" | "dashboard" | "settings" | "workspace";
+export type TopNavKey = "dashboard" | "security" | "settings" | "workspace";
 
 export function topNavFromPathname(pathname: string): TopNavKey {
-  if (pathname.startsWith("/auth")) {
-    return "auth";
+  if (pathname.startsWith("/security")) {
+    return "security";
   }
   if (pathname.startsWith("/settings")) {
     return "settings";
