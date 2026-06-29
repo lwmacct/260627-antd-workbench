@@ -1,24 +1,32 @@
 import { useState } from "react";
 import {
   WorkbenchAuthScreen,
+  type WorkbenchAuthMode,
   type WorkbenchAuthSubmitValues,
   type WorkbenchImageChallenge,
 } from "@lwmacct/260627-antd-workbench";
+import { Link, useNavigate } from "react-router-dom";
+import { useExampleText } from "../../shared/i18n";
 
-export function AuthPreviewPage() {
-  const [mode, setMode] = useState<"login" | "register">("login");
+export function AuthRoute({ mode }: { mode: WorkbenchAuthMode }) {
+  const text = useExampleText();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
 
   async function submit(values: WorkbenchAuthSubmitValues) {
-    setError(values.challenge.provider === "image" ? "" : "验证码类型不匹配");
+    setError(values.challenge.provider === "image" ? "" : text.auth.challengeTypeError);
   }
 
   return (
     <WorkbenchAuthScreen
       createImageChallenge={createImageChallenge}
       error={error}
+      labels={text.auth.labels}
       mode={mode}
-      onModeChange={setMode}
+      renderModeSwitch={({ children, targetMode }) => (
+        <Link to={`/auth/${targetMode}`}>{children}</Link>
+      )}
+      onModeChange={(nextMode) => navigate(`/auth/${nextMode}`)}
       onSubmit={submit}
     />
   );
