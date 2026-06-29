@@ -2,7 +2,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useState } from "react";
 import {
-  WorkbenchCredentialScreen,
+  WorkbenchCredentialPage,
   type WorkbenchCredentialMode,
   type WorkbenchCredentialSubmitValues,
   type WorkbenchImageChallenge,
@@ -41,7 +41,7 @@ export function CredentialRoute({ mode }: { mode: WorkbenchCredentialMode }) {
   }
 
   return (
-    <WorkbenchCredentialScreen
+    <WorkbenchCredentialPage
       config={{
         challenge: { provider: "image" },
         local: { loginEnabled: true, registrationEnabled: true },

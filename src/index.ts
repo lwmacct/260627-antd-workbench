@@ -10,7 +10,10 @@ export {
 } from "./appearance/defaults";
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
 export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
-export { WorkbenchCredentialScreen } from "./components/security/WorkbenchCredentialScreen";
+export { WorkbenchCredentialDrawer } from "./components/security/WorkbenchCredentialDrawer";
+export { WorkbenchCredentialForm } from "./components/security/WorkbenchCredentialForm";
+export { WorkbenchCredentialModal } from "./components/security/WorkbenchCredentialModal";
+export { WorkbenchCredentialPage } from "./components/security/WorkbenchCredentialPage";
 export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
 export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
 export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
@@ -65,10 +68,13 @@ export type {
   WorkbenchUserMenuLabels,
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
+export type { WorkbenchCredentialDrawerProps } from "./components/security/WorkbenchCredentialDrawer";
 export type {
   WorkbenchCredentialModeSwitchRenderProps,
-  WorkbenchCredentialScreenProps,
-} from "./components/security/WorkbenchCredentialScreen";
+  WorkbenchCredentialFormProps,
+} from "./components/security/WorkbenchCredentialForm";
+export type { WorkbenchCredentialModalProps } from "./components/security/WorkbenchCredentialModal";
+export type { WorkbenchCredentialPageProps } from "./components/security/WorkbenchCredentialPage";
 export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
 export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
 export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";

@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Alert, Button, Card, Divider, Form, Input, Space, Typography } from "antd";
+import { Alert, Button, Divider, Form, Input, Space, Typography } from "antd";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./WorkbenchChallengeField";
@@ -26,7 +26,7 @@ export interface WorkbenchCredentialModeSwitchRenderProps {
   targetMode: WorkbenchCredentialMode;
 }
 
-export interface WorkbenchCredentialScreenProps {
+export interface WorkbenchCredentialFormProps {
   className?: string;
   config?: WorkbenchCredentialConfig;
   createImageChallenge?: () => Promise<WorkbenchImageChallenge>;
@@ -35,8 +35,6 @@ export interface WorkbenchCredentialScreenProps {
   loading?: boolean;
   mode: WorkbenchCredentialMode;
   oauthLoadingProvider?: string;
-  panelClassName?: string;
-  panelExtra?: ReactNode;
   renderModeSwitch?(props: WorkbenchCredentialModeSwitchRenderProps): ReactNode;
   renderRemoteChallenge?(props: WorkbenchRemoteChallengeRenderProps): ReactNode;
   onModeChange?(mode: WorkbenchCredentialMode): void;
@@ -44,7 +42,7 @@ export interface WorkbenchCredentialScreenProps {
   onSubmit(values: WorkbenchCredentialSubmitValues): Promise<void> | void;
 }
 
-export function WorkbenchCredentialScreen({
+export function WorkbenchCredentialForm({
   className,
   config = defaultWorkbenchCredentialConfig,
   createImageChallenge,
@@ -53,14 +51,12 @@ export function WorkbenchCredentialScreen({
   loading = false,
   mode,
   oauthLoadingProvider,
-  panelClassName,
-  panelExtra,
   renderModeSwitch,
   renderRemoteChallenge,
   onModeChange,
   onOAuthLogin,
   onSubmit,
-}: WorkbenchCredentialScreenProps) {
+}: WorkbenchCredentialFormProps) {
   const [form] = Form.useForm<CredentialFormValues>();
   const [challenge, setChallenge] = useState<WorkbenchChallengeResponse>();
   const [challengeError, setChallengeError] = useState("");
@@ -144,109 +140,106 @@ export function WorkbenchCredentialScreen({
   }
 
   return (
-    <main className={cx("wb-security", className)}>
-      <Card className={cx("wb-security__panel", panelClassName)}>
-        {panelExtra ? <div className="wb-security__panel-extra">{panelExtra}</div> : null}
+    <div className={cx("wb-security-form", className)}>
+      <Space orientation="vertical" size={4} className="wb-security__header">
+        <Typography.Title level={1}>
+          {isRegister ? mergedLabels.registerTitle : mergedLabels.loginTitle}
+        </Typography.Title>
+        <Typography.Text type="secondary">
+          {isRegister ? mergedLabels.registerDescription : mergedLabels.loginDescription}
+        </Typography.Text>
+      </Space>
 
-        <Space orientation="vertical" size={4} className="wb-security__header">
-          <Typography.Title level={1}>
-            {isRegister ? mergedLabels.registerTitle : mergedLabels.loginTitle}
-          </Typography.Title>
-          <Typography.Text type="secondary">
-            {isRegister ? mergedLabels.registerDescription : mergedLabels.loginDescription}
-          </Typography.Text>
-        </Space>
+      {visibleError ? (
+        <Alert className="wb-security__alert" showIcon title={visibleError} type="error" />
+      ) : null}
 
-        {visibleError ? (
-          <Alert className="wb-security__alert" showIcon title={visibleError} type="error" />
-        ) : null}
+      <WorkbenchOAuthButtons
+        disabled={loading}
+        labels={mergedLabels.oauth}
+        loadingProvider={oauthLoadingProvider}
+        providers={oauthProviders}
+        onSelect={(provider) => onOAuthLogin?.(provider)}
+      />
 
-        <WorkbenchOAuthButtons
-          disabled={loading}
-          labels={mergedLabels.oauth}
-          loadingProvider={oauthLoadingProvider}
-          providers={oauthProviders}
-          onSelect={(provider) => onOAuthLogin?.(provider)}
-        />
+      {oauthProviders.length > 0 && localLoginEnabled ? <Divider plain>或</Divider> : null}
 
-        {oauthProviders.length > 0 && localLoginEnabled ? <Divider plain>或</Divider> : null}
-
-        {localEnabled ? (
-          <Form<CredentialFormValues>
-            form={form}
-            layout="vertical"
-            requiredMark={false}
-            onFinish={(values) => void submit(values)}
-            disabled={!localLoginEnabled}
+      {localEnabled ? (
+        <Form<CredentialFormValues>
+          clearOnDestroy
+          disabled={!localLoginEnabled}
+          form={form}
+          layout="vertical"
+          requiredMark={false}
+          onFinish={(values) => void submit(values)}
+        >
+          <Form.Item
+            label={mergedLabels.username}
+            name="username"
+            rules={[{ required: true, message: mergedLabels.usernameRequired }]}
           >
+            <Input autoComplete="username" prefix={<UserOutlined />} />
+          </Form.Item>
+          <Form.Item
+            label={mergedLabels.password}
+            name="password"
+            rules={[{ validator: validatePassword }]}
+          >
+            <Input.Password
+              autoComplete={isRegister ? "new-password" : "current-password"}
+              prefix={<LockOutlined />}
+            />
+          </Form.Item>
+          {isRegister ? (
             <Form.Item
-              label={mergedLabels.username}
-              name="username"
-              rules={[{ required: true, message: mergedLabels.usernameRequired }]}
-            >
-              <Input autoComplete="username" prefix={<UserOutlined />} />
-            </Form.Item>
-            <Form.Item
-              label={mergedLabels.password}
-              name="password"
-              rules={[{ validator: validatePassword }]}
+              label={mergedLabels.confirmPassword}
+              name="confirmPassword"
+              rules={[{ required: true, message: mergedLabels.confirmPasswordRequired }]}
             >
               <Input.Password
-                autoComplete={isRegister ? "new-password" : "current-password"}
+                autoComplete="new-password"
+                aria-label={String(mergedLabels.confirmPassword)}
                 prefix={<LockOutlined />}
               />
             </Form.Item>
-            {isRegister ? (
-              <Form.Item
-                label={mergedLabels.confirmPassword}
-                name="confirmPassword"
-                rules={[{ required: true, message: mergedLabels.confirmPasswordRequired }]}
-              >
-                <Input.Password
-                  autoComplete="new-password"
-                  aria-label={String(mergedLabels.confirmPassword)}
-                  prefix={<LockOutlined />}
-                />
-              </Form.Item>
-            ) : null}
-            {resolvedChallengeConfig ? (
-              <Form.Item label={mergedLabels.challenge.captcha} required>
-                <WorkbenchChallengeField
-                  config={resolvedChallengeConfig}
-                  createImageChallenge={createImageChallenge}
-                  disabled={loading}
-                  labels={mergedLabels.challenge}
-                  onChange={setChallenge}
-                  onError={setChallengeError}
-                  renderRemoteChallenge={renderRemoteChallenge}
-                  resetKey={challengeResetKey}
-                />
-              </Form.Item>
-            ) : null}
-            <Button
-              block
-              disabled={(Boolean(resolvedChallengeConfig) && !challenge) || (isRegister && !registrationEnabled)}
-              htmlType="submit"
-              loading={loading}
-              type="primary"
-            >
-              {isRegister ? mergedLabels.registerSubmit : mergedLabels.loginSubmit}
-            </Button>
-          </Form>
-        ) : null}
+          ) : null}
+          {resolvedChallengeConfig ? (
+            <Form.Item label={mergedLabels.challenge.captcha} required>
+              <WorkbenchChallengeField
+                config={resolvedChallengeConfig}
+                createImageChallenge={createImageChallenge}
+                disabled={loading}
+                labels={mergedLabels.challenge}
+                onChange={setChallenge}
+                onError={setChallengeError}
+                renderRemoteChallenge={renderRemoteChallenge}
+                resetKey={challengeResetKey}
+              />
+            </Form.Item>
+          ) : null}
+          <Button
+            block
+            disabled={(Boolean(resolvedChallengeConfig) && !challenge) || (isRegister && !registrationEnabled)}
+            htmlType="submit"
+            loading={loading}
+            type="primary"
+          >
+            {isRegister ? mergedLabels.registerSubmit : mergedLabels.loginSubmit}
+          </Button>
+        </Form>
+      ) : null}
 
-        {localEnabled
-          ? renderStatusOrModeSwitch({
-              isRegister,
-              localLoginEnabled,
-              registrationEnabled,
-              labels: mergedLabels,
-              onModeChange,
-              renderModeSwitch,
-            })
-          : null}
-      </Card>
-    </main>
+      {localEnabled
+        ? renderStatusOrModeSwitch({
+            isRegister,
+            localLoginEnabled,
+            registrationEnabled,
+            labels: mergedLabels,
+            onModeChange,
+            renderModeSwitch,
+          })
+        : null}
+    </div>
   );
 }
 

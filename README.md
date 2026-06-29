@@ -84,7 +84,8 @@ import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
 import {
   WorkbenchChallengeField,
-  WorkbenchCredentialScreen,
+  WorkbenchCredentialModal,
+  WorkbenchCredentialPage,
   WorkbenchOAuthButtons,
   WorkbenchVerificationModal,
   WorkbenchVerificationPage,
@@ -129,7 +130,10 @@ example/
 | `WorkbenchThemeToggle` | 深浅色切换按钮。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 用户头像菜单。 |
-| `WorkbenchCredentialScreen` | 登录/注册身份入口，业务请求和路由由使用方注入。 |
+| `WorkbenchCredentialForm` | 登录/注册纯表单，不绑定页面、弹窗或路由。 |
+| `WorkbenchCredentialPage` | 全屏登录/注册页。 |
+| `WorkbenchCredentialModal` | 弹窗登录/注册容器。 |
+| `WorkbenchCredentialDrawer` | 抽屉登录/注册容器。 |
 | `WorkbenchVerificationForm` | 通用安全验证纯表单，不绑定页面、弹窗或路由。 |
 | `WorkbenchVerificationPage` | 全屏安全验证页，可用于登录 2FA 路由。 |
 | `WorkbenchVerificationModal` | 弹窗安全验证容器，适合任意页面内触发。 |
