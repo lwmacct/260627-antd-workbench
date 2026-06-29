@@ -16,9 +16,13 @@ export function createWorkbenchCssVars(palette: WorkbenchPalette): Record<string
     "--app-card-muted-bg": palette.panelMuted,
     "--app-danger": palette.danger,
     "--app-header-bg": palette.header,
+    "--app-header-border": palette.border,
+    "--app-header-edge": palette.borderSoft,
     "--app-hover-bg": palette.hover,
     "--app-input-bg": palette.input,
     "--app-panel-muted-bg": palette.panelMuted,
+    "--app-nav-active-bg": palette.accentSofter,
+    "--app-nav-indicator": palette.accent,
     "--app-sidebar-bg": palette.sidebar,
     "--app-success": palette.success,
     "--app-text": palette.text,
@@ -30,4 +34,3 @@ export function createWorkbenchCssVars(palette: WorkbenchPalette): Record<string
     "--app-workbench-bg": palette.workbench,
   };
 }
-
