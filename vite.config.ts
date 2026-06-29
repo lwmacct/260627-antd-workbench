@@ -14,9 +14,13 @@ export default defineConfig({
     cssCodeSplit: true,
     lib: {
       entry: {
+        auth: "src/auth.ts",
         global: "src/styles/global.css",
         index: "src/index.ts",
-        styles: "src/styles/styles.css",
+        navigation: "src/navigation.ts",
+        provider: "src/provider.ts",
+        styles: "src/styles/index.css",
+        theme: "src/theme.ts",
       },
       formats: ["es"],
       fileName: (_, entryName) => `${entryName}.js`,

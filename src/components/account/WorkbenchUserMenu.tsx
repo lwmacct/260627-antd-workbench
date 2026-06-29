@@ -6,7 +6,7 @@ import {
 import { Avatar, Button, Dropdown, type MenuProps } from "antd";
 import type { ReactNode } from "react";
 
-export interface UserMenuLabels {
+export interface WorkbenchUserMenuLabels {
   account?: ReactNode;
   menu?: string;
   logout?: ReactNode;
@@ -20,21 +20,21 @@ export interface WorkbenchUser {
   username?: ReactNode;
 }
 
-export interface UserMenuProps {
+export interface WorkbenchUserMenuProps {
   items?: MenuProps["items"];
-  labels?: UserMenuLabels;
+  labels?: WorkbenchUserMenuLabels;
   user?: WorkbenchUser;
   onOpenAccount?(): void;
   onLogout?(): void;
 }
 
-export function UserMenu({
+export function WorkbenchUserMenu({
   items,
   labels,
   user,
   onOpenAccount,
   onLogout,
-}: UserMenuProps) {
+}: WorkbenchUserMenuProps) {
   const displayName = user?.name ?? user?.username ?? labels?.unnamedUser ?? "未命名用户";
   const menuItems: MenuProps["items"] = [
     {
@@ -74,7 +74,7 @@ export function UserMenu({
     <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={["click"]}>
       <Button aria-label={labels?.menu ?? "用户菜单"} shape="circle" type="text">
         {user?.avatar ?? (
-          <Avatar size={28} style={{ background: "var(--app-accent)" }}>
+          <Avatar size={28} style={{ background: "var(--wb-accent)" }}>
             {user?.initials ?? toInitial(displayName)}
           </Avatar>
         )}

@@ -1,0 +1,59 @@
+.example-panel {
+  margin-top: 12px;
+}
+
+.example-health {
+  width: 100%;
+}
+
+.example-metric .ant-card-body {
+  padding: 18px;
+}
+
+.example-metric h2.ant-typography {
+  margin: 2px 0 0;
+}
+
+.example-metric__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: var(--wb-control-radius, 6px);
+  background: var(--wb-accent-softer);
+  color: var(--wb-accent-hover);
+  font-size: 18px;
+}
+
+.example-sidebar {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.example-sidebar__list {
+  display: grid;
+  gap: 4px;
+}
+
+.example-sidebar__list button {
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: var(--wb-control-radius, 6px);
+  background: transparent;
+  color: var(--wb-text-secondary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.example-sidebar__active {
+  background: var(--wb-accent-soft);
+  color: var(--wb-text-strong) !important;
+}
+
+.example-workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}

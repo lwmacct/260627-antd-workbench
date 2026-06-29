@@ -5,18 +5,18 @@ import {
   defaultWorkbenchAppearance,
   workbenchAccentPresets,
   workbenchSurfaceTones,
-} from "./defaults";
+} from "../../appearance/defaults";
 import type {
   WorkbenchAppearance,
   WorkbenchDensity,
   WorkbenchSurfaceTone,
   WorkbenchThemeMode,
-} from "./model";
-import { useWorkbenchAppearance } from "./AppearanceProvider";
-import { cx } from "../internal/cx";
-import { workbenchSchemes } from "../theme/schemes";
+} from "../../appearance/model";
+import { useWorkbenchAppearance } from "../../provider/WorkbenchProvider";
+import { cx } from "../../shared/cx";
+import { workbenchSchemes } from "../../theme/schemes";
 
-export type AppearanceSettingsSection =
+export type WorkbenchAppearanceSettingsSection =
   | "accent"
   | "density"
   | "mode"
@@ -25,7 +25,7 @@ export type AppearanceSettingsSection =
   | "scheme"
   | "surface";
 
-export interface AppearanceSettingsLabels {
+export interface WorkbenchAppearanceSettingsLabels {
   accent?: ReactNode;
   black?: ReactNode;
   compact?: ReactNode;
@@ -47,13 +47,13 @@ export interface AppearanceSettingsLabels {
   tinted?: ReactNode;
 }
 
-export interface AppearanceSettingsProps {
+export interface WorkbenchAppearanceSettingsProps {
   className?: string;
-  labels?: AppearanceSettingsLabels;
-  sections?: AppearanceSettingsSection[];
+  labels?: WorkbenchAppearanceSettingsLabels;
+  sections?: WorkbenchAppearanceSettingsSection[];
 }
 
-const allSections: AppearanceSettingsSection[] = [
+const allSections: WorkbenchAppearanceSettingsSection[] = [
   "mode",
   "scheme",
   "surface",
@@ -63,11 +63,11 @@ const allSections: AppearanceSettingsSection[] = [
   "preview",
 ];
 
-export function AppearanceSettings({
+export function WorkbenchAppearanceSettings({
   className,
   labels,
   sections = allSections,
-}: AppearanceSettingsProps) {
+}: WorkbenchAppearanceSettingsProps) {
   const { appearance, palette, patchAppearance, resetAppearance, resolvedMode } =
     useWorkbenchAppearance();
   const visibleSections = new Set(sections);
@@ -245,7 +245,7 @@ function AppearanceField({
 
 function surfaceLabel(
   surface: WorkbenchSurfaceTone,
-  labels?: AppearanceSettingsLabels,
+  labels?: WorkbenchAppearanceSettingsLabels,
 ): ReactNode {
   if (surface === "black") {
     return labels?.black ?? "黑";

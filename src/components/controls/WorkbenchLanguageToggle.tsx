@@ -1,24 +1,24 @@
 import { GlobalOutlined } from "@ant-design/icons";
 import { Button, Tooltip } from "antd";
 import type { ReactNode } from "react";
-import { useWorkbenchLocale } from "../locale/context";
-import type { WorkbenchLocaleOption } from "../locale/model";
+import { useWorkbenchLocale } from "../../locale/context";
+import type { WorkbenchLocaleOption } from "../../locale/model";
 
-export interface LanguageToggleLabels {
+export interface WorkbenchLanguageToggleLabels {
   switchLanguage?: ReactNode;
 }
 
-export interface LanguageToggleProps {
+export interface WorkbenchLanguageToggleProps {
   iconOnly?: boolean;
-  labels?: LanguageToggleLabels;
+  labels?: WorkbenchLanguageToggleLabels;
   options?: WorkbenchLocaleOption[];
 }
 
-export function LanguageToggle({
+export function WorkbenchLanguageToggle({
   iconOnly = false,
   labels,
   options: localOptions,
-}: LanguageToggleProps) {
+}: WorkbenchLanguageToggleProps) {
   const { locale, options: contextOptions, setLocale, toggleLocale } = useWorkbenchLocale();
   const options = localOptions ?? contextOptions;
   const current = options.find((option) => option.value === locale);

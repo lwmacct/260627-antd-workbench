@@ -7,8 +7,8 @@ import {
 } from "@ant-design/icons";
 import { Alert, Button, Card, Divider, Form, Input, Space, Typography } from "antd";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { cx } from "../internal/cx";
-import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./ChallengeField";
+import { cx } from "../../shared/cx";
+import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./WorkbenchChallengeField";
 import { defaultWorkbenchAuthLabels, type WorkbenchAuthLabels } from "./labels";
 import {
   defaultWorkbenchAuthConfig,

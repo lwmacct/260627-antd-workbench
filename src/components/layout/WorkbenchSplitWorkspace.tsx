@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
-import { cx } from "../internal/cx";
+import { cx } from "../../shared/cx";
 
-export interface SplitWorkspaceProps {
+export interface WorkbenchSplitWorkspaceProps {
   children: ReactNode;
   className?: string;
   collapseOnMobile?: boolean;
@@ -13,7 +13,7 @@ export interface SplitWorkspaceProps {
   viewportClassName?: string;
 }
 
-export function SplitWorkspace({
+export function WorkbenchSplitWorkspace({
   children,
   className,
   collapseOnMobile = true,
@@ -23,7 +23,7 @@ export function SplitWorkspace({
   sidebarPlacement = "start",
   sidebarWidth = 220,
   viewportClassName,
-}: SplitWorkspaceProps) {
+}: WorkbenchSplitWorkspaceProps) {
   const style = {
     "--wb-split-sidebar-width": toCssSize(sidebarWidth),
   } as CSSProperties;

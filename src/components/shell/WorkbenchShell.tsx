@@ -1,10 +1,10 @@
 import { Layout } from "antd";
 import type { ReactNode } from "react";
-import { cx } from "../internal/cx";
-import type { WorkbenchNavEntry } from "../navigation/model";
-import { Header, type WorkbenchBrand } from "./Header";
+import { cx } from "../../shared/cx";
+import type { WorkbenchNavEntry } from "../../navigation/model";
+import { WorkbenchHeader, type WorkbenchBrand } from "./WorkbenchHeader";
 
-export interface AppShellProps {
+export interface WorkbenchShellProps {
   actions?: ReactNode;
   brand: WorkbenchBrand;
   children: ReactNode;
@@ -17,7 +17,7 @@ export interface AppShellProps {
   onSelectNav(key: string): void;
 }
 
-export function AppShell({
+export function WorkbenchShell({
   actions,
   brand,
   children,
@@ -28,10 +28,10 @@ export function AppShell({
   selectedNavKey,
   selectedNavKeys,
   onSelectNav,
-}: AppShellProps) {
+}: WorkbenchShellProps) {
   return (
     <Layout className={cx("wb-shell", className)}>
-      <Header
+      <WorkbenchHeader
         actions={actions}
         brand={brand}
         nav={nav}

@@ -1,10 +1,10 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu } from "antd";
 import type { ReactNode } from "react";
-import { cx } from "../internal/cx";
-import { getNavItemLabel } from "../navigation/find";
-import type { WorkbenchNavEntry } from "../navigation/model";
-import { toAntdMenuItems } from "../navigation/toAntdMenu";
+import { cx } from "../../shared/cx";
+import { getNavItemLabel } from "../../navigation/find";
+import type { WorkbenchNavEntry } from "../../navigation/model";
+import { toAntdMenuItems } from "../../navigation/toAntdMenu";
 
 export interface WorkbenchBrand {
   ariaLabel?: string;
@@ -14,7 +14,7 @@ export interface WorkbenchBrand {
   version?: string;
 }
 
-export interface HeaderProps {
+export interface WorkbenchHeaderProps {
   actions?: ReactNode;
   brand: WorkbenchBrand;
   className?: string;
@@ -26,7 +26,7 @@ export interface HeaderProps {
   onSelectNav(key: string): void;
 }
 
-export function Header({
+export function WorkbenchHeader({
   actions,
   brand,
   className,
@@ -36,7 +36,7 @@ export function Header({
   selectedNavKey,
   selectedNavKeys,
   onSelectNav,
-}: HeaderProps) {
+}: WorkbenchHeaderProps) {
   const selectedKeys = selectedNavKeys ?? (selectedNavKey ? [selectedNavKey] : []);
   const selectedKey = selectedKeys[0] ?? "";
   const menuItems = toAntdMenuItems(nav);

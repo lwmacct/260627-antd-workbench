@@ -14,9 +14,9 @@ import type {
   WorkbenchAppearancePatch,
   WorkbenchResolvedThemeMode,
   WorkbenchThemeMode,
-} from "./model";
-import { normalizeWorkbenchAppearance } from "./normalize";
-import { resolveInitialAppearance, writeStoredAppearance } from "./storage";
+} from "../appearance/model";
+import { normalizeWorkbenchAppearance } from "../appearance/normalize";
+import { resolveInitialAppearance, writeStoredAppearance } from "../appearance/storage";
 import { WorkbenchLocaleContext } from "../locale/context";
 import type {
   WorkbenchLocaleContextValue,
@@ -29,14 +29,14 @@ import { createWorkbenchCssVars } from "../theme/cssVars";
 import type { WorkbenchPalette } from "../theme/model";
 import { createWorkbenchPalette } from "../theme/palette";
 
-export interface WorkbenchAppearanceOptions {
+export interface WorkbenchAppearanceProviderOptions {
   defaultValue?: WorkbenchAppearancePatch;
   rootElement?: HTMLElement | null;
   storageKey?: false | string;
   onChange?(appearance: WorkbenchAppearance): void;
 }
 
-export interface WorkbenchAntdOptions {
+export interface WorkbenchAntdProviderOptions {
   app?: boolean | Omit<AntdAppProps, "children">;
   config?: Omit<ConfigProviderProps, "children" | "locale" | "theme">;
   locale?: ConfigProviderProps["locale"];
@@ -44,9 +44,9 @@ export interface WorkbenchAntdOptions {
   theme?: ThemeConfig;
 }
 
-export interface WorkbenchRootProps {
-  antd?: WorkbenchAntdOptions;
-  appearance?: WorkbenchAppearanceOptions;
+export interface WorkbenchProviderProps {
+  antd?: WorkbenchAntdProviderOptions;
+  appearance?: WorkbenchAppearanceProviderOptions;
   children: ReactNode;
   locale?: WorkbenchLocaleOptions;
   withAntdApp?: boolean;
@@ -66,13 +66,13 @@ export interface WorkbenchAppearanceContextValue {
 
 const WorkbenchAppearanceContext = createContext<WorkbenchAppearanceContextValue | null>(null);
 
-export function WorkbenchRoot({
+export function WorkbenchProvider({
   antd,
   appearance: appearanceOptions,
   children,
   locale: localeOptions,
   withAntdApp = true,
-}: WorkbenchRootProps) {
+}: WorkbenchProviderProps) {
   const storageKey = appearanceOptions?.storageKey ?? "workbench.appearance";
   const rootElement = appearanceOptions?.rootElement;
   const localeStorageKey = localeOptions?.storageKey ?? "workbench.locale";
@@ -241,7 +241,7 @@ export function WorkbenchRoot({
     Object.entries(cssVars).forEach(([name, value]) => {
       target.style.setProperty(name, value);
     });
-    target.style.setProperty("--app-control-radius", `${appearance.radius}px`);
+    target.style.setProperty("--wb-control-radius", `${appearance.radius}px`);
 
     return () => {
       target.removeAttribute("data-workbench-density");
@@ -250,7 +250,7 @@ export function WorkbenchRoot({
       Object.keys(cssVars).forEach((name) => {
         target.style.removeProperty(name);
       });
-      target.style.removeProperty("--app-control-radius");
+      target.style.removeProperty("--wb-control-radius");
     };
   }, [appearance.density, appearance.mode, appearance.radius, palette, resolvedMode, rootElement]);
 
@@ -279,7 +279,7 @@ export function useWorkbenchAppearance(): WorkbenchAppearanceContextValue {
   const context = useContext(WorkbenchAppearanceContext);
 
   if (!context) {
-    throw new Error("useWorkbenchAppearance must be used within WorkbenchRoot.");
+    throw new Error("useWorkbenchAppearance must be used within WorkbenchProvider.");
   }
 
   return context;

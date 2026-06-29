@@ -1,8 +1,8 @@
 import { Flex, Space, Typography } from "antd";
 import type { ReactNode } from "react";
-import { cx } from "../internal/cx";
+import { cx } from "../../shared/cx";
 
-export interface PageProps {
+export interface WorkbenchPageProps {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
@@ -12,7 +12,7 @@ export interface PageProps {
   toolbar?: ReactNode;
 }
 
-export function Page({
+export function WorkbenchPage({
   children,
   className,
   contentClassName,
@@ -20,7 +20,7 @@ export function Page({
   extra,
   title,
   toolbar,
-}: PageProps) {
+}: WorkbenchPageProps) {
   const hasHeader = title || description || extra || toolbar;
 
   return (

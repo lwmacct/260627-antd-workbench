@@ -1,28 +1,28 @@
 export {
-  WorkbenchRoot,
+  WorkbenchProvider,
   resolveWorkbenchThemeMode,
   useWorkbenchAppearance,
-} from "./appearance/AppearanceProvider";
+} from "./provider/WorkbenchProvider";
 export {
   defaultWorkbenchAppearance,
   workbenchAccentPresets,
   workbenchSurfaceTones,
 } from "./appearance/defaults";
-export { AppearanceSettings } from "./appearance/AppearanceSettings";
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
-export { AppShell } from "./layout/AppShell";
-export { CenterState } from "./layout/CenterState";
-export { Header } from "./layout/Header";
-export { Page } from "./layout/Page";
-export { SectionLayout } from "./layout/SectionLayout";
-export { SplitWorkspace } from "./layout/SplitWorkspace";
-export { UserMenu } from "./account/UserMenu";
-export { WorkbenchAuthScreen } from "./auth/AuthScreen";
-export { WorkbenchChallengeField } from "./auth/ChallengeField";
-export { defaultWorkbenchAuthLabels } from "./auth/labels";
-export { defaultWorkbenchAuthConfig } from "./auth/model";
-export { LanguageToggle } from "./controls/LanguageToggle";
-export { ThemeToggle } from "./controls/ThemeToggle";
+export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
+export { WorkbenchAuthScreen } from "./components/auth/WorkbenchAuthScreen";
+export { WorkbenchChallengeField } from "./components/auth/WorkbenchChallengeField";
+export { defaultWorkbenchAuthLabels } from "./components/auth/labels";
+export { defaultWorkbenchAuthConfig } from "./components/auth/model";
+export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";
+export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
+export { WorkbenchCenterState } from "./components/layout/WorkbenchCenterState";
+export { WorkbenchPage } from "./components/layout/WorkbenchPage";
+export { WorkbenchSectionLayout } from "./components/layout/WorkbenchSectionLayout";
+export { WorkbenchSplitWorkspace } from "./components/layout/WorkbenchSplitWorkspace";
+export { WorkbenchAppearanceSettings } from "./components/settings/WorkbenchAppearanceSettings";
+export { WorkbenchHeader } from "./components/shell/WorkbenchHeader";
+export { WorkbenchShell } from "./components/shell/WorkbenchShell";
 export { useWorkbenchLocale } from "./locale/context";
 export { findNavItem, getNavItemLabel } from "./navigation/find";
 export { toAntdMenuItems } from "./navigation/toAntdMenu";
@@ -32,11 +32,11 @@ export { createWorkbenchPalette } from "./theme/palette";
 export { workbenchSchemes } from "./theme/schemes";
 
 export type {
-  WorkbenchAntdOptions,
+  WorkbenchAntdProviderOptions,
   WorkbenchAppearanceContextValue,
-  WorkbenchAppearanceOptions,
-  WorkbenchRootProps,
-} from "./appearance/AppearanceProvider";
+  WorkbenchAppearanceProviderOptions,
+  WorkbenchProviderProps,
+} from "./provider/WorkbenchProvider";
 export type {
   WorkbenchAppearance,
   WorkbenchAppearancePatch,
@@ -47,29 +47,19 @@ export type {
   WorkbenchThemeMode,
 } from "./appearance/model";
 export type {
-  AppearanceSettingsLabels,
-  AppearanceSettingsProps,
-  AppearanceSettingsSection,
-} from "./appearance/AppearanceSettings";
-export type { AppShellProps } from "./layout/AppShell";
-export type { CenterStateProps } from "./layout/CenterState";
-export type { HeaderProps, WorkbenchBrand } from "./layout/Header";
-export type { PageProps } from "./layout/Page";
-export type {
-  SectionLayoutLabels,
-  SectionLayoutProps,
-} from "./layout/SectionLayout";
-export type { SplitWorkspaceProps } from "./layout/SplitWorkspace";
-export type { UserMenuLabels, UserMenuProps, WorkbenchUser } from "./account/UserMenu";
+  WorkbenchUser,
+  WorkbenchUserMenuLabels,
+  WorkbenchUserMenuProps,
+} from "./components/account/WorkbenchUserMenu";
 export type {
   WorkbenchAuthModeSwitchRenderProps,
   WorkbenchAuthScreenProps,
-} from "./auth/AuthScreen";
+} from "./components/auth/WorkbenchAuthScreen";
 export type {
   WorkbenchChallengeFieldProps,
   WorkbenchRemoteChallengeRenderProps,
-} from "./auth/ChallengeField";
-export type { WorkbenchAuthLabels } from "./auth/labels";
+} from "./components/auth/WorkbenchChallengeField";
+export type { WorkbenchAuthLabels } from "./components/auth/labels";
 export type {
   WorkbenchAuthChallengeConfig,
   WorkbenchAuthChallengeResponse,
@@ -79,12 +69,32 @@ export type {
   WorkbenchChallengeProvider,
   WorkbenchImageChallenge,
   WorkbenchOAuthProvider,
-} from "./auth/model";
+} from "./components/auth/model";
 export type {
-  LanguageToggleLabels,
-  LanguageToggleProps,
-} from "./controls/LanguageToggle";
-export type { ThemeToggleLabels, ThemeToggleProps } from "./controls/ThemeToggle";
+  WorkbenchLanguageToggleLabels,
+  WorkbenchLanguageToggleProps,
+} from "./components/controls/WorkbenchLanguageToggle";
+export type {
+  WorkbenchThemeToggleLabels,
+  WorkbenchThemeToggleProps,
+} from "./components/controls/WorkbenchThemeToggle";
+export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";
+export type { WorkbenchPageProps } from "./components/layout/WorkbenchPage";
+export type {
+  WorkbenchSectionLayoutLabels,
+  WorkbenchSectionLayoutProps,
+} from "./components/layout/WorkbenchSectionLayout";
+export type { WorkbenchSplitWorkspaceProps } from "./components/layout/WorkbenchSplitWorkspace";
+export type {
+  WorkbenchAppearanceSettingsLabels,
+  WorkbenchAppearanceSettingsProps,
+  WorkbenchAppearanceSettingsSection,
+} from "./components/settings/WorkbenchAppearanceSettings";
+export type {
+  WorkbenchBrand,
+  WorkbenchHeaderProps,
+} from "./components/shell/WorkbenchHeader";
+export type { WorkbenchShellProps } from "./components/shell/WorkbenchShell";
 export type {
   WorkbenchLocaleContextValue,
   WorkbenchLocaleOption,

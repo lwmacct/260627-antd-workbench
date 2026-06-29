@@ -1,6 +1,6 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.35.260629",
+  "version": "0.36.260629",
   "private": false,
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
   "type": "module",
@@ -12,7 +12,23 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
+    },
     "./global.css": "./dist/global.css",
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "import": "./dist/navigation.js"
+    },
+    "./provider": {
+      "types": "./dist/provider.d.ts",
+      "import": "./dist/provider.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.js"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
@@ -33,7 +49,9 @@
   },
   "scripts": {
     "build": "vite build",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build:example": "vite build --config vite.example.config.ts",
+    "dev": "vite --config vite.example.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.example.json --noEmit",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {

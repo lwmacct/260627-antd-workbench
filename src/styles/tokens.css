@@ -1,0 +1,71 @@
+:root,
+:root[data-theme="dark"],
+:root[data-workbench-theme="dark"] {
+  color-scheme: dark;
+  --wb-bg: #101214;
+  --wb-workbench-bg: #171a1f;
+  --wb-header-bg: #1c2026;
+  --wb-header-border: #4d5867;
+  --wb-header-edge: rgba(0, 0, 0, 0.5);
+  --wb-sidebar-bg: #15181d;
+  --wb-card-bg: #1f242b;
+  --wb-card-elevated-bg: #262c35;
+  --wb-card-muted-bg: #2d3540;
+  --wb-panel-muted-bg: #2d3540;
+  --wb-input-bg: #252b34;
+  --wb-hover-bg: #2b323c;
+  --wb-active-bg: #343d49;
+  --wb-border: #424c59;
+  --wb-border-soft: #303843;
+  --wb-text: #e3e7ed;
+  --wb-text-strong: #fbfcfe;
+  --wb-text-secondary: #c2cad6;
+  --wb-text-muted: #9da8b7;
+  --wb-text-subtle: #7b8797;
+  --wb-accent: #2388ff;
+  --wb-accent-hover: #65adff;
+  --wb-accent-active: #145da8;
+  --wb-accent-soft: rgba(35, 136, 255, 0.24);
+  --wb-accent-softer: rgba(35, 136, 255, 0.14);
+  --wb-nav-active-bg: rgba(35, 136, 255, 0.12);
+  --wb-nav-indicator: #2388ff;
+  --wb-success: #57d68d;
+  --wb-warning: #e7b84f;
+  --wb-danger: #ff7f73;
+}
+
+:root[data-theme="light"],
+:root[data-workbench-theme="light"] {
+  color-scheme: light;
+  --wb-bg: #f4f6f8;
+  --wb-workbench-bg: #ffffff;
+  --wb-header-bg: #ffffff;
+  --wb-header-border: #b8c4d3;
+  --wb-header-edge: rgba(15, 23, 42, 0.1);
+  --wb-sidebar-bg: #f8fafc;
+  --wb-card-bg: #ffffff;
+  --wb-card-elevated-bg: #ffffff;
+  --wb-card-muted-bg: #f1f5f9;
+  --wb-panel-muted-bg: #f1f5f9;
+  --wb-input-bg: #ffffff;
+  --wb-hover-bg: #eef3f8;
+  --wb-active-bg: #ddeeff;
+  --wb-border: #c8d2df;
+  --wb-border-soft: #dfe6ef;
+  --wb-text: #1f2937;
+  --wb-text-strong: #0f172a;
+  --wb-text-secondary: #475569;
+  --wb-text-muted: #667085;
+  --wb-text-subtle: #8a94a6;
+  --wb-accent: #0b70d7;
+  --wb-accent-hover: #0759b8;
+  --wb-accent-active: #d8ebff;
+  --wb-accent-soft: rgba(11, 112, 215, 0.13);
+  --wb-accent-softer: rgba(11, 112, 215, 0.08);
+  --wb-nav-active-bg: rgba(11, 112, 215, 0.08);
+  --wb-nav-indicator: #0b70d7;
+  --wb-success: #178248;
+  --wb-warning: #a86700;
+  --wb-danger: #d92d20;
+}
+

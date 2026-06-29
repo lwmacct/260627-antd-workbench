@@ -1,28 +1,28 @@
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Space, Typography } from "antd";
 import { useMemo, useState, type ReactNode } from "react";
-import { cx } from "../internal/cx";
-import { findNavItem } from "../navigation/find";
-import type { WorkbenchNavEntry } from "../navigation/model";
-import { toAntdMenuItems } from "../navigation/toAntdMenu";
+import { cx } from "../../shared/cx";
+import { findNavItem } from "../../navigation/find";
+import type { WorkbenchNavEntry } from "../../navigation/model";
+import { toAntdMenuItems } from "../../navigation/toAntdMenu";
 
-export interface SectionLayoutProps {
+export interface WorkbenchSectionLayoutProps {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
-  labels?: SectionLayoutLabels;
+  labels?: WorkbenchSectionLayoutLabels;
   nav: WorkbenchNavEntry[];
   selectedKey: string;
   siderWidth?: number;
   onSelect(key: string): void;
 }
 
-export interface SectionLayoutLabels {
+export interface WorkbenchSectionLayoutLabels {
   mobileNavigation?: string;
   openNavigation?: string;
 }
 
-export function SectionLayout({
+export function WorkbenchSectionLayout({
   children,
   className,
   contentClassName,
@@ -31,7 +31,7 @@ export function SectionLayout({
   selectedKey,
   siderWidth = 208,
   onSelect,
-}: SectionLayoutProps) {
+}: WorkbenchSectionLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuItems = useMemo(() => toAntdMenuItems(nav), [nav]);
   const currentItem = findNavItem(nav, selectedKey);
