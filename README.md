@@ -2,7 +2,7 @@
 
 面向高密度运营后台的 React + Ant Design workbench 基础组件库。
 
-这个包提供全屏应用外壳、顶部导航、分区导航、页面容器、用户菜单、主题切换和外观预设。它只负责通用 UI 基础设施；路由、认证、数据请求、权限控制和业务页面应保留在使用方应用内。
+这个包提供全屏应用外壳、顶部导航、分区导航、页面容器、用户菜单、认证界面、主题切换和外观预设。它只负责通用 UI 基础设施；路由、数据请求、会话同步、权限控制和业务页面应保留在使用方应用内。
 
 ## 设计边界
 
@@ -11,6 +11,7 @@
 - `styles.css` 只包含组件和主题变量样式；`global.css` 额外包含全屏应用需要的 body、滚动条和 Ant Design 全局覆盖。
 - 外观系统以一个标准化 `WorkbenchAppearance` 对象为核心，统一驱动 CSS 变量和 Ant Design theme tokens。
 - 语言状态只处理通用 locale 值、Ant Design locale 和文档 `lang` 属性，不包含任何业务文案字典。
+- 认证组件只提供登录、注册、OAuth 入口和验证码控件的 UI 契约；接口请求、React Query、路由跳转和第三方验证码 SDK 由业务应用注入。
 
 ## 安装
 
@@ -315,6 +316,39 @@ interface WorkbenchNavGroup {
 ### `UserMenu`
 
 头像按钮，包含用户身份展示、可选账号入口、自定义菜单项和退出登录操作。用户信息通过 `user` 注入，可传 `name`、`username`、`initials` 或自定义 `avatar`。
+
+### `WorkbenchAuthScreen`
+
+全屏登录/注册界面。组件不依赖路由、React Query 或具体接口；业务应用需要注入认证配置、提交回调、图片验证码创建函数、OAuth 跳转和模式切换渲染。
+
+```tsx
+import { Link } from "react-router-dom";
+import {
+  WorkbenchAuthScreen,
+  type WorkbenchAuthSubmitValues,
+} from "@lwmacct/260627-antd-workbench";
+
+function LoginPage() {
+  return (
+    <WorkbenchAuthScreen
+      mode="login"
+      config={authState.data?.config}
+      createImageChallenge={createImageChallenge}
+      loading={loginMutation.isPending}
+      error={loginMutation.error?.message}
+      onOAuthLogin={(provider) => startOAuthLogin(provider.provider)}
+      onSubmit={(values: WorkbenchAuthSubmitValues) =>
+        loginMutation.mutateAsync(values)
+      }
+      renderModeSwitch={({ targetMode, children }) => (
+        <Link to={targetMode === "login" ? "/login" : "/register"}>{children}</Link>
+      )}
+    />
+  );
+}
+```
+
+图片验证码由 `createImageChallenge` 提供，返回 `{ provider: "image", challengeId, image }`。`hcaptcha`、`turnstile` 等远程验证码需要通过 `renderRemoteChallenge` 接入业务应用自己的 SDK，并在拿到 token 后调用 `onChange({ provider, token })`。
 
 ### `CenterState`
 

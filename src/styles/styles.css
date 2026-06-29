@@ -669,6 +669,99 @@
   background: var(--app-bg);
 }
 
+.wb-auth {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: auto;
+  place-items: center;
+  padding: 24px;
+  background: var(--app-bg);
+}
+
+.wb-auth__panel {
+  width: min(420px, 100%);
+  border-color: var(--app-border);
+  background: var(--app-card-elevated-bg);
+}
+
+.wb-auth__header {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.wb-auth__header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.wb-auth__alert {
+  margin-bottom: 16px;
+}
+
+.wb-auth__oauth-buttons {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.wb-auth__mode-switch {
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.wb-auth__mode-switch a,
+.wb-auth__mode-switch .ant-btn-link {
+  margin-left: 6px;
+  padding: 0;
+}
+
+.wb-auth__captcha-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  overflow: hidden;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-control-radius, 6px);
+  background: var(--app-card-elevated-bg);
+}
+
+.wb-auth__captcha-row:focus-within {
+  border-color: var(--app-accent);
+}
+
+.wb-auth__captcha-input {
+  min-width: 0;
+  border: 0;
+  border-radius: 0 !important;
+}
+
+.wb-auth__captcha-input .ant-input {
+  border: 0;
+}
+
+.wb-auth__captcha-button {
+  width: 150px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--app-border);
+  border-radius: 0;
+  background: var(--app-panel-muted-bg, var(--app-card-muted-bg));
+}
+
+.wb-auth__captcha-button img {
+  display: block;
+  width: 100%;
+  height: 32px;
+  object-fit: cover;
+}
+
+.wb-auth__remote-challenge {
+  min-height: 32px;
+  color: var(--app-text-muted);
+}
+
 @media (max-width: 768px) {
   .wb-header__nav-full {
     display: none;

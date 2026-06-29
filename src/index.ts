@@ -17,6 +17,10 @@ export { Page } from "./layout/Page";
 export { SectionLayout } from "./layout/SectionLayout";
 export { SplitWorkspace } from "./layout/SplitWorkspace";
 export { UserMenu } from "./account/UserMenu";
+export { WorkbenchAuthScreen } from "./auth/AuthScreen";
+export { WorkbenchChallengeField } from "./auth/ChallengeField";
+export { defaultWorkbenchAuthLabels } from "./auth/labels";
+export { defaultWorkbenchAuthConfig } from "./auth/model";
 export { LanguageToggle } from "./controls/LanguageToggle";
 export { ThemeToggle } from "./controls/ThemeToggle";
 export { useWorkbenchLocale } from "./locale/context";
@@ -57,6 +61,25 @@ export type {
 } from "./layout/SectionLayout";
 export type { SplitWorkspaceProps } from "./layout/SplitWorkspace";
 export type { UserMenuLabels, UserMenuProps, WorkbenchUser } from "./account/UserMenu";
+export type {
+  WorkbenchAuthModeSwitchRenderProps,
+  WorkbenchAuthScreenProps,
+} from "./auth/AuthScreen";
+export type {
+  WorkbenchChallengeFieldProps,
+  WorkbenchRemoteChallengeRenderProps,
+} from "./auth/ChallengeField";
+export type { WorkbenchAuthLabels } from "./auth/labels";
+export type {
+  WorkbenchAuthChallengeConfig,
+  WorkbenchAuthChallengeResponse,
+  WorkbenchAuthMode,
+  WorkbenchAuthPublicConfig,
+  WorkbenchAuthSubmitValues,
+  WorkbenchChallengeProvider,
+  WorkbenchImageChallenge,
+  WorkbenchOAuthProvider,
+} from "./auth/model";
 export type {
   LanguageToggleLabels,
   LanguageToggleProps,
