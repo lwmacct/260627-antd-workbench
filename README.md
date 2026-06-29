@@ -286,12 +286,15 @@ interface WorkbenchNavGroup {
 <SplitWorkspace
   sidebar={<RoomList />}
   sidebarWidth={260}
+  contentClassName="workspace-body"
 >
   <Page title="Workspace">...</Page>
 </SplitWorkspace>
 ```
 
 默认在小屏幕下折叠为上下布局。传 `collapseOnMobile={false}` 可关闭这个行为。
+
+`SplitWorkspace` 会把内容区拆成滚动视口和内容主体两层：`viewportClassName` 作用在外层滚动视口，`contentClassName` 作用在内层主体。内层主体默认按列方向撑满剩余宽度和最小高度，业务页面通常只需要给 `contentClassName` 添加间距、局部网格或自己的工作区结构。
 
 ### `Page`
 

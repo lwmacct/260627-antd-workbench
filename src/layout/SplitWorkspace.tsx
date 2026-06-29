@@ -10,6 +10,7 @@ export interface SplitWorkspaceProps {
   sidebarClassName?: string;
   sidebarPlacement?: "end" | "start";
   sidebarWidth?: number | string;
+  viewportClassName?: string;
 }
 
 export function SplitWorkspace({
@@ -21,6 +22,7 @@ export function SplitWorkspace({
   sidebarClassName,
   sidebarPlacement = "start",
   sidebarWidth = 220,
+  viewportClassName,
 }: SplitWorkspaceProps) {
   const style = {
     "--wb-split-sidebar-width": toCssSize(sidebarWidth),
@@ -29,7 +31,11 @@ export function SplitWorkspace({
     <aside className={cx("wb-split__sidebar", sidebarClassName)}>{sidebar}</aside>
   );
   const contentNode = (
-    <div className={cx("wb-split__content", contentClassName)}>{children}</div>
+    <div className={cx("wb-split__content", viewportClassName)}>
+      <div className={cx("wb-split__content-body", contentClassName)}>
+        {children}
+      </div>
+    </div>
   );
 
   return (
@@ -51,4 +57,3 @@ export function SplitWorkspace({
 function toCssSize(value: number | string): string {
   return typeof value === "number" ? `${value}px` : value;
 }
-
