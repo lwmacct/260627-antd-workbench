@@ -8,6 +8,7 @@ export type WorkbenchSchemeName =
   | "graphite"
   | "midnight"
   | "mist"
+  | "neutral"
   | "paper"
   | "porcelain"
   | "warm"
@@ -120,6 +121,12 @@ export const workbenchSchemes: WorkbenchScheme[] = [
     name: "zinc",
     dark: createNeutralBase("#111113", "#18181b", "#202024", "#232329", "#161618"),
     light: createNeutralBase("#f6f6f7", "#ffffff", "#ffffff", "#ffffff", "#fafafa"),
+  },
+  {
+    label: "Neutral",
+    name: "neutral",
+    dark: createAntdNeutralBase("dark"),
+    light: createAntdNeutralBase("light"),
   },
   {
     label: "Paper",
@@ -425,6 +432,56 @@ function createNeutralBase(
     textSubtle: dark ? "#7b8797" : "#8a94a6",
     warning: dark ? "#e7b84f" : "#a86700",
     workbench,
+  };
+}
+
+function createAntdNeutralBase(mode: WorkbenchResolvedThemeMode): BasePalette {
+  if (mode === "light") {
+    return {
+      active: "#e6f4ff",
+      bg: "#f5f5f5",
+      border: "#d9d9d9",
+      borderSoft: "#f0f0f0",
+      danger: "#e45959",
+      header: "#ffffff",
+      hover: "#f5f5f5",
+      input: "#ffffff",
+      panel: "#ffffff",
+      panelElevated: "#ffffff",
+      panelMuted: "#fafafa",
+      sidebar: "#ffffff",
+      success: "#178248",
+      text: "#1f1f1f",
+      textMuted: "#8c8c8c",
+      textSecondary: "#595959",
+      textStrong: "#000000",
+      textSubtle: "#bfbfbf",
+      warning: "#a86700",
+      workbench: "#ffffff",
+    };
+  }
+
+  return {
+    active: "#303030",
+    bg: "#141414",
+    border: "#303030",
+    borderSoft: "#262626",
+    danger: "#e45959",
+    header: "#1f1f1f",
+    hover: "#2a2a2a",
+    input: "#1f1f1f",
+    panel: "#1f1f1f",
+    panelElevated: "#262626",
+    panelMuted: "#262626",
+    sidebar: "#1f1f1f",
+    success: "#59db8f",
+    text: "#d9d9d9",
+    textMuted: "#8c8c8c",
+    textSecondary: "#bfbfbf",
+    textStrong: "#ffffff",
+    textSubtle: "#6f6f6f",
+    warning: "#e7b84f",
+    workbench: "#141414",
   };
 }
 
