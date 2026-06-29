@@ -1,30 +1,29 @@
 import { Button, Card, Descriptions } from "antd";
-import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useWorkbenchVerification,
+  WorkbenchPage,
+} from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
 export function ProfileRoute() {
   const text = useExampleText();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { verify } = useWorkbenchVerification();
+
+  async function verifySensitiveAction() {
+    await verify({
+      description: text.security.verificationDescription(text.security.sensitiveAction),
+      purpose: "sensitive-action",
+      rememberOption: { defaultChecked: true, minutes: 15 },
+      subject: text.security.sensitiveAction,
+    });
+  }
 
   return (
     <WorkbenchPage description={text.settings.profileDescription} title={text.settings.profile}>
       <Card
         className="example-panel"
         extra={
-          <Button
-            onClick={() =>
-              navigate("/security/verify", {
-                state: {
-                  purpose: "sensitive-action",
-                  rememberMinutes: 15,
-                  returnTo: location.pathname,
-                  subject: text.security.sensitiveAction,
-                },
-              })
-            }
-          >
+          <Button onClick={() => void verifySensitiveAction()}>
             {text.security.sensitiveAction}
           </Button>
         }

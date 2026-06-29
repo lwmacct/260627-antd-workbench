@@ -1,7 +1,14 @@
 export { WorkbenchChallengeField } from "./components/security/WorkbenchChallengeField";
 export { WorkbenchCredentialScreen } from "./components/security/WorkbenchCredentialScreen";
 export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
-export { WorkbenchVerificationScreen } from "./components/security/WorkbenchVerificationScreen";
+export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
+export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
+export { WorkbenchVerificationModal } from "./components/security/WorkbenchVerificationModal";
+export { WorkbenchVerificationPage } from "./components/security/WorkbenchVerificationPage";
+export {
+  WorkbenchVerificationProvider,
+  useWorkbenchVerification,
+} from "./components/security/WorkbenchVerificationProvider";
 export {
   defaultWorkbenchChallengeFieldLabels,
   defaultWorkbenchCredentialLabels,
@@ -19,7 +26,16 @@ export type {
   WorkbenchCredentialScreenProps,
 } from "./components/security/WorkbenchCredentialScreen";
 export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
-export type { WorkbenchVerificationScreenProps } from "./components/security/WorkbenchVerificationScreen";
+export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
+export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";
+export type { WorkbenchVerificationModalProps } from "./components/security/WorkbenchVerificationModal";
+export type { WorkbenchVerificationPageProps } from "./components/security/WorkbenchVerificationPage";
+export type {
+  WorkbenchVerificationContextValue,
+  WorkbenchVerificationProviderProps,
+  WorkbenchVerificationResult,
+  WorkbenchVerificationSurface,
+} from "./components/security/WorkbenchVerificationProvider";
 export type {
   WorkbenchChallengeFieldLabels,
   WorkbenchCredentialLabels,
@@ -38,5 +54,6 @@ export type {
   WorkbenchVerificationMethod,
   WorkbenchVerificationPurpose,
   WorkbenchVerificationRememberOption,
+  WorkbenchVerificationRequest,
   WorkbenchVerificationSubmitValues,
 } from "./components/security/model";

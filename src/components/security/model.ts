@@ -67,6 +67,15 @@ export interface WorkbenchVerificationRememberOption {
   minutes: number;
 }
 
+export interface WorkbenchVerificationRequest {
+  description?: ReactNode;
+  method?: WorkbenchVerificationMethod;
+  purpose: WorkbenchVerificationPurpose;
+  rememberOption?: false | WorkbenchVerificationRememberOption;
+  subject?: ReactNode;
+  title?: ReactNode;
+}
+
 export interface WorkbenchVerificationSubmitValues {
   code?: string;
   method: WorkbenchVerificationMethod;

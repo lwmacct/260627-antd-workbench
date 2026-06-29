@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  WorkbenchVerificationScreen,
+  WorkbenchVerificationPage,
   type WorkbenchVerificationPurpose,
   type WorkbenchVerificationSubmitValues,
 } from "@lwmacct/260627-antd-workbench";
@@ -38,7 +38,7 @@ export function VerificationRoute() {
   }
 
   return (
-    <WorkbenchVerificationScreen
+    <WorkbenchVerificationPage
       description={text.security.verificationDescription(state?.subject)}
       error={error}
       labels={text.security.verificationLabels}

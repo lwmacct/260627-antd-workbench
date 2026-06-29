@@ -86,7 +86,10 @@ import {
   WorkbenchChallengeField,
   WorkbenchCredentialScreen,
   WorkbenchOAuthButtons,
-  WorkbenchVerificationScreen,
+  WorkbenchVerificationModal,
+  WorkbenchVerificationPage,
+  WorkbenchVerificationProvider,
+  useWorkbenchVerification,
 } from "@lwmacct/260627-antd-workbench/security";
 ```
 
@@ -127,7 +130,11 @@ example/
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 用户头像菜单。 |
 | `WorkbenchCredentialScreen` | 登录/注册身份入口，业务请求和路由由使用方注入。 |
-| `WorkbenchVerificationScreen` | 通用安全验证界面，可用于登录 2FA、重新认证和敏感操作确认。 |
+| `WorkbenchVerificationForm` | 通用安全验证纯表单，不绑定页面、弹窗或路由。 |
+| `WorkbenchVerificationPage` | 全屏安全验证页，可用于登录 2FA 路由。 |
+| `WorkbenchVerificationModal` | 弹窗安全验证容器，适合任意页面内触发。 |
+| `WorkbenchVerificationDrawer` | 抽屉安全验证容器，适合侧边工作流。 |
+| `WorkbenchVerificationProvider` | Promise 式安全验证编排容器，配合 `useWorkbenchVerification` 使用。 |
 | `WorkbenchOAuthButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
 | `WorkbenchChallengeField` | 图片验证码和远程 challenge 的通用输入控件。 |
 

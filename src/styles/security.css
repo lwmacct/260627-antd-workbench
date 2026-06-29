@@ -28,6 +28,10 @@
   background: var(--wb-card-elevated-bg);
 }
 
+.wb-security-form {
+  width: 100%;
+}
+
 .wb-security__panel-extra {
   display: flex;
   justify-content: flex-start;
