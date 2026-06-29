@@ -15,8 +15,11 @@ export { CenterState } from "./layout/CenterState";
 export { Header } from "./layout/Header";
 export { Page } from "./layout/Page";
 export { SectionLayout } from "./layout/SectionLayout";
+export { SplitWorkspace } from "./layout/SplitWorkspace";
 export { UserMenu } from "./account/UserMenu";
+export { LanguageToggle } from "./controls/LanguageToggle";
 export { ThemeToggle } from "./controls/ThemeToggle";
+export { useWorkbenchLocale } from "./locale/context";
 export { findNavItem, getNavItemLabel } from "./navigation/find";
 export { toAntdMenuItems } from "./navigation/toAntdMenu";
 export { createWorkbenchTheme } from "./theme/antd";
@@ -25,6 +28,7 @@ export { createWorkbenchPalette } from "./theme/palette";
 export { workbenchSchemes } from "./theme/schemes";
 
 export type {
+  WorkbenchAntdOptions,
   WorkbenchAppearanceContextValue,
   WorkbenchAppearanceOptions,
   WorkbenchRootProps,
@@ -51,8 +55,18 @@ export type {
   SectionLayoutLabels,
   SectionLayoutProps,
 } from "./layout/SectionLayout";
-export type { UserMenuLabels, UserMenuProps } from "./account/UserMenu";
+export type { SplitWorkspaceProps } from "./layout/SplitWorkspace";
+export type { UserMenuLabels, UserMenuProps, WorkbenchUser } from "./account/UserMenu";
+export type {
+  LanguageToggleLabels,
+  LanguageToggleProps,
+} from "./controls/LanguageToggle";
 export type { ThemeToggleLabels, ThemeToggleProps } from "./controls/ThemeToggle";
+export type {
+  WorkbenchLocaleContextValue,
+  WorkbenchLocaleOption,
+  WorkbenchLocaleOptions,
+} from "./locale/model";
 export type {
   WorkbenchNavEntry,
   WorkbenchNavGroup,

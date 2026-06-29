@@ -7,57 +7,86 @@ import { Avatar, Button, Dropdown, type MenuProps } from "antd";
 import type { ReactNode } from "react";
 
 export interface UserMenuLabels {
+  account?: ReactNode;
+  menu?: string;
   logout?: ReactNode;
-  settings?: ReactNode;
   unnamedUser?: ReactNode;
 }
 
+export interface WorkbenchUser {
+  avatar?: ReactNode;
+  initials?: ReactNode;
+  name?: ReactNode;
+  username?: ReactNode;
+}
+
 export interface UserMenuProps {
+  items?: MenuProps["items"];
   labels?: UserMenuLabels;
-  username?: string;
-  onLogout(): void;
+  user?: WorkbenchUser;
   onOpenAccount?(): void;
+  onLogout?(): void;
 }
 
 export function UserMenu({
+  items,
   labels,
-  username,
-  onLogout,
+  user,
   onOpenAccount,
+  onLogout,
 }: UserMenuProps) {
-  const initial = (username || "?").trim().slice(0, 1).toUpperCase();
-  const items: MenuProps["items"] = [
+  const displayName = user?.name ?? user?.username ?? labels?.unnamedUser ?? "未命名用户";
+  const menuItems: MenuProps["items"] = [
     {
       disabled: true,
       icon: <UserOutlined />,
       key: "user",
-      label: username || labels?.unnamedUser || "未命名用户",
+      label: displayName,
     },
-    { type: "divider" },
+    user?.username && user.username !== displayName
+      ? {
+          disabled: true,
+          key: "username",
+          label: user.username,
+        }
+      : null,
+    items || onOpenAccount || onLogout ? { type: "divider" } : null,
+    ...(items ?? []),
     onOpenAccount
       ? {
           icon: <SettingOutlined />,
-          key: "settings",
-          label: labels?.settings || "设置",
+          key: "account",
+          label: labels?.account || "账号",
           onClick: onOpenAccount,
         }
       : null,
-    {
-      icon: <LogoutOutlined />,
-      key: "logout",
-      label: labels?.logout || "退出登录",
-      onClick: onLogout,
-    },
+    onLogout
+      ? {
+          icon: <LogoutOutlined />,
+          key: "logout",
+          label: labels?.logout || "退出登录",
+          onClick: onLogout,
+        }
+      : null,
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
-      <Button aria-label="用户菜单" shape="circle" type="text">
-        <Avatar size={28} style={{ background: "var(--app-accent)" }}>
-          {initial}
-        </Avatar>
+    <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={["click"]}>
+      <Button aria-label={labels?.menu ?? "用户菜单"} shape="circle" type="text">
+        {user?.avatar ?? (
+          <Avatar size={28} style={{ background: "var(--app-accent)" }}>
+            {user?.initials ?? toInitial(displayName)}
+          </Avatar>
+        )}
       </Button>
     </Dropdown>
   );
 }
 
+function toInitial(value: ReactNode): ReactNode {
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value).trim().slice(0, 1).toUpperCase() || "?";
+  }
+
+  return <UserOutlined />;
+}

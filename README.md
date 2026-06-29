@@ -10,6 +10,7 @@
 - JS 入口不再自动导入 CSS，避免“导入组件即修改整站样式”的副作用。
 - `styles.css` 只包含组件和主题变量样式；`global.css` 额外包含全屏应用需要的 body、滚动条和 Ant Design 全局覆盖。
 - 外观系统以一个标准化 `WorkbenchAppearance` 对象为核心，统一驱动 CSS 变量和 Ant Design theme tokens。
+- 语言状态只处理通用 locale 值、Ant Design locale 和文档 `lang` 属性，不包含任何业务文案字典。
 
 ## 安装
 
@@ -48,6 +49,7 @@ import "@lwmacct/260627-antd-workbench/styles.css";
 ```tsx
 import {
   AppShell,
+  LanguageToggle,
   Page,
   ThemeToggle,
   UserMenu,
@@ -76,12 +78,24 @@ export function App() {
         },
         storageKey: "my-app.appearance",
       }}
+      locale={{
+        defaultValue: "zh",
+        options: [
+          { value: "zh", label: "简体中文", shortLabel: "简 / EN", documentLang: "zh-CN" },
+          { value: "en", label: "English", shortLabel: "EN / 简", documentLang: "en" },
+        ],
+        storageKey: "my-app.locale",
+      }}
     >
       <AppShell
         actions={
           <>
             <ThemeToggle />
-            <UserMenu username="Ada" onLogout={() => undefined} />
+            <LanguageToggle />
+            <UserMenu
+              user={{ name: "Ada Lovelace", initials: "A" }}
+              onLogout={() => undefined}
+            />
           </>
         }
         brand={{ name: "Workbench", version: "1.0.0" }}
@@ -149,7 +163,60 @@ function ThemeButton() {
 | `appearance.storageKey` | localStorage key。传 `false` 可关闭持久化，默认是 `workbench.appearance`。 |
 | `appearance.rootElement` | 接收 `data-workbench-*` 属性和 CSS 变量的元素，默认是 `document.documentElement`。 |
 | `appearance.onChange` | 外观变化后的回调。 |
+| `locale.defaultValue` | locale 默认值。 |
+| `locale.value` | 受控 locale 值。 |
+| `locale.options` | 可选语言列表，可携带 `label`、`shortLabel`、`documentLang`、`antdLocale`。 |
+| `locale.storageKey` | locale localStorage key。传 `false` 可关闭持久化，默认是 `workbench.locale`。 |
+| `locale.documentLang` | 写入根元素 `lang` 的固定值或映射函数。 |
+| `locale.antdLocale` | 默认 Ant Design locale；也可在每个 locale option 上提供。 |
+| `locale.onChange` | locale 变化后的回调。 |
+| `antd.locale` | 直接传给 Ant Design `ConfigProvider` 的 locale，优先级高于 locale option。 |
+| `antd.theme` | 额外 Ant Design theme。默认与 workbench theme 浅合并。 |
+| `antd.mergeTheme` | 是否合并 `antd.theme` 和 workbench theme，默认 `true`。 |
+| `antd.config` | 透传给 Ant Design `ConfigProvider` 的其他配置。 |
+| `antd.app` | 是否包裹 Ant Design `App`，也可传 `App` props。 |
 | `withAntdApp` | 是否用 Ant Design `App` 包裹 children，默认是 `true`。 |
+
+### Locale 与 AntD
+
+业务应用可以继续维护自己的文案字典，只把当前 locale、Ant Design locale 和语言切换控件交给 workbench：
+
+```tsx
+import enUS from "antd/locale/en_US";
+import zhCN from "antd/locale/zh_CN";
+import {
+  LanguageToggle,
+  WorkbenchRoot,
+  useWorkbenchLocale,
+} from "@lwmacct/260627-antd-workbench";
+
+const localeOptions = [
+  {
+    value: "zh",
+    label: "简体中文",
+    shortLabel: "简 / EN",
+    documentLang: "zh-CN",
+    antdLocale: zhCN,
+  },
+  {
+    value: "en",
+    label: "English",
+    shortLabel: "EN / 简",
+    documentLang: "en",
+    antdLocale: enUS,
+  },
+];
+
+function App() {
+  return (
+    <WorkbenchRoot locale={{ defaultValue: "zh", options: localeOptions }}>
+      <LanguageToggle />
+    </WorkbenchRoot>
+  );
+}
+```
+
+`useWorkbenchLocale()` 返回 `locale`、`options`、`setLocale`、`toggleLocale` 和当前解析出的 `antdLocale`。
 
 ## 导航模型
 
@@ -211,6 +278,21 @@ interface WorkbenchNavGroup {
 
 桌面端渲染侧边菜单；小屏幕下隐藏侧边菜单，并用底部抽屉展示同一组菜单项。
 
+### `SplitWorkspace`
+
+用于“任意侧栏内容 + 工作区”的通用双栏布局。侧栏可以是树、筛选器、列表、统计卡片或业务自定义组件。
+
+```tsx
+<SplitWorkspace
+  sidebar={<RoomList />}
+  sidebarWidth={260}
+>
+  <Page title="Workspace">...</Page>
+</SplitWorkspace>
+```
+
+默认在小屏幕下折叠为上下布局。传 `collapseOnMobile={false}` 可关闭这个行为。
+
 ### `Page`
 
 页面级容器，用于统一标题、描述、操作区和内容间距。`toolbar` 和 `extra` 可用于放置按钮、筛选器或页面操作。
@@ -223,9 +305,13 @@ interface WorkbenchNavGroup {
 
 主题切换图标按钮，用于在已解析的深色和浅色主题之间切换。当当前模式是 `system` 时，点击后会写入明确的 `dark` 或 `light` 模式。
 
+### `LanguageToggle`
+
+语言切换按钮，读取 `WorkbenchRoot` 的 locale options 并切换到下一个 locale。也可以通过组件自身的 `options` prop 临时覆盖。
+
 ### `UserMenu`
 
-头像按钮，包含用户身份展示、可选账号设置入口和退出登录操作。
+头像按钮，包含用户身份展示、可选账号入口、自定义菜单项和退出登录操作。用户信息通过 `user` 注入，可传 `name`、`username`、`initials` 或自定义 `avatar`。
 
 ### `CenterState`
 
@@ -255,6 +341,7 @@ interface WorkbenchNavGroup {
 | `data-workbench-mode` | `dark`、`light` 或 `system` |
 | `data-workbench-theme` | 解析后的 `dark` 或 `light` |
 | `data-workbench-density` | `compact`、`comfortable` 或 `spacious` |
+| `data-workbench-locale` | 当前 locale 值 |
 
 ## 开发
 
