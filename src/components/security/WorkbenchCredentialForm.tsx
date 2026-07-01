@@ -132,7 +132,7 @@ export function WorkbenchCredentialForm({
     }
 
     const username = form.getFieldValue("username")?.trim().toLowerCase();
-    if (username && username.length >= 3 && value.toLowerCase().includes(username)) {
+    if (isRegister && username && username.length >= 3 && value.toLowerCase().includes(username)) {
       return Promise.reject(new Error(mergedLabels.passwordContainsUsername));
     }
 
