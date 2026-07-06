@@ -1,6 +1,6 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ChangeEvent, type ReactNode } from "react";
 import type { WorkbenchChallengeFieldLabels } from "./labels";
 import { defaultWorkbenchChallengeFieldLabels } from "./labels";
 import type {
@@ -140,7 +140,7 @@ function ImageChallengeField({
         autoComplete="off"
         className="wb-security__captcha-input"
         disabled={disabled || loading}
-        onChange={(event) => setAnswer(event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setAnswer(event.target.value)}
         value={answer}
       />
       <Button

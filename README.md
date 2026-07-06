@@ -7,8 +7,8 @@
 ## 安装
 
 ```bash
-npm install react react-dom antd @ant-design/icons
-npm install @lwmacct/260627-antd-workbench
+pnpm add react react-dom antd @ant-design/icons
+pnpm add @lwmacct/260627-antd-workbench
 ```
 
 ## 样式入口
@@ -159,7 +159,7 @@ example/
 ## 示例应用
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 示例应用位于 `example/`，通过包名导入本库，开发时由 `vite.example.config.ts` alias 到本地 `src/`。
@@ -167,17 +167,17 @@ npm run dev
 ## 开发
 
 ```bash
-npm ci
-npm run typecheck
-npm run build
-npm run build:example
+pnpm install --frozen-lockfile
+pnpm run typecheck
+pnpm run build
+pnpm run build:example
 ```
 
 发版前运行：
 
 ```bash
-npm run typecheck
-npm run build
+pnpm run typecheck
+pnpm run build
 task git:tag:next
 ```
 

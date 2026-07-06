@@ -42,6 +42,7 @@ export function WorkbenchHeader({
   const menuItems = toAntdMenuItems(nav);
   const activeNavLabel = getNavItemLabel(nav, selectedKey, mobileNavFallback);
   const subtitle = brand.subtitle ?? shortenVersion(brand.version);
+  const handleMenuClick = ({ key }: { key: string }) => onSelectNav(key);
 
   return (
     <header className={cx("wb-header", className)}>
@@ -60,13 +61,13 @@ export function WorkbenchHeader({
           items={menuItems}
           mode="horizontal"
           selectedKeys={selectedKeys}
-          onClick={({ key }) => onSelectNav(key)}
+          onClick={handleMenuClick}
         />
         <Dropdown
           menu={{
             items: menuItems,
             selectedKeys,
-            onClick: ({ key }) => onSelectNav(key),
+            onClick: handleMenuClick,
           }}
           placement="bottom"
           styles={{ root: { minWidth: "min(240px, calc(100vw - 24px))" } }}
@@ -95,4 +96,3 @@ function asText(value: ReactNode): string {
 function shortenVersion(version: string | undefined): string | undefined {
   return version?.split(/[+-]/, 1)[0];
 }
-

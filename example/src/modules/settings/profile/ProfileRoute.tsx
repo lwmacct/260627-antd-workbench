@@ -1,4 +1,5 @@
-import { Button, Card, Descriptions } from "antd";
+import { Button, Descriptions } from "antd";
+import Card from "antd/es/card/Card";
 import {
   useWorkbenchVerification,
   WorkbenchPage,

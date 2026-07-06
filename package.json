@@ -1,7 +1,8 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.41.260706",
+  "version": "0.42.260706",
   "private": false,
+  "packageManager": "pnpm@11.10.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
   "type": "module",
   "main": "./dist/index.js",
@@ -52,7 +53,7 @@
     "build:example": "vite build --config vite.example.config.ts",
     "dev": "vite --config vite.example.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.example.json --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@ant-design/icons": "^6.0.0",

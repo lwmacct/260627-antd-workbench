@@ -1,4 +1,5 @@
-import { Card, Progress, Space } from "antd";
+import { Progress, Space } from "antd";
+import Card from "antd/es/card/Card";
 import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 

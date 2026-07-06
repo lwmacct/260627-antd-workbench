@@ -1,5 +1,6 @@
 import { CheckCircleOutlined, ClockCircleOutlined, WarningOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Progress, Row, Space, Table, Tag, Typography } from "antd";
+import { Button, Col, Progress, Row, Space, Table, Tag, Typography } from "antd";
+import Card from "antd/es/card/Card";
 import type { ColumnsType } from "antd/es/table";
 import type { ReactNode } from "react";
 import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";

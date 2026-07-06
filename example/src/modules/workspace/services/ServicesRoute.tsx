@@ -1,5 +1,6 @@
 import { DatabaseOutlined, SearchOutlined } from "@ant-design/icons";
-import { Card, Input, Space, Tag, Typography } from "antd";
+import { Input, Space, Tag, Typography } from "antd";
+import Card from "antd/es/card/Card";
 import { WorkbenchPage, WorkbenchSplitWorkspace } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 

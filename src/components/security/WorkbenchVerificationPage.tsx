@@ -1,4 +1,5 @@
-import { Button, Card } from "antd";
+import { Button } from "antd";
+import Card from "antd/es/card/Card";
 import type { ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import {

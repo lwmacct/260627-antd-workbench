@@ -84,7 +84,7 @@ export function WorkbenchAppearanceSettings({
               { label: labels?.system ?? "跟随系统", value: "system" },
             ]}
             value={appearance.mode}
-            onChange={(mode) => patchAppearance({ mode })}
+            onChange={(mode: WorkbenchThemeMode) => patchAppearance({ mode })}
           />
         </AppearanceField>
       ) : null}
@@ -124,7 +124,7 @@ export function WorkbenchAppearanceSettings({
               value: surface.name,
             }))}
             value={appearance.surface}
-            onChange={(surface) => patchAppearance({ surface })}
+            onChange={(surface: WorkbenchSurfaceTone) => patchAppearance({ surface })}
           />
         </AppearanceField>
       ) : null}
@@ -170,7 +170,7 @@ export function WorkbenchAppearanceSettings({
               { label: labels?.spacious ?? "宽松", value: "spacious" },
             ]}
             value={appearance.density}
-            onChange={(density) => patchAppearance({ density })}
+            onChange={(density: WorkbenchDensity) => patchAppearance({ density })}
           />
         </AppearanceField>
       ) : null}
@@ -183,7 +183,7 @@ export function WorkbenchAppearanceSettings({
               max={12}
               min={0}
               value={appearance.radius}
-              onChange={(radius) => patchAppearance({ radius })}
+              onChange={(radius: number) => patchAppearance({ radius })}
             />
             <Typography.Text className="wb-appearance-settings__radius-value">
               {appearance.radius}px
@@ -261,4 +261,3 @@ function surfaceLabel(
 
 export type { WorkbenchAppearance };
 export { defaultWorkbenchAppearance };
-

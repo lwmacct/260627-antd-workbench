@@ -86,7 +86,7 @@ export function WorkbenchVerificationForm({
         initialValues={{ remember: defaultRemember }}
         layout="vertical"
         requiredMark={false}
-        onFinish={(values) => void submit(values)}
+        onFinish={(values: VerificationFormValues) => void submit(values)}
       >
         <Form.Item
           label={mergedLabels.code}

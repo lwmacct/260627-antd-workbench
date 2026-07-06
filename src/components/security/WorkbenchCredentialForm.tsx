@@ -171,7 +171,7 @@ export function WorkbenchCredentialForm({
           form={form}
           layout="vertical"
           requiredMark={false}
-          onFinish={(values) => void submit(values)}
+          onFinish={(values: CredentialFormValues) => void submit(values)}
         >
           <Form.Item
             label={mergedLabels.username}

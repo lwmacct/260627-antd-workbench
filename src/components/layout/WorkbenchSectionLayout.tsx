@@ -44,6 +44,7 @@ export function WorkbenchSectionLayout({
     onSelect(key);
     setMobileOpen(false);
   }
+  const handleMenuClick = ({ key }: { key: string }) => handleSelect(key);
 
   return (
     <Layout className={cx("wb-section", className)}>
@@ -56,7 +57,7 @@ export function WorkbenchSectionLayout({
           items={menuItems}
           mode="inline"
           selectedKeys={[selectedKey]}
-          onClick={({ key }) => handleSelect(key)}
+          onClick={handleMenuClick}
         />
       </Layout.Sider>
       <Layout.Content className={cx("wb-section__content", contentClassName)}>
@@ -92,10 +93,9 @@ export function WorkbenchSectionLayout({
           items={menuItems}
           mode="inline"
           selectedKeys={[selectedKey]}
-          onClick={({ key }) => handleSelect(key)}
+          onClick={handleMenuClick}
         />
       </Drawer>
     </Layout>
   );
 }
-
