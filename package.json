@@ -4,6 +4,16 @@
   "private": false,
   "packageManager": "pnpm@11.10.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
+  "scripts": {
+    "build": "vite build",
+    "build:example": "vite build --config vite.example.config.ts",
+    "dev": "vite --config vite.example.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.example.json --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "engines": {
+    "npm": "please-use-pnpm"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,13 +57,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "build": "vite build",
-    "build:example": "vite build --config vite.example.config.ts",
-    "dev": "vite --config vite.example.config.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.example.json --noEmit",
-    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@ant-design/icons": "^6.0.0",
