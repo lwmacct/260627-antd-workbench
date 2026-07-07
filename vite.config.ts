@@ -2,6 +2,12 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
+const peerExternals = ["@ant-design/icons", "antd", "react", "react-dom"];
+
+function isPeerExternal(id: string) {
+  return peerExternals.some((peer) => id === peer || id.startsWith(`${peer}/`));
+}
+
 export default defineConfig({
   plugins: [
     react(),
@@ -25,14 +31,8 @@ export default defineConfig({
       formats: ["es"],
       fileName: (_, entryName) => `${entryName}.js`,
     },
-    rollupOptions: {
-      external: [
-        "react",
-        "react/jsx-runtime",
-        "react-dom",
-        "antd",
-        "@ant-design/icons",
-      ],
+    rolldownOptions: {
+      external: isPeerExternal,
     },
   },
 });
