@@ -1,6 +1,5 @@
 import { Progress, Space } from "antd";
-import Card from "antd/es/card/Card";
-import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";
+import { WorkbenchPage, WorkbenchPanel } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
 export function CapacityRoute() {
@@ -11,13 +10,13 @@ export function CapacityRoute() {
       description={text.workspace.capacityDescription}
       title={text.workspace.capacity}
     >
-      <Card className="example-panel" title={text.workspace.capacityUsage}>
+      <WorkbenchPanel title={text.workspace.capacityUsage}>
         <Space className="example-health" orientation="vertical" size={14}>
           <Progress percent={68} />
           <Progress percent={82} strokeColor="var(--wb-warning)" />
           <Progress percent={36} />
         </Space>
-      </Card>
+      </WorkbenchPanel>
     </WorkbenchPage>
   );
 }

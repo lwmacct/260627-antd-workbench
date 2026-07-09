@@ -1,11 +1,11 @@
 import { SafetyCertificateOutlined } from "@ant-design/icons";
 import { Alert, Button, Space } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchPage,
   WorkbenchVerificationModal,
   type WorkbenchVerificationSubmitValues,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { assertExampleVerification } from "./demo";
@@ -26,7 +26,7 @@ export function VerificationModalRoute() {
       description={text.components.verificationModalDescription}
       title={text.components.verificationModal}
     >
-      <Card className="example-panel">
+      <WorkbenchPanel>
         <Space className="example-components-actions" direction="vertical" size={12}>
           <Button
             icon={<SafetyCertificateOutlined />}
@@ -37,7 +37,7 @@ export function VerificationModalRoute() {
           </Button>
           {status ? <Alert message={status} showIcon type="success" /> : null}
         </Space>
-      </Card>
+      </WorkbenchPanel>
       <WorkbenchVerificationModal
         description={text.security.sensitiveActionDescription}
         labels={text.security.verificationLabels}

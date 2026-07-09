@@ -1,8 +1,8 @@
 import { Button, Descriptions } from "antd";
-import Card from "antd/es/card/Card";
 import {
   useWorkbenchVerification,
   WorkbenchPage,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
@@ -21,8 +21,7 @@ export function ProfileRoute() {
 
   return (
     <WorkbenchPage description={text.settings.profileDescription} title={text.settings.profile}>
-      <Card
-        className="example-panel"
+      <WorkbenchPanel
         extra={
           <Button onClick={() => void verifySensitiveAction()}>
             {text.security.sensitiveAction}
@@ -37,7 +36,7 @@ export function ProfileRoute() {
             { key: "role", label: text.settings.role, children: "Operator" },
           ]}
         />
-      </Card>
+      </WorkbenchPanel>
     </WorkbenchPage>
   );
 }

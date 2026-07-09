@@ -193,6 +193,25 @@
 }
 
 .wb-page__content {
+  display: grid;
+  gap: 12px;
   min-width: 0;
 }
 
+.wb-panel {
+  min-width: 0;
+  box-shadow: none;
+}
+
+.wb-panel--full {
+  width: 100%;
+}
+
+.wb-panel .ant-card-head {
+  min-height: 40px;
+  padding-inline: 12px;
+}
+
+.wb-panel .ant-card-body {
+  padding: 12px;
+}

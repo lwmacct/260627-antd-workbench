@@ -35,6 +35,7 @@ export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguage
 export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
 export { WorkbenchCenterState } from "./components/layout/WorkbenchCenterState";
 export { WorkbenchPage } from "./components/layout/WorkbenchPage";
+export { WorkbenchPanel } from "./components/layout/WorkbenchPanel";
 export { WorkbenchSectionLayout } from "./components/layout/WorkbenchSectionLayout";
 export { WorkbenchSplitWorkspace } from "./components/layout/WorkbenchSplitWorkspace";
 export { WorkbenchAppearanceSettings } from "./components/settings/WorkbenchAppearanceSettings";
@@ -121,6 +122,7 @@ export type {
 } from "./components/controls/WorkbenchThemeToggle";
 export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";
 export type { WorkbenchPageProps } from "./components/layout/WorkbenchPage";
+export type { WorkbenchPanelProps } from "./components/layout/WorkbenchPanel";
 export type {
   WorkbenchSectionLayoutLabels,
   WorkbenchSectionLayoutProps,

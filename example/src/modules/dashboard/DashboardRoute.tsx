@@ -5,13 +5,13 @@ import {
   WarningOutlined,
 } from "@ant-design/icons";
 import { Alert, Button, Col, Progress, Row, Space, Table, Tag, Typography } from "antd";
-import Card from "antd/es/card/Card";
 import type { ColumnsType } from "antd/es/table";
 import { useState, type ReactNode } from "react";
 import {
   WorkbenchPage,
   WorkbenchVerificationProvider,
   useWorkbenchVerification,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../shared/i18n";
 
@@ -79,16 +79,16 @@ export function DashboardRoute() {
           <MetricCard icon={<WarningOutlined />} label={text.dashboard.blocked} value="3" />
         </Col>
       </Row>
-      <Card className="example-panel" title={text.dashboard.health}>
+      <WorkbenchPanel title={text.dashboard.health}>
         <Space className="example-health" orientation="vertical" size={14}>
           <Progress percent={92} status="active" />
           <Progress percent={74} strokeColor="var(--wb-warning)" />
           <Progress percent={38} status="exception" />
         </Space>
-      </Card>
-      <Card className="example-panel" title={text.dashboard.queue}>
+      </WorkbenchPanel>
+      <WorkbenchPanel title={text.dashboard.queue}>
         <Table columns={columns} dataSource={queue} pagination={false} size="middle" />
-      </Card>
+      </WorkbenchPanel>
       <WorkbenchVerificationProvider
         labels={text.security.verificationLabels}
         onVerify={(values) => {
@@ -105,7 +105,7 @@ export function DashboardRoute() {
 
 function MetricCard({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <Card className="example-metric">
+    <WorkbenchPanel className="example-metric">
       <Space align="center" size={12}>
         <span className="example-metric__icon">{icon}</span>
         <span>
@@ -113,7 +113,7 @@ function MetricCard({ icon, label, value }: { icon: ReactNode; label: string; va
           <Typography.Title level={2}>{value}</Typography.Title>
         </span>
       </Space>
-    </Card>
+    </WorkbenchPanel>
   );
 }
 
@@ -146,8 +146,7 @@ function SensitiveActionCard() {
     ) : null;
 
   return (
-    <Card
-      className="example-panel"
+    <WorkbenchPanel
       extra={
         <Button icon={<LockOutlined />} type="primary" onClick={handleVerify}>
           {text.security.sensitiveAction}
@@ -161,6 +160,6 @@ function SensitiveActionCard() {
         </Typography.Text>
         {alert}
       </Space>
-    </Card>
+    </WorkbenchPanel>
   );
 }

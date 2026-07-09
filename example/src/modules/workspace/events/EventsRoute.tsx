@@ -1,6 +1,5 @@
 import { Timeline } from "antd";
-import Card from "antd/es/card/Card";
-import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";
+import { WorkbenchPage, WorkbenchPanel } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
 export function EventsRoute() {
@@ -8,7 +7,7 @@ export function EventsRoute() {
 
   return (
     <WorkbenchPage description={text.workspace.eventsDescription} title={text.workspace.events}>
-      <Card className="example-panel">
+      <WorkbenchPanel>
         <Timeline
           items={[
             { color: "green", content: text.workspace.eventItems[0] },
@@ -16,7 +15,7 @@ export function EventsRoute() {
             { color: "gold", content: text.workspace.eventItems[2] },
           ]}
         />
-      </Card>
+      </WorkbenchPanel>
     </WorkbenchPage>
   );
 }

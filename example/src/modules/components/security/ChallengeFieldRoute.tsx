@@ -1,10 +1,10 @@
 import { Alert, Button, Col, Row, Space, Typography } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchChallengeField,
   WorkbenchPage,
   type WorkbenchChallengeResponse,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { createExampleImageChallenge } from "./demo";
@@ -21,7 +21,7 @@ export function ChallengeFieldRoute() {
     >
       <Row gutter={[12, 12]}>
         <Col xs={24} lg={12}>
-          <Card className="example-panel" title={text.components.imageChallenge}>
+          <WorkbenchPanel title={text.components.imageChallenge}>
             <Space className="example-components-actions" direction="vertical" size={10}>
               <WorkbenchChallengeField
                 config={{ provider: "image" }}
@@ -37,10 +37,10 @@ export function ChallengeFieldRoute() {
               ) : null}
               {challengeError ? <Alert message={challengeError} showIcon type="error" /> : null}
             </Space>
-          </Card>
+          </WorkbenchPanel>
         </Col>
         <Col xs={24} lg={12}>
-          <Card className="example-panel" title={text.components.remoteChallenge}>
+          <WorkbenchPanel title={text.components.remoteChallenge}>
             <WorkbenchChallengeField
               config={{ provider: "turnstile", sitekey: "example-site-key" }}
               labels={text.security.credentialLabels.challenge}
@@ -64,7 +64,7 @@ export function ChallengeFieldRoute() {
                 </Space>
               )}
             />
-          </Card>
+          </WorkbenchPanel>
         </Col>
       </Row>
     </WorkbenchPage>

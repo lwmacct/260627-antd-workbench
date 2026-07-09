@@ -1,7 +1,7 @@
-import Card from "antd/es/card/Card";
 import {
   WorkbenchAppearanceSettings,
   WorkbenchPage,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
@@ -13,9 +13,9 @@ export function AppearanceRoute() {
       description={text.settings.appearanceDescription}
       title={text.settings.appearance}
     >
-      <Card className="example-panel" title={text.settings.appearanceCard}>
+      <WorkbenchPanel title={text.settings.appearanceCard}>
         <WorkbenchAppearanceSettings labels={text.settings.appearanceLabels} />
-      </Card>
+      </WorkbenchPanel>
     </WorkbenchPage>
   );
 }

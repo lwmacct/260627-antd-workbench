@@ -1,12 +1,12 @@
 import { LoginOutlined } from "@ant-design/icons";
 import { Alert, Button, Space } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchCredentialModal,
   WorkbenchPage,
   type WorkbenchCredentialMode,
   type WorkbenchCredentialSubmitValues,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { createExampleImageChallenge, exampleCredentialConfig } from "./demo";
@@ -27,14 +27,14 @@ export function CredentialModalRoute() {
       description={text.components.credentialModalDescription}
       title={text.components.credentialModal}
     >
-      <Card className="example-panel">
+      <WorkbenchPanel>
         <Space className="example-components-actions" direction="vertical" size={12}>
           <Button icon={<LoginOutlined />} type="primary" onClick={() => setOpen(true)}>
             {text.components.openCredentialModal}
           </Button>
           {status ? <Alert message={status} showIcon type="success" /> : null}
         </Space>
-      </Card>
+      </WorkbenchPanel>
       <WorkbenchCredentialModal
         config={exampleCredentialConfig}
         createImageChallenge={createExampleImageChallenge}

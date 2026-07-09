@@ -33,6 +33,7 @@ import "@lwmacct/260627-antd-workbench/styles.css";
 import {
   WorkbenchLanguageToggle,
   WorkbenchPage,
+  WorkbenchPanel,
   WorkbenchProvider,
   WorkbenchShell,
   WorkbenchThemeToggle,
@@ -61,7 +62,9 @@ export function App() {
         selectedNavKey="dashboard"
         onSelectNav={(key) => console.log(key)}
       >
-        <WorkbenchPage title="Dashboard">业务页面内容</WorkbenchPage>
+        <WorkbenchPage title="Dashboard">
+          <WorkbenchPanel title="Queue">业务页面内容</WorkbenchPanel>
+        </WorkbenchPage>
       </WorkbenchShell>
     </WorkbenchProvider>
   );
@@ -124,6 +127,7 @@ example/
 | `WorkbenchShell` | 全屏应用外壳，包含顶部栏和可滚动内容区。 |
 | `WorkbenchHeader` | 独立顶部栏组件，通常由 `WorkbenchShell` 内部使用。 |
 | `WorkbenchPage` | 页面标题、描述、操作区和内容容器。 |
+| `WorkbenchPanel` | 标准内容面板，基于 Ant Design `Card`，用于业务页面里的信息块、表单和表格容器。 |
 | `WorkbenchSectionLayout` | 设置页或分组页面的侧边导航布局。 |
 | `WorkbenchSplitWorkspace` | 通用侧栏加工作区布局。 |
 | `WorkbenchAppearanceSettings` | 外观设置面板，必须在 `WorkbenchProvider` 下使用。 |
@@ -155,6 +159,10 @@ example/
 - `--wb-text`
 - `--wb-accent`
 - `--wb-control-radius`
+
+公共主题变量只使用 `--wb-*` 命名空间。业务应用不应把这些 token 复制成 `--app-*`
+等自定义别名；页面面板优先使用 `WorkbenchPanel` 或 Ant Design token，避免在业务 CSS
+中覆盖卡片背景和边框颜色。
 
 ## 示例应用
 

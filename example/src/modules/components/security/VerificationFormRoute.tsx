@@ -1,10 +1,10 @@
 import { Alert } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchPage,
   WorkbenchVerificationForm,
   type WorkbenchVerificationSubmitValues,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { assertExampleVerification } from "./demo";
@@ -23,7 +23,7 @@ export function VerificationFormRoute() {
       description={text.components.verificationFormDescription}
       title={text.components.verificationForm}
     >
-      <Card className="example-panel">
+      <WorkbenchPanel>
         <WorkbenchVerificationForm
           description={text.security.sensitiveActionDescription}
           labels={text.security.verificationLabels}
@@ -35,8 +35,8 @@ export function VerificationFormRoute() {
           title={text.security.sensitiveAction}
           onSubmit={submit}
         />
-      </Card>
-      {status ? <Alert className="example-panel" message={status} showIcon type="success" /> : null}
+      </WorkbenchPanel>
+      {status ? <Alert message={status} showIcon type="success" /> : null}
     </WorkbenchPage>
   );
 }

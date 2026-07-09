@@ -1,7 +1,10 @@
 import { DatabaseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, Space, Tag, Typography } from "antd";
-import Card from "antd/es/card/Card";
-import { WorkbenchPage, WorkbenchSplitWorkspace } from "@lwmacct/260627-antd-workbench";
+import {
+  WorkbenchPage,
+  WorkbenchPanel,
+  WorkbenchSplitWorkspace,
+} from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 
 const services = ["Identity", "Billing", "Gateway", "Console", "Scheduler"];
@@ -44,7 +47,7 @@ export function ServicesRoute() {
       >
         <div className="example-workspace-grid">
           {cards.map((title, index) => (
-            <Card key={title} className="example-panel" title={title}>
+            <WorkbenchPanel key={title} title={title}>
               <Typography.Paragraph>
                 {index % 2 === 0
                   ? text.workspace.stableServiceCopy
@@ -53,7 +56,7 @@ export function ServicesRoute() {
               <Tag color={index === 1 ? "gold" : "green"}>
                 {index === 1 ? text.workspace.pending : text.workspace.healthy}
               </Tag>
-            </Card>
+            </WorkbenchPanel>
           ))}
         </div>
       </WorkbenchSplitWorkspace>

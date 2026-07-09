@@ -1,11 +1,11 @@
 import { Alert } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchCredentialForm,
   WorkbenchPage,
   type WorkbenchCredentialMode,
   type WorkbenchCredentialSubmitValues,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { createExampleImageChallenge, exampleCredentialConfig } from "./demo";
@@ -24,7 +24,7 @@ export function CredentialFormRoute() {
       description={text.components.credentialFormDescription}
       title={text.components.credentialForm}
     >
-      <Card className="example-panel">
+      <WorkbenchPanel>
         <WorkbenchCredentialForm
           config={exampleCredentialConfig}
           createImageChallenge={createExampleImageChallenge}
@@ -36,8 +36,8 @@ export function CredentialFormRoute() {
           }
           onSubmit={submit}
         />
-      </Card>
-      {status ? <Alert className="example-panel" message={status} showIcon type="success" /> : null}
+      </WorkbenchPanel>
+      {status ? <Alert message={status} showIcon type="success" /> : null}
     </WorkbenchPage>
   );
 }

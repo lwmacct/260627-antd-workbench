@@ -1,12 +1,12 @@
 import { LockOutlined } from "@ant-design/icons";
 import { Alert, Button, Space, Typography } from "antd";
-import Card from "antd/es/card/Card";
 import { useState } from "react";
 import {
   WorkbenchPage,
   WorkbenchVerificationProvider,
   useWorkbenchVerification,
   type WorkbenchVerificationResult,
+  WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
 import { assertExampleVerification } from "./demo";
@@ -53,7 +53,7 @@ function VerificationProviderCard() {
   }
 
   return (
-    <Card className="example-panel">
+    <WorkbenchPanel>
       <Space className="example-components-actions" direction="vertical" size={12}>
         <Typography.Text type="secondary">
           {text.components.verificationProviderDescription}
@@ -68,6 +68,6 @@ function VerificationProviderCard() {
           <Alert message={text.security.sensitiveActionCancelled} showIcon type="info" />
         ) : null}
       </Space>
-    </Card>
+    </WorkbenchPanel>
   );
 }
