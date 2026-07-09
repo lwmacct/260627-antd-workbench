@@ -1,5 +1,6 @@
 import {
   AppstoreOutlined,
+  BlockOutlined,
   ExperimentOutlined,
   GithubOutlined,
   LoginOutlined,
@@ -20,6 +21,7 @@ type ShellNav = WorkbenchShellProps["nav"];
 
 const navTargets: Record<TopNavKey, string> = {
   dashboard: examplePaths.dashboard,
+  components: examplePaths.components,
   security: examplePaths.security,
   settings: examplePaths.settings,
   workspace: examplePaths.workspace,
@@ -30,9 +32,11 @@ export function ExampleShell() {
   const location = useLocation();
   const navigate = useNavigate();
   const activeNavKey = topNavFromPathname(location.pathname);
-  const flushContent = activeNavKey === "settings" || activeNavKey === "workspace";
+  const flushContent =
+    activeNavKey === "components" || activeNavKey === "settings" || activeNavKey === "workspace";
   const topNav: ShellNav = [
     { icon: <AppstoreOutlined />, key: "dashboard", label: text.shell.dashboard },
+    { icon: <BlockOutlined />, key: "components", label: text.shell.components },
     { icon: <ExperimentOutlined />, key: "workspace", label: text.shell.workspace },
     { icon: <SettingOutlined />, key: "settings", label: text.shell.settings },
     { icon: <LoginOutlined />, key: "security", label: text.shell.security },

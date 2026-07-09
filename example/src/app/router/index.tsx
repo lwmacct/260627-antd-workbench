@@ -1,4 +1,5 @@
 import { Navigate, Outlet, createHashRouter } from "react-router-dom";
+import { componentsRoutes } from "../../modules/components/routes";
 import { dashboardRoute } from "../../modules/dashboard/routes";
 import { securityRoutes } from "../../modules/security/routes";
 import { settingsRoutes } from "../../modules/settings/routes";
@@ -20,6 +21,7 @@ export const router = createHashRouter([
         element: <ExampleShell />,
         children: [
           dashboardRoute,
+          componentsRoutes,
           workspaceRoutes,
           settingsRoutes,
         ],

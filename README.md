@@ -164,7 +164,7 @@ pnpm run dev
 
 示例应用位于 `example/`，通过包名导入本库，开发时由 `vite.example.config.ts` alias 到本地 `src/`。
 
-示例首页包含 `WorkbenchVerificationProvider` 的页面内敏感操作验证；安全路由包含整页登录、注册和二次验证流程。
+示例首页包含 `WorkbenchVerificationProvider` 的页面内敏感操作验证；`Components` 导航使用左侧菜单拆分展示 security 表单、弹窗、抽屉、Provider 和 challenge 控件；安全路由包含整页登录、注册和二次验证流程。
 
 ## 开发
 

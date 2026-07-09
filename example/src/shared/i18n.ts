@@ -6,6 +6,39 @@ import {
 } from "@lwmacct/260627-antd-workbench";
 
 interface ExampleText {
+  components: {
+    challengeField: string;
+    challengeFieldDescription: string;
+    challengeGroup: string;
+    challengeReady: string;
+    credentialDrawer: string;
+    credentialDrawerDescription: string;
+    credentialForm: string;
+    credentialFormDescription: string;
+    credentialGroup: string;
+    credentialModal: string;
+    credentialModalDescription: string;
+    credentialSubmitted(mode: string, username: string): string;
+    imageChallenge: string;
+    oauthSelected(provider: string): string;
+    openCredentialDrawer: string;
+    openCredentialModal: string;
+    openVerificationDrawer: string;
+    openVerificationModal: string;
+    remoteChallenge: string;
+    remoteChallengeAdapter(provider: string): string;
+    resolveRemoteChallenge: string;
+    verificationForm: string;
+    verificationFormDescription: string;
+    verificationGroup: string;
+    verificationModal: string;
+    verificationModalDescription: string;
+    verificationDrawer: string;
+    verificationDrawerDescription: string;
+    verificationProvider: string;
+    verificationProviderDescription: string;
+    verificationSubmitted(method: string): string;
+  };
   security: {
     back: string;
     backToLogin: string;
@@ -54,6 +87,7 @@ interface ExampleText {
     role: string;
   };
   shell: {
+    components: string;
     dashboard: string;
     security: string;
     source: string;
@@ -81,6 +115,40 @@ interface ExampleText {
 }
 
 const zh: ExampleText = {
+  components: {
+    challengeField: "ChallengeField",
+    challengeFieldDescription: "演示图片验证码和远程 challenge adapter 的接入方式。",
+    challengeGroup: "Challenge",
+    challengeReady: "验证码响应已生成。",
+    credentialDrawer: "CredentialDrawer",
+    credentialDrawerDescription: "抽屉容器适合从当前工作流侧边拉起登录或注册。",
+    credentialForm: "账号表单",
+    credentialFormDescription: "纯表单组件不绑定页面、弹窗或路由，适合嵌入业务自定义容器。",
+    credentialGroup: "账号",
+    credentialModal: "CredentialModal",
+    credentialModalDescription: "弹窗容器适合页面内临时登录、注册或重新认证入口。",
+    credentialSubmitted: (mode, username) =>
+      `${mode === "register" ? "注册" : "登录"}提交：${username}`,
+    imageChallenge: "图片验证码",
+    oauthSelected: (provider) => `选择了 ${provider} 登录。`,
+    openCredentialDrawer: "打开登录抽屉",
+    openCredentialModal: "打开登录弹窗",
+    openVerificationDrawer: "打开验证抽屉",
+    openVerificationModal: "打开验证弹窗",
+    remoteChallenge: "远程 Challenge 适配器",
+    remoteChallengeAdapter: (provider) => `${provider} 由业务应用渲染，这里演示 adapter 接入点。`,
+    resolveRemoteChallenge: "模拟通过",
+    verificationForm: "验证表单",
+    verificationFormDescription: "纯验证表单适合嵌入自定义面板，并由业务控制提交结果。",
+    verificationGroup: "验证",
+    verificationModal: "VerificationModal",
+    verificationModalDescription: "弹窗验证适合页面内敏感操作前的短流程确认。",
+    verificationDrawer: "VerificationDrawer",
+    verificationDrawerDescription: "抽屉验证适合侧边工作流或需要保留页面上下文的操作。",
+    verificationProvider: "VerificationProvider",
+    verificationProviderDescription: "Provider 提供 Promise 式编排，子组件可按需请求安全验证。",
+    verificationSubmitted: (method) => `${method} 验证已提交。`,
+  },
   security: {
     back: "返回总览",
     backToLogin: "返回登录",
@@ -137,6 +205,7 @@ const zh: ExampleText = {
     role: "角色",
   },
   shell: {
+    components: "组件",
     dashboard: "总览",
     security: "安全",
     settings: "设置",
@@ -164,6 +233,48 @@ const zh: ExampleText = {
 };
 
 const en: ExampleText = {
+  components: {
+    challengeField: "ChallengeField",
+    challengeFieldDescription:
+      "Shows image challenges and the adapter point for remote challenge providers.",
+    challengeGroup: "Challenge",
+    challengeReady: "Challenge response is ready.",
+    credentialDrawer: "CredentialDrawer",
+    credentialDrawerDescription:
+      "The drawer surface opens credential flows beside the current workflow.",
+    credentialForm: "Credential form",
+    credentialFormDescription:
+      "The headless form can be embedded in an app-owned page, panel, or shell.",
+    credentialGroup: "Credential",
+    credentialModal: "CredentialModal",
+    credentialModalDescription:
+      "The modal surface fits temporary sign-in, registration, or re-authentication.",
+    credentialSubmitted: (mode, username) => `${mode} submitted for ${username}.`,
+    imageChallenge: "Image challenge",
+    oauthSelected: (provider) => `${provider} login selected.`,
+    openCredentialDrawer: "Open credential drawer",
+    openCredentialModal: "Open credential modal",
+    openVerificationDrawer: "Open verification drawer",
+    openVerificationModal: "Open verification modal",
+    remoteChallenge: "Remote challenge adapter",
+    remoteChallengeAdapter: (provider) =>
+      `${provider} is rendered by the app; this shows the adapter point.`,
+    resolveRemoteChallenge: "Resolve",
+    verificationForm: "Verification form",
+    verificationFormDescription:
+      "The verification form can be embedded in a custom panel while the app owns submit handling.",
+    verificationGroup: "Verification",
+    verificationModal: "VerificationModal",
+    verificationModalDescription:
+      "The modal surface fits short verification flows before sensitive actions.",
+    verificationDrawer: "VerificationDrawer",
+    verificationDrawerDescription:
+      "The drawer surface keeps page context visible during side workflows.",
+    verificationProvider: "VerificationProvider",
+    verificationProviderDescription:
+      "The provider exposes promise-based orchestration for in-page verification requests.",
+    verificationSubmitted: (method) => `${method} verification submitted.`,
+  },
   security: {
     back: "Back to dashboard",
     backToLogin: "Back to sign in",
@@ -276,6 +387,7 @@ const en: ExampleText = {
     role: "Role",
   },
   shell: {
+    components: "Components",
     dashboard: "Dashboard",
     security: "Security",
     settings: "Settings",
