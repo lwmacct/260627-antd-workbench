@@ -1,6 +1,5 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
 
 const peerExternals = ["@ant-design/icons", "antd", "react", "react-dom"];
 
@@ -9,13 +8,7 @@ function isPeerExternal(id: string) {
 }
 
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({
-      entryRoot: "src",
-      insertTypesEntry: true,
-    }),
-  ],
+  plugins: [react()],
   build: {
     cssCodeSplit: true,
     lib: {

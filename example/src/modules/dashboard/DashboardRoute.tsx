@@ -1,9 +1,18 @@
-import { CheckCircleOutlined, ClockCircleOutlined, WarningOutlined } from "@ant-design/icons";
-import { Button, Col, Progress, Row, Space, Table, Tag, Typography } from "antd";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  LockOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
+import { Alert, Button, Col, Progress, Row, Space, Table, Tag, Typography } from "antd";
 import Card from "antd/es/card/Card";
 import type { ColumnsType } from "antd/es/table";
-import type { ReactNode } from "react";
-import { WorkbenchPage } from "@lwmacct/260627-antd-workbench";
+import { useState, type ReactNode } from "react";
+import {
+  WorkbenchPage,
+  WorkbenchVerificationProvider,
+  useWorkbenchVerification,
+} from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../shared/i18n";
 
 interface QueueItem {
@@ -80,6 +89,16 @@ export function DashboardRoute() {
       <Card className="example-panel" title={text.dashboard.queue}>
         <Table columns={columns} dataSource={queue} pagination={false} size="middle" />
       </Card>
+      <WorkbenchVerificationProvider
+        labels={text.security.verificationLabels}
+        onVerify={(values) => {
+          if (!/^\d{6}$/.test(values.code ?? "")) {
+            throw new Error(String(text.security.verificationLabels.codeInvalid));
+          }
+        }}
+      >
+        <SensitiveActionCard />
+      </WorkbenchVerificationProvider>
     </WorkbenchPage>
   );
 }
@@ -93,6 +112,54 @@ function MetricCard({ icon, label, value }: { icon: ReactNode; label: string; va
           <Typography.Text type="secondary">{label}</Typography.Text>
           <Typography.Title level={2}>{value}</Typography.Title>
         </span>
+      </Space>
+    </Card>
+  );
+}
+
+function SensitiveActionCard() {
+  const text = useExampleText();
+  const { verify } = useWorkbenchVerification();
+  const [status, setStatus] = useState<"cancelled" | "idle" | "verified">("idle");
+
+  async function handleVerify() {
+    const result = await verify({
+      description: text.security.sensitiveActionDescription,
+      method: "totp",
+      purpose: "sensitive-action",
+      rememberOption: {
+        defaultChecked: true,
+        minutes: text.security.verificationRememberMinutes,
+      },
+      subject: text.dashboard.queue,
+      title: text.security.sensitiveAction,
+    });
+
+    setStatus(result.status);
+  }
+
+  const alert =
+    status === "verified" ? (
+      <Alert message={text.security.sensitiveActionVerified} showIcon type="success" />
+    ) : status === "cancelled" ? (
+      <Alert message={text.security.sensitiveActionCancelled} showIcon type="info" />
+    ) : null;
+
+  return (
+    <Card
+      className="example-panel"
+      extra={
+        <Button icon={<LockOutlined />} type="primary" onClick={handleVerify}>
+          {text.security.sensitiveAction}
+        </Button>
+      }
+      title={text.security.sensitiveActionTitle}
+    >
+      <Space className="example-sensitive-action" direction="vertical" size={12}>
+        <Typography.Text type="secondary">
+          {text.security.sensitiveActionDescription}
+        </Typography.Text>
+        {alert}
       </Space>
     </Card>
   );

@@ -61,3 +61,7 @@
 .example-security-back.ant-btn {
   padding-inline: 0;
 }
+
+.example-sensitive-action {
+  width: 100%;
+}

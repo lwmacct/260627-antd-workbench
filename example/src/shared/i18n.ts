@@ -12,6 +12,10 @@ interface ExampleText {
     challengeTypeError: string;
     credentialLabels: WorkbenchCredentialLabels;
     sensitiveAction: string;
+    sensitiveActionCancelled: string;
+    sensitiveActionDescription: string;
+    sensitiveActionTitle: string;
+    sensitiveActionVerified: string;
     verificationDescription(subject?: string): string;
     verificationLabels: WorkbenchVerificationLabels;
     verificationRememberMinutes: number;
@@ -83,6 +87,10 @@ const zh: ExampleText = {
     challengeTypeError: "验证码类型不匹配",
     credentialLabels: {},
     sensitiveAction: "敏感操作验证",
+    sensitiveActionCancelled: "验证已取消，操作未执行。",
+    sensitiveActionDescription: "页面内敏感操作通过 Provider 拉起验证弹窗，验证成功后再继续业务动作。",
+    sensitiveActionTitle: "页面内验证",
+    sensitiveActionVerified: "验证通过，可以继续执行敏感操作。",
     verificationDescription: (subject) =>
       subject ? `请输入 ${subject} 的安全验证码。` : "请输入安全验证码以继续操作。",
     verificationLabels: {
@@ -195,6 +203,11 @@ const en: ExampleText = {
       usernameRequired: "Enter your username",
     },
     sensitiveAction: "Sensitive action verification",
+    sensitiveActionCancelled: "Verification was cancelled. No action was applied.",
+    sensitiveActionDescription:
+      "Sensitive in-page actions can request verification through the provider before continuing.",
+    sensitiveActionTitle: "In-page verification",
+    sensitiveActionVerified: "Verification passed. The sensitive action can continue.",
     verificationDescription: (subject) =>
       subject
         ? `Enter the security code for ${subject}.`
