@@ -2,7 +2,7 @@
   "name": "@lwmacct/260627-antd-workbench",
   "version": "0.46.260709",
   "private": false,
-  "packageManager": "pnpm@11.10.0",
+  "packageManager": "pnpm@11.11.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
   "scripts": {
     "build": "vite build && tsc -p tsconfig.json --emitDeclarationOnly",
