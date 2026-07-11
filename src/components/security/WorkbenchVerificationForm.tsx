@@ -2,10 +2,7 @@ import { LockOutlined } from "@ant-design/icons";
 import { Alert, Button, Checkbox, Form, Input, Space, Typography } from "antd";
 import { useEffect, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
-import {
-  defaultWorkbenchVerificationLabels,
-  type WorkbenchVerificationLabels,
-} from "./labels";
+import { useWorkbenchLocale } from "../../locale/context";
 import type {
   WorkbenchVerificationMethod,
   WorkbenchVerificationPurpose,
@@ -22,7 +19,6 @@ export interface WorkbenchVerificationFormProps {
   className?: string;
   description?: ReactNode;
   error?: ReactNode;
-  labels?: WorkbenchVerificationLabels;
   loading?: boolean;
   method?: WorkbenchVerificationMethod;
   purpose: WorkbenchVerificationPurpose;
@@ -35,7 +31,6 @@ export function WorkbenchVerificationForm({
   className,
   description,
   error,
-  labels,
   loading = false,
   method = "totp",
   purpose,
@@ -43,8 +38,9 @@ export function WorkbenchVerificationForm({
   title,
   onSubmit,
 }: WorkbenchVerificationFormProps) {
+  const { messages } = useWorkbenchLocale();
   const [form] = Form.useForm<VerificationFormValues>();
-  const mergedLabels = { ...defaultWorkbenchVerificationLabels, ...labels };
+  const mergedLabels = messages.verification;
   const resolvedRememberOption = rememberOption === false ? undefined : rememberOption;
   const rememberEnabled = resolvedRememberOption?.enabled !== false;
   const rememberMinutes = resolvedRememberOption?.minutes ?? 0;

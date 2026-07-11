@@ -14,7 +14,7 @@ export function AppearanceRoute() {
       title={text.settings.appearance}
     >
       <WorkbenchPanel title={text.settings.appearanceCard}>
-        <WorkbenchAppearanceSettings labels={text.settings.appearanceLabels} />
+        <WorkbenchAppearanceSettings />
       </WorkbenchPanel>
     </WorkbenchPage>
   );

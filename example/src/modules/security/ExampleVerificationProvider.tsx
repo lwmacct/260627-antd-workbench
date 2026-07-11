@@ -17,7 +17,6 @@ export function ExampleVerificationProvider({ children }: { children: ReactNode 
 
   return (
     <WorkbenchVerificationProvider
-      labels={text.security.verificationLabels}
       surface="modal"
       onVerify={verify}
     >

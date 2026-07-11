@@ -14,6 +14,7 @@ import type {
 } from "../../appearance/model";
 import { useWorkbenchAppearance } from "../../provider/WorkbenchProvider";
 import { cx } from "../../shared/cx";
+import { useWorkbenchLocale } from "../../locale/context";
 import { workbenchSchemes } from "../../theme/schemes";
 
 export type WorkbenchAppearanceSettingsSection =
@@ -49,7 +50,6 @@ export interface WorkbenchAppearanceSettingsLabels {
 
 export interface WorkbenchAppearanceSettingsProps {
   className?: string;
-  labels?: WorkbenchAppearanceSettingsLabels;
   sections?: WorkbenchAppearanceSettingsSection[];
 }
 
@@ -65,9 +65,10 @@ const allSections: WorkbenchAppearanceSettingsSection[] = [
 
 export function WorkbenchAppearanceSettings({
   className,
-  labels,
   sections = allSections,
 }: WorkbenchAppearanceSettingsProps) {
+  const { messages } = useWorkbenchLocale();
+  const labels = messages.appearance;
   const { appearance, palette, patchAppearance, resetAppearance, resolvedMode } =
     useWorkbenchAppearance();
   const visibleSections = new Set(sections);
@@ -75,13 +76,13 @@ export function WorkbenchAppearanceSettings({
   return (
     <div className={cx("wb-appearance-settings", className)}>
       {visibleSections.has("mode") ? (
-        <AppearanceField label={labels?.mode ?? "主题"}>
+        <AppearanceField label={labels.mode}>
           <Segmented<WorkbenchThemeMode>
             block
             options={[
-              { label: labels?.dark ?? "深色", value: "dark" },
-              { label: labels?.light ?? "浅色", value: "light" },
-              { label: labels?.system ?? "跟随系统", value: "system" },
+              { label: labels.dark, value: "dark" },
+              { label: labels.light, value: "light" },
+              { label: labels.system, value: "system" },
             ]}
             value={appearance.mode}
             onChange={(mode: WorkbenchThemeMode) => patchAppearance({ mode })}
@@ -90,7 +91,7 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("scheme") ? (
-        <AppearanceField label={labels?.scheme ?? "方案"}>
+        <AppearanceField label={labels.scheme}>
           <div className="wb-appearance-settings__schemes">
             {workbenchSchemes.map((scheme) => (
               <button
@@ -116,7 +117,7 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("surface") ? (
-        <AppearanceField label={labels?.surface ?? "底色"}>
+        <AppearanceField label={labels.surface}>
           <Segmented<WorkbenchSurfaceTone>
             block
             options={workbenchSurfaceTones.map((surface) => ({
@@ -130,7 +131,7 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("accent") ? (
-        <AppearanceField label={labels?.accent ?? "主色"}>
+        <AppearanceField label={labels.accent}>
           <Space className="wb-appearance-settings__swatches" size={8} wrap>
             {workbenchAccentPresets.map((preset) => (
               <button
@@ -150,7 +151,7 @@ export function WorkbenchAppearanceSettings({
             ))}
             <label className="wb-appearance-settings__color">
               <input
-                aria-label={labels?.customAccent ?? "自定义主色"}
+                aria-label={labels.customAccent}
                 type="color"
                 value={appearance.accent}
                 onChange={(event) => patchAppearance({ accent: event.target.value })}
@@ -161,13 +162,13 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("density") ? (
-        <AppearanceField label={labels?.density ?? "密度"}>
+        <AppearanceField label={labels.density}>
           <Segmented<WorkbenchDensity>
             block
             options={[
-              { label: labels?.comfortable ?? "舒适", value: "comfortable" },
-              { label: labels?.compact ?? "紧凑", value: "compact" },
-              { label: labels?.spacious ?? "宽松", value: "spacious" },
+              { label: labels.comfortable, value: "comfortable" },
+              { label: labels.compact, value: "compact" },
+              { label: labels.spacious, value: "spacious" },
             ]}
             value={appearance.density}
             onChange={(density: WorkbenchDensity) => patchAppearance({ density })}
@@ -176,7 +177,7 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("radius") ? (
-        <AppearanceField label={labels?.radius ?? "圆角"}>
+        <AppearanceField label={labels.radius}>
           <Flex align="center" gap={12}>
             <Slider
               className="wb-appearance-settings__radius"
@@ -193,7 +194,7 @@ export function WorkbenchAppearanceSettings({
       ) : null}
 
       {visibleSections.has("preview") ? (
-        <AppearanceField label={labels?.preview ?? "预览"}>
+        <AppearanceField label={labels.preview}>
           <div className="wb-appearance-settings__preview">
             <div className="wb-appearance-settings__preview-sidebar">
               <span />
@@ -219,7 +220,7 @@ export function WorkbenchAppearanceSettings({
 
       <Flex justify="flex-end">
         <Button icon={<ReloadOutlined />} onClick={resetAppearance}>
-          {labels?.reset ?? "重置"}
+          {labels.reset}
         </Button>
       </Flex>
     </div>
@@ -245,18 +246,18 @@ function AppearanceField({
 
 function surfaceLabel(
   surface: WorkbenchSurfaceTone,
-  labels?: WorkbenchAppearanceSettingsLabels,
+  labels: Required<WorkbenchAppearanceSettingsLabels>,
 ): ReactNode {
   if (surface === "black") {
-    return labels?.black ?? "黑";
+    return labels.black;
   }
   if (surface === "soft") {
-    return labels?.soft ?? "柔";
+    return labels.soft;
   }
   if (surface === "tinted") {
-    return labels?.tinted ?? "染";
+    return labels.tinted;
   }
-  return labels?.deep ?? "深";
+  return labels.deep;
 }
 
 export type { WorkbenchAppearance };

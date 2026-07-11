@@ -1,17 +1,13 @@
 import { GithubOutlined, GoogleOutlined, LoginOutlined } from "@ant-design/icons";
 import { Button, Space, type ButtonProps } from "antd";
 import type { ReactNode } from "react";
-import {
-  defaultWorkbenchOAuthButtonsLabels,
-  type WorkbenchOAuthButtonsLabels,
-} from "./labels";
+import { useWorkbenchLocale } from "../../locale/context";
 import type { WorkbenchOAuthProvider } from "./model";
 
 export interface WorkbenchOAuthButtonsProps {
   block?: boolean;
   className?: string;
   disabled?: boolean;
-  labels?: WorkbenchOAuthButtonsLabels;
   loadingProvider?: string;
   providers: WorkbenchOAuthProvider[];
   size?: ButtonProps["size"];
@@ -22,13 +18,12 @@ export function WorkbenchOAuthButtons({
   block = true,
   className,
   disabled,
-  labels,
   loadingProvider,
   providers,
   size,
   onSelect,
 }: WorkbenchOAuthButtonsProps) {
-  const mergedLabels = { ...defaultWorkbenchOAuthButtonsLabels, ...labels };
+  const { messages } = useWorkbenchLocale();
 
   if (providers.length === 0) {
     return null;
@@ -46,7 +41,7 @@ export function WorkbenchOAuthButtons({
           size={size}
           onClick={() => onSelect(provider)}
         >
-          {mergedLabels.loginWith(provider.label)}
+          {messages.oauth.loginWith(provider.label)}
         </Button>
       ))}
     </Space>

@@ -54,7 +54,6 @@ export function CredentialRoute({ mode }: { mode: WorkbenchCredentialMode }) {
       }}
       createImageChallenge={createImageChallenge}
       error={error}
-      labels={text.security.credentialLabels}
       mode={mode}
       panelExtra={
         <Button

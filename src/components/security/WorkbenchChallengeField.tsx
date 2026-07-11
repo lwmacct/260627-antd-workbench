@@ -2,7 +2,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useCallback, useEffect, useState, type ChangeEvent, type ReactNode } from "react";
 import type { WorkbenchChallengeFieldLabels } from "./labels";
-import { defaultWorkbenchChallengeFieldLabels } from "./labels";
+import { useWorkbenchLocale } from "../../locale/context";
 import type {
   WorkbenchChallengeConfig,
   WorkbenchChallengeResponse,
@@ -21,7 +21,6 @@ export interface WorkbenchChallengeFieldProps {
   config: WorkbenchChallengeConfig;
   createImageChallenge?: () => Promise<WorkbenchImageChallenge>;
   disabled?: boolean;
-  labels?: WorkbenchChallengeFieldLabels;
   renderRemoteChallenge?(props: WorkbenchRemoteChallengeRenderProps): ReactNode;
   resetKey?: number;
   onChange(challenge?: WorkbenchChallengeResponse): void;
@@ -32,13 +31,13 @@ export function WorkbenchChallengeField({
   config,
   createImageChallenge,
   disabled,
-  labels,
   renderRemoteChallenge,
   resetKey,
   onChange,
   onError,
 }: WorkbenchChallengeFieldProps) {
-  const mergedLabels = { ...defaultWorkbenchChallengeFieldLabels, ...labels };
+  const { messages } = useWorkbenchLocale();
+  const mergedLabels = messages.challenge;
   const resolvedResetKey = resetKey ?? 0;
 
   const handleError = useCallback((message: string) => {

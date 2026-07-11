@@ -90,7 +90,6 @@ export function DashboardRoute() {
         <Table columns={columns} dataSource={queue} pagination={false} size="middle" />
       </WorkbenchPanel>
       <WorkbenchVerificationProvider
-        labels={text.security.verificationLabels}
         onVerify={(values) => {
           if (!/^\d{6}$/.test(values.code ?? "")) {
             throw new Error(String(text.security.verificationLabels.codeInvalid));

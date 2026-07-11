@@ -41,7 +41,6 @@ export function VerificationRoute() {
     <WorkbenchVerificationPage
       description={text.security.verificationDescription(state?.subject)}
       error={error}
-      labels={text.security.verificationLabels}
       panelExtra={
         <Button
           className="example-security-back"

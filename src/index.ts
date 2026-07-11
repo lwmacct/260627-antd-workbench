@@ -15,6 +15,10 @@ export { WorkbenchCredentialForm } from "./components/security/WorkbenchCredenti
 export { WorkbenchCredentialModal } from "./components/security/WorkbenchCredentialModal";
 export { WorkbenchCredentialPage } from "./components/security/WorkbenchCredentialPage";
 export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
+export {
+  WorkbenchAuthCheckingPage,
+  WorkbenchOAuthSignInPage,
+} from "./components/security/WorkbenchOAuthSignInPage";
 export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
 export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
 export { WorkbenchVerificationModal } from "./components/security/WorkbenchVerificationModal";
@@ -24,12 +28,6 @@ export {
   useWorkbenchVerification,
 } from "./components/security/WorkbenchVerificationProvider";
 export { WorkbenchChallengeField } from "./components/security/WorkbenchChallengeField";
-export {
-  defaultWorkbenchChallengeFieldLabels,
-  defaultWorkbenchCredentialLabels,
-  defaultWorkbenchOAuthButtonsLabels,
-  defaultWorkbenchVerificationLabels,
-} from "./components/security/labels";
 export { defaultWorkbenchCredentialConfig } from "./components/security/model";
 export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";
 export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
@@ -66,7 +64,7 @@ export type {
 } from "./appearance/model";
 export type {
   WorkbenchUser,
-  WorkbenchUserMenuLabels,
+  WorkbenchUserAction,
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
 export type { WorkbenchCredentialDrawerProps } from "./components/security/WorkbenchCredentialDrawer";
@@ -77,6 +75,11 @@ export type {
 export type { WorkbenchCredentialModalProps } from "./components/security/WorkbenchCredentialModal";
 export type { WorkbenchCredentialPageProps } from "./components/security/WorkbenchCredentialPage";
 export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
+export type {
+  WorkbenchAuthCheckingPageProps,
+  WorkbenchOAuthSignInPageProps,
+  WorkbenchSignInBrand,
+} from "./components/security/WorkbenchOAuthSignInPage";
 export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
 export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";
 export type { WorkbenchVerificationModalProps } from "./components/security/WorkbenchVerificationModal";
@@ -112,19 +115,11 @@ export type {
   WorkbenchVerificationRequest,
   WorkbenchVerificationSubmitValues,
 } from "./components/security/model";
-export type {
-  WorkbenchLanguageToggleLabels,
-  WorkbenchLanguageToggleProps,
-} from "./components/controls/WorkbenchLanguageToggle";
-export type {
-  WorkbenchThemeToggleLabels,
-  WorkbenchThemeToggleProps,
-} from "./components/controls/WorkbenchThemeToggle";
+export type { WorkbenchLanguageToggleProps } from "./components/controls/WorkbenchLanguageToggle";
 export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";
 export type { WorkbenchPageProps } from "./components/layout/WorkbenchPage";
 export type { WorkbenchPanelProps } from "./components/layout/WorkbenchPanel";
 export type {
-  WorkbenchSectionLayoutLabels,
   WorkbenchSectionLayoutProps,
 } from "./components/layout/WorkbenchSectionLayout";
 export type { WorkbenchSplitWorkspaceProps } from "./components/layout/WorkbenchSplitWorkspace";
@@ -139,9 +134,9 @@ export type {
 } from "./components/shell/WorkbenchHeader";
 export type { WorkbenchShellProps } from "./components/shell/WorkbenchShell";
 export type {
+  WorkbenchLocale,
   WorkbenchLocaleContextValue,
-  WorkbenchLocaleOption,
-  WorkbenchLocaleOptions,
+  WorkbenchMessages,
 } from "./locale/model";
 export type {
   WorkbenchNavEntry,

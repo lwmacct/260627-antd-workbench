@@ -26,7 +26,6 @@ export function VerificationFormRoute() {
       <WorkbenchPanel>
         <WorkbenchVerificationForm
           description={text.security.sensitiveActionDescription}
-          labels={text.security.verificationLabels}
           purpose="sensitive-action"
           rememberOption={{
             defaultChecked: true,

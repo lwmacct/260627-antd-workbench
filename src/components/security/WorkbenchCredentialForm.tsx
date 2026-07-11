@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import { WorkbenchChallengeField, type WorkbenchRemoteChallengeRenderProps } from "./WorkbenchChallengeField";
 import { WorkbenchOAuthButtons } from "./WorkbenchOAuthButtons";
-import { defaultWorkbenchCredentialLabels, type WorkbenchCredentialLabels } from "./labels";
+import { useWorkbenchLocale } from "../../locale/context";
+import type { WorkbenchCredentialLabels } from "./labels";
 import {
   defaultWorkbenchCredentialConfig,
   type WorkbenchChallengeResponse,
@@ -31,7 +32,6 @@ export interface WorkbenchCredentialFormProps {
   config?: WorkbenchCredentialConfig;
   createImageChallenge?: () => Promise<WorkbenchImageChallenge>;
   error?: ReactNode;
-  labels?: WorkbenchCredentialLabels;
   loading?: boolean;
   mode: WorkbenchCredentialMode;
   oauthLoadingProvider?: string;
@@ -47,7 +47,6 @@ export function WorkbenchCredentialForm({
   config = defaultWorkbenchCredentialConfig,
   createImageChallenge,
   error,
-  labels,
   loading = false,
   mode,
   oauthLoadingProvider,
@@ -57,22 +56,12 @@ export function WorkbenchCredentialForm({
   onOAuthLogin,
   onSubmit,
 }: WorkbenchCredentialFormProps) {
+  const { messages } = useWorkbenchLocale();
   const [form] = Form.useForm<CredentialFormValues>();
   const [challenge, setChallenge] = useState<WorkbenchChallengeResponse>();
   const [challengeError, setChallengeError] = useState("");
   const [challengeResetKey, setChallengeResetKey] = useState(0);
-  const mergedLabels = {
-    ...defaultWorkbenchCredentialLabels,
-    ...labels,
-    challenge: {
-      ...defaultWorkbenchCredentialLabels.challenge,
-      ...labels?.challenge,
-    },
-    oauth: {
-      ...defaultWorkbenchCredentialLabels.oauth,
-      ...labels?.oauth,
-    },
-  };
+  const mergedLabels = messages.credential;
   const localConfig = config.local === undefined ? defaultWorkbenchCredentialConfig.local : config.local;
   const oauthConfig = config.oauth === undefined ? defaultWorkbenchCredentialConfig.oauth : config.oauth;
   const challengeConfig =
@@ -156,7 +145,6 @@ export function WorkbenchCredentialForm({
 
       <WorkbenchOAuthButtons
         disabled={loading}
-        labels={mergedLabels.oauth}
         loadingProvider={oauthLoadingProvider}
         providers={oauthProviders}
         onSelect={(provider) => onOAuthLogin?.(provider)}
@@ -209,7 +197,6 @@ export function WorkbenchCredentialForm({
                 config={resolvedChallengeConfig}
                 createImageChallenge={createImageChallenge}
                 disabled={loading}
-                labels={mergedLabels.challenge}
                 onChange={setChallenge}
                 onError={setChallengeError}
                 renderRemoteChallenge={renderRemoteChallenge}

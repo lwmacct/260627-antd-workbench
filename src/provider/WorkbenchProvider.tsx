@@ -18,11 +18,8 @@ import type {
 import { normalizeWorkbenchAppearance } from "../appearance/normalize";
 import { resolveInitialAppearance, writeStoredAppearance } from "../appearance/storage";
 import { WorkbenchLocaleContext } from "../locale/context";
-import type {
-  WorkbenchLocaleContextValue,
-  WorkbenchLocaleOption,
-  WorkbenchLocaleOptions,
-} from "../locale/model";
+import { workbenchLocales } from "../locale/messages";
+import type { WorkbenchLocale, WorkbenchLocaleContextValue } from "../locale/model";
 import { readStoredLocale, writeStoredLocale } from "../locale/storage";
 import { createWorkbenchTheme } from "../theme/antd";
 import { createWorkbenchCssVars } from "../theme/cssVars";
@@ -39,7 +36,6 @@ export interface WorkbenchAppearanceProviderOptions {
 export interface WorkbenchAntdProviderOptions {
   app?: boolean | Omit<AntdAppProps, "children">;
   config?: Omit<ConfigProviderProps, "children" | "locale" | "theme">;
-  locale?: ConfigProviderProps["locale"];
   mergeTheme?: boolean;
   theme?: ThemeConfig;
 }
@@ -48,8 +44,11 @@ export interface WorkbenchProviderProps {
   antd?: WorkbenchAntdProviderOptions;
   appearance?: WorkbenchAppearanceProviderOptions;
   children: ReactNode;
-  locale?: WorkbenchLocaleOptions;
+  defaultLocale?: WorkbenchLocale;
+  locale?: WorkbenchLocale;
+  localeStorageKey?: false | string;
   withAntdApp?: boolean;
+  onLocaleChange?(locale: WorkbenchLocale): void;
 }
 
 export interface WorkbenchAppearanceContextValue {
@@ -70,14 +69,15 @@ export function WorkbenchProvider({
   antd,
   appearance: appearanceOptions,
   children,
-  locale: localeOptions,
+  defaultLocale = "zh-CN",
+  locale: controlledLocale,
+  localeStorageKey = "workbench.locale",
   withAntdApp = true,
+  onLocaleChange,
 }: WorkbenchProviderProps) {
   const storageKey = appearanceOptions?.storageKey ?? "workbench.appearance";
   const rootElement = appearanceOptions?.rootElement;
-  const localeStorageKey = localeOptions?.storageKey ?? "workbench.locale";
-  const defaultLocale = localeOptions?.defaultValue ?? localeOptions?.options?.[0]?.value ?? "";
-  const localeControlled = localeOptions?.value !== undefined;
+  const localeControlled = controlledLocale !== undefined;
   const resolvedDefaultAppearance = useMemo(
     () => normalizeWorkbenchAppearance(appearanceOptions?.defaultValue),
     [appearanceOptions?.defaultValue],
@@ -85,14 +85,13 @@ export function WorkbenchProvider({
   const [appearance, setLocalAppearance] = useState<WorkbenchAppearance>(() =>
     resolveInitialAppearance(resolvedDefaultAppearance, storageKey),
   );
-  const [localLocale, setLocalLocale] = useState<string>(
-    () => localeOptions?.value ?? readStoredLocale(localeStorageKey) ?? defaultLocale,
+  const [localLocale, setLocalLocale] = useState<WorkbenchLocale>(
+    () => controlledLocale ?? resolveInitialLocale(readStoredLocale(localeStorageKey), defaultLocale),
   );
   const [systemMode, setSystemMode] = useState<WorkbenchResolvedThemeMode>(getSystemThemeMode);
   const resolvedMode = resolveWorkbenchThemeMode(appearance.mode, systemMode);
-  const locale = localeControlled ? localeOptions.value ?? "" : localLocale;
-  const localeOption = localeOptions?.options?.find((option) => option.value === locale);
-  const antdLocale = antd?.locale ?? localeOption?.antdLocale ?? localeOptions?.antdLocale;
+  const locale = controlledLocale ?? localLocale;
+  const localePack = workbenchLocales[locale];
   const palette = useMemo(
     () => createWorkbenchPalette(appearance, resolvedMode),
     [appearance, resolvedMode],
@@ -110,38 +109,28 @@ export function WorkbenchProvider({
   );
 
   const setLocale = useMemo(
-    () => (nextLocale: string) => {
+    () => (nextLocale: WorkbenchLocale) => {
       if (localeControlled) {
-        localeOptions.onChange?.(nextLocale);
+        onLocaleChange?.(nextLocale);
         return;
       }
 
       setLocalLocale(nextLocale);
     },
-    [localeControlled, localeOptions],
+    [localeControlled, onLocaleChange],
   );
 
   const localeContextValue = useMemo<WorkbenchLocaleContextValue>(
     () => ({
-      antdLocale,
+      antdLocale: localePack.antdLocale,
       locale,
-      options: localeOptions?.options ?? [],
+      messages: localePack.messages,
       setLocale,
       toggleLocale() {
-        const options = localeOptions?.options ?? [];
-        if (options.length === 0) {
-          return;
-        }
-
-        const currentIndex = Math.max(
-          0,
-          options.findIndex((option) => option.value === locale),
-        );
-        const next = options[(currentIndex + 1) % options.length];
-        setLocale(next.value);
+        setLocale(locale === "zh-CN" ? "en-US" : "zh-CN");
       },
     }),
-    [antdLocale, locale, localeOptions?.options, setLocale],
+    [locale, localePack, setLocale],
   );
 
   const contextValue = useMemo<WorkbenchAppearanceContextValue>(
@@ -200,9 +189,9 @@ export function WorkbenchProvider({
   useEffect(() => {
     writeStoredLocale(localeStorageKey, locale);
     if (!localeControlled) {
-      localeOptions?.onChange?.(locale);
+      onLocaleChange?.(locale);
     }
-  }, [locale, localeControlled, localeOptions?.onChange, localeStorageKey]);
+  }, [locale, localeControlled, localeStorageKey, onLocaleChange]);
 
   useEffect(() => {
     const target = rootElement ?? globalThis.document?.documentElement;
@@ -212,10 +201,7 @@ export function WorkbenchProvider({
 
     const previousLang = target.getAttribute("lang");
     target.setAttribute("data-workbench-locale", locale);
-    const documentLang = resolveDocumentLang(locale, localeOption, localeOptions);
-    if (documentLang) {
-      target.setAttribute("lang", documentLang);
-    }
+    target.setAttribute("lang", localePack.documentLang);
 
     return () => {
       target.removeAttribute("data-workbench-locale");
@@ -225,7 +211,7 @@ export function WorkbenchProvider({
         target.removeAttribute("lang");
       }
     };
-  }, [locale, localeOption, localeOptions, rootElement]);
+  }, [locale, localePack.documentLang, rootElement]);
 
   useEffect(() => {
     const target = rootElement ?? globalThis.document?.documentElement;
@@ -267,7 +253,7 @@ export function WorkbenchProvider({
   return (
     <WorkbenchAppearanceContext value={contextValue}>
       <WorkbenchLocaleContext value={localeContextValue}>
-        <ConfigProvider {...antd?.config} locale={antdLocale} theme={antdTheme}>
+        <ConfigProvider {...antd?.config} locale={localePack.antdLocale} theme={antdTheme}>
           {content}
         </ConfigProvider>
       </WorkbenchLocaleContext>
@@ -311,14 +297,10 @@ function mergeThemeConfig(baseTheme: ThemeConfig, overrideTheme: ThemeConfig): T
   };
 }
 
-function resolveDocumentLang(
-  locale: string,
-  option: WorkbenchLocaleOption | undefined,
-  options: WorkbenchLocaleOptions | undefined,
-): string | undefined {
-  if (typeof options?.documentLang === "function") {
-    return options.documentLang(locale);
-  }
-
-  return options?.documentLang ?? option?.documentLang;
+function resolveInitialLocale(stored: string | null, fallback: WorkbenchLocale): WorkbenchLocale {
+  if (stored === "zh-CN" || stored === "en-US") return stored;
+  const browserLocale = globalThis.navigator?.language;
+  if (browserLocale?.toLowerCase().startsWith("zh")) return "zh-CN";
+  if (browserLocale) return "en-US";
+  return fallback;
 }

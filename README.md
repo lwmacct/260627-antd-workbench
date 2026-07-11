@@ -48,13 +48,16 @@ const nav: WorkbenchNavEntry[] = [
 
 export function App() {
   return (
-    <WorkbenchProvider>
+    <WorkbenchProvider defaultLocale="zh-CN" localeStorageKey="my-tool.locale">
       <WorkbenchShell
         actions={
           <>
             <WorkbenchThemeToggle />
             <WorkbenchLanguageToggle />
-            <WorkbenchUserMenu user={{ name: "Ada Lovelace", initials: "A" }} />
+            <WorkbenchUserMenu
+              user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
+              onLogout={() => console.log("logout")}
+            />
           </>
         }
         brand={{ name: "Workbench", version: "2.0.0" }}
@@ -70,6 +73,28 @@ export function App() {
   );
 }
 ```
+
+## 中英文
+
+Workbench 严格支持 `zh-CN` 和 `en-US`。Provider 内置两套 Ant Design locale 和 Workbench
+组件文案；语言按钮、主题按钮、账户菜单、移动端导航、外观设置及安全组件会自动随 locale
+切换，消费方无需逐个传入 labels。
+
+```tsx
+<WorkbenchProvider
+  defaultLocale="zh-CN"
+  localeStorageKey="my-tool.locale"
+  onLocaleChange={(locale) => console.log(locale)}
+>
+  <App />
+</WorkbenchProvider>
+```
+
+首次语言按“有效持久化值、浏览器语言、`defaultLocale`”选择。非法持久化值会回退到受支持
+语言并自动修正。需要受控状态时传入 `locale="en-US"` 和 `onLocaleChange`。
+
+Workbench 只翻译公共组件。业务应用应通过 `useWorkbenchLocale()` 读取严格类型的 locale，
+并据此选择自己的中英文业务词典。
 
 ## 公开入口
 
@@ -133,7 +158,7 @@ example/
 | `WorkbenchAppearanceSettings` | 外观设置面板，必须在 `WorkbenchProvider` 下使用。 |
 | `WorkbenchThemeToggle` | 深浅色切换按钮。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
-| `WorkbenchUserMenu` | 用户头像菜单。 |
+| `WorkbenchUserMenu` | 用户头像账号 Popover，支持身份信息、自定义操作和异步退出。 |
 | `WorkbenchCredentialForm` | 登录/注册纯表单，不绑定页面、弹窗或路由。 |
 | `WorkbenchCredentialPage` | 全屏登录/注册页。 |
 | `WorkbenchCredentialModal` | 弹窗登录/注册容器。 |
@@ -144,6 +169,8 @@ example/
 | `WorkbenchVerificationDrawer` | 抽屉安全验证容器，适合侧边工作流。 |
 | `WorkbenchVerificationProvider` | Promise 式安全验证编排容器，配合 `useWorkbenchVerification` 使用。 |
 | `WorkbenchOAuthButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
+| `WorkbenchOAuthSignInPage` | 纯 OAuth 全屏登录页，不绑定请求或路由。 |
+| `WorkbenchAuthCheckingPage` | 认证状态检查中的全屏加载页。 |
 | `WorkbenchChallengeField` | 图片验证码和远程 challenge 的通用输入控件。 |
 
 ## 主题变量

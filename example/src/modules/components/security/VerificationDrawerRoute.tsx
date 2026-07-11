@@ -40,7 +40,6 @@ export function VerificationDrawerRoute() {
       </WorkbenchPanel>
       <WorkbenchVerificationDrawer
         description={text.security.sensitiveActionDescription}
-        labels={text.security.verificationLabels}
         open={open}
         purpose="sensitive-action"
         rememberOption={{ minutes: text.security.verificationRememberMinutes }}

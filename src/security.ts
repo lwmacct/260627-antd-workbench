@@ -4,6 +4,10 @@ export { WorkbenchCredentialForm } from "./components/security/WorkbenchCredenti
 export { WorkbenchCredentialModal } from "./components/security/WorkbenchCredentialModal";
 export { WorkbenchCredentialPage } from "./components/security/WorkbenchCredentialPage";
 export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
+export {
+  WorkbenchAuthCheckingPage,
+  WorkbenchOAuthSignInPage,
+} from "./components/security/WorkbenchOAuthSignInPage";
 export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
 export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
 export { WorkbenchVerificationModal } from "./components/security/WorkbenchVerificationModal";
@@ -12,12 +16,6 @@ export {
   WorkbenchVerificationProvider,
   useWorkbenchVerification,
 } from "./components/security/WorkbenchVerificationProvider";
-export {
-  defaultWorkbenchChallengeFieldLabels,
-  defaultWorkbenchCredentialLabels,
-  defaultWorkbenchOAuthButtonsLabels,
-  defaultWorkbenchVerificationLabels,
-} from "./components/security/labels";
 export { defaultWorkbenchCredentialConfig } from "./components/security/model";
 
 export type {
@@ -32,6 +30,11 @@ export type {
 export type { WorkbenchCredentialModalProps } from "./components/security/WorkbenchCredentialModal";
 export type { WorkbenchCredentialPageProps } from "./components/security/WorkbenchCredentialPage";
 export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
+export type {
+  WorkbenchAuthCheckingPageProps,
+  WorkbenchOAuthSignInPageProps,
+  WorkbenchSignInBrand,
+} from "./components/security/WorkbenchOAuthSignInPage";
 export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
 export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";
 export type { WorkbenchVerificationModalProps } from "./components/security/WorkbenchVerificationModal";

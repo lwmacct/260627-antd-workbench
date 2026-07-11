@@ -1,5 +1,4 @@
 import { Drawer, type DrawerProps } from "antd";
-import type { WorkbenchVerificationLabels } from "./labels";
 import {
   WorkbenchVerificationForm,
   type WorkbenchVerificationFormProps,
@@ -11,7 +10,6 @@ export interface WorkbenchVerificationDrawerProps extends WorkbenchVerificationF
     DrawerProps,
     "children" | "destroyOnHidden" | "footer" | "onClose" | "open" | "title"
   >;
-  labels?: WorkbenchVerificationLabels;
   open: boolean;
   onClose?(): void;
 }
@@ -19,7 +17,6 @@ export interface WorkbenchVerificationDrawerProps extends WorkbenchVerificationF
 export function WorkbenchVerificationDrawer({
   destroyOnHidden = true,
   drawerProps,
-  labels,
   open,
   onClose,
   ...formProps
@@ -34,7 +31,7 @@ export function WorkbenchVerificationDrawer({
       onClose={onClose}
       {...drawerProps}
     >
-      <WorkbenchVerificationForm labels={labels} {...formProps} />
+      <WorkbenchVerificationForm {...formProps} />
     </Drawer>
   );
 }

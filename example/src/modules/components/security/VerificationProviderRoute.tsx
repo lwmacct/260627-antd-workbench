@@ -20,7 +20,6 @@ export function VerificationProviderRoute() {
       title={text.components.verificationProvider}
     >
       <WorkbenchVerificationProvider
-        labels={text.security.verificationLabels}
         onVerify={(values) =>
           assertExampleVerification(values, String(text.security.verificationLabels.codeInvalid))
         }

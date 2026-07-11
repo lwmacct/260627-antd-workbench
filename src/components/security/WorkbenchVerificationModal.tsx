@@ -1,5 +1,4 @@
 import { Modal, type ModalProps } from "antd";
-import type { WorkbenchVerificationLabels } from "./labels";
 import {
   WorkbenchVerificationForm,
   type WorkbenchVerificationFormProps,
@@ -7,7 +6,6 @@ import {
 
 export interface WorkbenchVerificationModalProps extends WorkbenchVerificationFormProps {
   destroyOnHidden?: boolean;
-  labels?: WorkbenchVerificationLabels;
   modalProps?: Omit<
     ModalProps,
     "children" | "destroyOnHidden" | "footer" | "onCancel" | "open" | "title"
@@ -18,7 +16,6 @@ export interface WorkbenchVerificationModalProps extends WorkbenchVerificationFo
 
 export function WorkbenchVerificationModal({
   destroyOnHidden = true,
-  labels,
   modalProps,
   open,
   onCancel,
@@ -35,7 +32,7 @@ export function WorkbenchVerificationModal({
       onCancel={onCancel}
       {...modalProps}
     >
-      <WorkbenchVerificationForm labels={labels} {...formProps} />
+      <WorkbenchVerificationForm {...formProps} />
     </Modal>
   );
 }

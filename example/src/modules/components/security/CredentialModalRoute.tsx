@@ -38,7 +38,6 @@ export function CredentialModalRoute() {
       <WorkbenchCredentialModal
         config={exampleCredentialConfig}
         createImageChallenge={createExampleImageChallenge}
-        labels={text.security.credentialLabels}
         mode={mode}
         open={open}
         onCancel={() => setOpen(false)}

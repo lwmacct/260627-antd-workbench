@@ -1,85 +1,154 @@
-import {
-  LogoutOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Button, Dropdown, type MenuProps } from "antd";
-import type { ReactNode } from "react";
-
-export interface WorkbenchUserMenuLabels {
-  account?: ReactNode;
-  menu?: string;
-  logout?: ReactNode;
-  unnamedUser?: ReactNode;
-}
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Divider, Popover, Space, Typography } from "antd";
+import { useState, type ReactNode } from "react";
+import { cx } from "../../shared/cx";
+import { useWorkbenchLocale } from "../../locale/context";
 
 export interface WorkbenchUser {
-  avatar?: ReactNode;
-  initials?: ReactNode;
-  name?: ReactNode;
-  username?: ReactNode;
+  avatarUrl?: string;
+  displayName?: ReactNode;
+  provider?: ReactNode;
+  providerIcon?: ReactNode;
+  username: ReactNode;
+}
+
+export interface WorkbenchUserAction {
+  danger?: boolean;
+  disabled?: boolean;
+  icon?: ReactNode;
+  key: string;
+  label: ReactNode;
+  onClick?(): void | Promise<void>;
 }
 
 export interface WorkbenchUserMenuProps {
-  items?: MenuProps["items"];
-  labels?: WorkbenchUserMenuLabels;
-  user?: WorkbenchUser;
-  onOpenAccount?(): void;
-  onLogout?(): void;
+  actions?: WorkbenchUserAction[];
+  className?: string;
+  logoutLoading?: boolean;
+  user: WorkbenchUser;
+  onLogout?(): void | Promise<void>;
 }
 
 export function WorkbenchUserMenu({
-  items,
-  labels,
+  actions,
+  className,
+  logoutLoading,
   user,
-  onOpenAccount,
   onLogout,
 }: WorkbenchUserMenuProps) {
-  const displayName = user?.name ?? user?.username ?? labels?.unnamedUser ?? "未命名用户";
-  const menuItems: MenuProps["items"] = [
-    {
-      disabled: true,
-      icon: <UserOutlined />,
-      key: "user",
-      label: displayName,
-    },
-    user?.username && user.username !== displayName
-      ? {
-          disabled: true,
-          key: "username",
-          label: user.username,
-        }
-      : null,
-    items || onOpenAccount || onLogout ? { type: "divider" } : null,
-    ...(items ?? []),
-    onOpenAccount
-      ? {
-          icon: <SettingOutlined />,
-          key: "account",
-          label: labels?.account || "账号",
-          onClick: onOpenAccount,
-        }
-      : null,
-    onLogout
-      ? {
-          icon: <LogoutOutlined />,
-          key: "logout",
-          label: labels?.logout || "退出登录",
-          onClick: onLogout,
-        }
-      : null,
-  ];
+  const { messages } = useWorkbenchLocale();
+  const [open, setOpen] = useState(false);
+  const [pendingLogout, setPendingLogout] = useState(false);
+  const displayName = user.displayName ?? user.username;
+  const loading = logoutLoading ?? pendingLogout;
+
+  async function handleAction(action: WorkbenchUserAction) {
+    await action.onClick?.();
+    setOpen(false);
+  }
+
+  async function handleLogout() {
+    if (!onLogout || loading) return;
+    setPendingLogout(true);
+    try {
+      await onLogout();
+      setOpen(false);
+    } finally {
+      setPendingLogout(false);
+    }
+  }
+
+  const content = (
+    <div className="wb-user-menu__card">
+      <div className="wb-user-menu__identity">
+        <Avatar className="wb-user-menu__avatar" size={44} src={user.avatarUrl}>
+          {toInitial(displayName)}
+        </Avatar>
+        <div className="wb-user-menu__identity-meta">
+          <Typography.Text
+            className="wb-user-menu__display-name"
+            strong
+            title={asTitle(displayName)}
+          >
+            {displayName}
+          </Typography.Text>
+          <Typography.Text
+            className="wb-user-menu__username"
+            title={asTitle(user.username)}
+            type="secondary"
+          >
+            @{user.username}
+          </Typography.Text>
+          {user.provider ? (
+            <Space className="wb-user-menu__provider" size={4}>
+              {user.providerIcon}
+              <Typography.Text type="secondary">
+                {user.provider}
+              </Typography.Text>
+            </Space>
+          ) : null}
+        </div>
+      </div>
+
+      {actions?.length ? (
+        <div className="wb-user-menu__actions">
+          <Divider />
+          {actions.map((action) => (
+            <Button
+              key={action.key}
+              block
+              danger={action.danger}
+              disabled={action.disabled}
+              icon={action.icon}
+              type="text"
+              onClick={() => void handleAction(action)}
+            >
+              {action.label}
+            </Button>
+          ))}
+        </div>
+      ) : null}
+
+      {onLogout ? (
+        <div className="wb-user-menu__logout">
+          <Divider />
+          <Button
+            block
+            danger
+            icon={<LogoutOutlined />}
+            loading={loading}
+            type="text"
+            onClick={() => void handleLogout()}
+          >
+            {messages.account.logout}
+          </Button>
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
-    <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={["click"]}>
-      <Button aria-label={labels?.menu ?? "用户菜单"} shape="circle" type="text">
-        {user?.avatar ?? (
-          <Avatar size={28} style={{ background: "var(--wb-accent)" }}>
-            {user?.initials ?? toInitial(displayName)}
-          </Avatar>
-        )}
+    <Popover
+      arrow={false}
+      content={content}
+      open={open}
+      placement="bottomRight"
+      trigger="click"
+      onOpenChange={setOpen}
+    >
+      <Button
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-label={messages.account.menu}
+        className={cx("wb-user-menu__trigger", className)}
+        shape="circle"
+        type="text"
+      >
+        <Avatar size={30} src={user.avatarUrl}>
+          {toInitial(displayName)}
+        </Avatar>
       </Button>
-    </Dropdown>
+    </Popover>
   );
 }
 
@@ -87,6 +156,11 @@ function toInitial(value: ReactNode): ReactNode {
   if (typeof value === "string" || typeof value === "number") {
     return String(value).trim().slice(0, 1).toUpperCase() || "?";
   }
-
   return <UserOutlined />;
+}
+
+function asTitle(value: ReactNode): string | undefined {
+  return typeof value === "string" || typeof value === "number"
+    ? String(value)
+    : undefined;
 }

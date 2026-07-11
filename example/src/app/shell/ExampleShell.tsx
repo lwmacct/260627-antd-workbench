@@ -56,14 +56,20 @@ export function ExampleShell() {
           <WorkbenchThemeToggle />
           <WorkbenchLanguageToggle />
           <WorkbenchUserMenu
-            items={[
+            actions={[
               {
                 icon: <GithubOutlined />,
                 key: "source",
                 label: text.shell.source,
               },
             ]}
-            user={{ initials: "A", name: "Ada Lovelace", username: "ada@example.test" }}
+            user={{
+              displayName: "Ada Lovelace",
+              provider: "GitHub",
+              providerIcon: <GithubOutlined />,
+              username: "ada-lovelace",
+            }}
+            onLogout={() => undefined}
           />
         </>
       }

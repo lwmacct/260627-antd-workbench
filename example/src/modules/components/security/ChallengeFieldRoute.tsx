@@ -26,7 +26,6 @@ export function ChallengeFieldRoute() {
               <WorkbenchChallengeField
                 config={{ provider: "image" }}
                 createImageChallenge={createExampleImageChallenge}
-                labels={text.security.credentialLabels.challenge}
                 onChange={setChallenge}
                 onError={setChallengeError}
               />
@@ -43,7 +42,6 @@ export function ChallengeFieldRoute() {
           <WorkbenchPanel title={text.components.remoteChallenge}>
             <WorkbenchChallengeField
               config={{ provider: "turnstile", sitekey: "example-site-key" }}
-              labels={text.security.credentialLabels.challenge}
               onChange={setChallenge}
               onError={setChallengeError}
               renderRemoteChallenge={({ config, onChange }) => (

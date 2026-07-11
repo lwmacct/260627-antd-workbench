@@ -38,7 +38,6 @@ export function CredentialDrawerRoute() {
       <WorkbenchCredentialDrawer
         config={exampleCredentialConfig}
         createImageChallenge={createExampleImageChallenge}
-        labels={text.security.credentialLabels}
         mode={mode}
         open={open}
         onClose={() => setOpen(false)}

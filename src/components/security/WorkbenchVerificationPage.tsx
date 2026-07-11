@@ -2,10 +2,7 @@ import { Button } from "antd";
 import Card from "antd/es/card/Card";
 import type { ReactNode } from "react";
 import { cx } from "../../shared/cx";
-import {
-  defaultWorkbenchVerificationLabels,
-  type WorkbenchVerificationLabels,
-} from "./labels";
+import { useWorkbenchLocale } from "../../locale/context";
 import {
   WorkbenchVerificationForm,
   type WorkbenchVerificationFormProps,
@@ -19,16 +16,12 @@ export interface WorkbenchVerificationPageProps extends WorkbenchVerificationFor
 
 export function WorkbenchVerificationPage({
   className,
-  labels,
   panelClassName,
   panelExtra,
   onBack,
   ...formProps
 }: WorkbenchVerificationPageProps) {
-  const mergedLabels: Required<WorkbenchVerificationLabels> = {
-    ...defaultWorkbenchVerificationLabels,
-    ...labels,
-  };
+  const { messages } = useWorkbenchLocale();
 
   return (
     <main className={cx("wb-security", className)}>
@@ -37,13 +30,13 @@ export function WorkbenchVerificationPage({
           <div className="wb-security__panel-extra">
             {panelExtra ?? (
               <Button type="text" onClick={onBack}>
-                {mergedLabels.back}
+                {messages.verification.back}
               </Button>
             )}
           </div>
         ) : null}
 
-        <WorkbenchVerificationForm labels={labels} {...formProps} />
+        <WorkbenchVerificationForm {...formProps} />
       </Card>
     </main>
   );

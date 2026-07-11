@@ -420,5 +420,5 @@ const en: ExampleText = {
 
 export function useExampleText(): ExampleText {
   const { locale } = useWorkbenchLocale();
-  return locale === "en" ? en : zh;
+  return locale === "en-US" ? en : zh;
 }

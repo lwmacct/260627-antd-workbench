@@ -28,7 +28,6 @@ export function CredentialFormRoute() {
         <WorkbenchCredentialForm
           config={exampleCredentialConfig}
           createImageChallenge={createExampleImageChallenge}
-          labels={text.security.credentialLabels}
           mode={mode}
           onModeChange={setMode}
           onOAuthLogin={(provider) =>

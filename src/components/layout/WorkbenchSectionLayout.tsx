@@ -4,41 +4,32 @@ import { useMemo, useState, type ReactNode } from "react";
 import { cx } from "../../shared/cx";
 import { findNavItem } from "../../navigation/find";
 import type { WorkbenchNavEntry } from "../../navigation/model";
+import { useWorkbenchLocale } from "../../locale/context";
 import { toAntdMenuItems } from "../../navigation/toAntdMenu";
 
 export interface WorkbenchSectionLayoutProps {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
-  labels?: WorkbenchSectionLayoutLabels;
   nav: WorkbenchNavEntry[];
   selectedKey: string;
   siderWidth?: number;
   onSelect(key: string): void;
 }
 
-export interface WorkbenchSectionLayoutLabels {
-  mobileNavigation?: string;
-  openNavigation?: string;
-}
-
 export function WorkbenchSectionLayout({
   children,
   className,
   contentClassName,
-  labels,
   nav,
   selectedKey,
   siderWidth = 208,
   onSelect,
 }: WorkbenchSectionLayoutProps) {
+  const { messages } = useWorkbenchLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuItems = useMemo(() => toAntdMenuItems(nav), [nav]);
   const currentItem = findNavItem(nav, selectedKey);
-  const labelText = {
-    mobileNavigation: labels?.mobileNavigation ?? "分区导航",
-    openNavigation: labels?.openNavigation ?? "分区导航",
-  };
 
   function handleSelect(key: string) {
     onSelect(key);
@@ -69,7 +60,7 @@ export function WorkbenchSectionLayout({
             </Space>
           </div>
           <Button
-            aria-label={labelText.openNavigation}
+            aria-label={messages.navigation.sectionNavigation}
             className="wb-section__mobile-trigger"
             icon={<MenuOutlined />}
             shape="circle"
@@ -86,7 +77,7 @@ export function WorkbenchSectionLayout({
         open={mobileOpen}
         placement="bottom"
         size="default"
-        title={labelText.mobileNavigation}
+        title={messages.navigation.sectionNavigation}
       >
         <Menu
           className="wb-section__drawer-menu"

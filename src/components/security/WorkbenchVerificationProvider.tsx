@@ -7,7 +7,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { WorkbenchVerificationLabels } from "./labels";
 import type {
   WorkbenchVerificationRequest,
   WorkbenchVerificationSubmitValues,
@@ -28,7 +27,6 @@ export type WorkbenchVerificationResult =
 
 export interface WorkbenchVerificationProviderProps {
   children: ReactNode;
-  labels?: WorkbenchVerificationLabels;
   surface?: WorkbenchVerificationSurface;
   onVerify(
     values: WorkbenchVerificationSubmitValues,
@@ -49,7 +47,6 @@ const WorkbenchVerificationContext = createContext<WorkbenchVerificationContextV
 
 export function WorkbenchVerificationProvider({
   children,
-  labels,
   surface = "modal",
   onVerify,
 }: WorkbenchVerificationProviderProps) {
@@ -120,7 +117,6 @@ export function WorkbenchVerificationProvider({
           <WorkbenchVerificationDrawer
             {...active.request}
             error={error}
-            labels={labels}
             loading={loading}
             open
             onClose={close}
@@ -130,7 +126,6 @@ export function WorkbenchVerificationProvider({
           <WorkbenchVerificationModal
             {...active.request}
             error={error}
-            labels={labels}
             loading={loading}
             open
             onCancel={close}
