@@ -3,9 +3,9 @@ import { Button } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  WorkbenchVerificationPage,
+  WorkbenchCodeVerificationPage,
   type WorkbenchVerificationPurpose,
-  type WorkbenchVerificationSubmitValues,
+  type WorkbenchCodeVerificationValues,
 } from "@lwmacct/260627-antd-workbench";
 import { examplePaths } from "../../app/router/navigation";
 import { useExampleText } from "../../shared/i18n";
@@ -27,7 +27,7 @@ export function VerificationRoute() {
   const rememberMinutes = state?.rememberMinutes ?? text.security.verificationRememberMinutes;
   const [error, setError] = useState("");
 
-  function submit(values: WorkbenchVerificationSubmitValues) {
+  function submit(values: WorkbenchCodeVerificationValues) {
     if (!/^\d{6}$/.test(values.code ?? "")) {
       setError(String(text.security.verificationLabels.codeInvalid));
       return;
@@ -38,8 +38,9 @@ export function VerificationRoute() {
   }
 
   return (
-    <WorkbenchVerificationPage
+    <WorkbenchCodeVerificationPage
       description={text.security.verificationDescription(state?.subject)}
+      method="totp"
       error={error}
       panelExtra={
         <Button

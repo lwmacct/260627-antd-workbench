@@ -13,6 +13,8 @@ export function ProfileRoute() {
   async function verifySensitiveAction() {
     await verify({
       description: text.security.verificationDescription(text.security.sensitiveAction),
+      kind: "code",
+      method: "totp",
       purpose: "sensitive-action",
       rememberOption: { defaultChecked: true, minutes: 15 },
       subject: text.security.sensitiveAction,

@@ -1,42 +1,14 @@
-import { Alert } from "antd";
-import { useState } from "react";
-import {
-  WorkbenchCredentialForm,
-  WorkbenchPage,
-  type WorkbenchCredentialMode,
-  type WorkbenchCredentialSubmitValues,
-  WorkbenchPanel,
-} from "@lwmacct/260627-antd-workbench";
+import { Space, message } from "antd";
+import { WorkbenchPage, WorkbenchPanel, WorkbenchPasswordSignInForm, WorkbenchPasswordSignUpForm } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
-import { createExampleImageChallenge, exampleCredentialConfig } from "./demo";
+import { createExampleImageChallenge } from "./demo";
 
 export function CredentialFormRoute() {
   const text = useExampleText();
-  const [mode, setMode] = useState<WorkbenchCredentialMode>("login");
-  const [status, setStatus] = useState("");
-
-  function submit(values: WorkbenchCredentialSubmitValues) {
-    setStatus(text.components.credentialSubmitted(values.mode, values.username));
-  }
-
-  return (
-    <WorkbenchPage
-      description={text.components.credentialFormDescription}
-      title={text.components.credentialForm}
-    >
-      <WorkbenchPanel>
-        <WorkbenchCredentialForm
-          config={exampleCredentialConfig}
-          createImageChallenge={createExampleImageChallenge}
-          mode={mode}
-          onModeChange={setMode}
-          onOAuthLogin={(provider) =>
-            setStatus(text.components.oauthSelected(String(provider.label)))
-          }
-          onSubmit={submit}
-        />
-      </WorkbenchPanel>
-      {status ? <Alert message={status} showIcon type="success" /> : null}
-    </WorkbenchPage>
-  );
+  return <WorkbenchPage description={text.components.credentialFormDescription} title={text.components.credentialForm}>
+    <Space align="start" size={16} wrap>
+      <WorkbenchPanel><WorkbenchPasswordSignInForm challenge={{ provider: "image" }} createImageChallenge={createExampleImageChallenge} onSubmit={(values) => void message.success(text.components.credentialSubmitted("login", values.username))} /></WorkbenchPanel>
+      <WorkbenchPanel><WorkbenchPasswordSignUpForm onSubmit={(values) => void message.success(text.components.credentialSubmitted("register", values.username))} /></WorkbenchPanel>
+    </Space>
+  </WorkbenchPage>;
 }

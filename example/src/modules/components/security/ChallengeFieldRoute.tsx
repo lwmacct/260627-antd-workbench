@@ -1,9 +1,9 @@
 import { Alert, Button, Col, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import {
-  WorkbenchChallengeField,
+  WorkbenchHumanChallengeField,
   WorkbenchPage,
-  type WorkbenchChallengeResponse,
+  type WorkbenchHumanChallengeResponse,
   WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
@@ -11,7 +11,7 @@ import { createExampleImageChallenge } from "./demo";
 
 export function ChallengeFieldRoute() {
   const text = useExampleText();
-  const [challenge, setChallenge] = useState<WorkbenchChallengeResponse>();
+  const [challenge, setChallenge] = useState<WorkbenchHumanChallengeResponse>();
   const [challengeError, setChallengeError] = useState("");
 
   return (
@@ -23,7 +23,7 @@ export function ChallengeFieldRoute() {
         <Col xs={24} lg={12}>
           <WorkbenchPanel title={text.components.imageChallenge}>
             <Space className="example-components-actions" direction="vertical" size={10}>
-              <WorkbenchChallengeField
+              <WorkbenchHumanChallengeField
                 config={{ provider: "image" }}
                 createImageChallenge={createExampleImageChallenge}
                 onChange={setChallenge}
@@ -40,7 +40,7 @@ export function ChallengeFieldRoute() {
         </Col>
         <Col xs={24} lg={12}>
           <WorkbenchPanel title={text.components.remoteChallenge}>
-            <WorkbenchChallengeField
+            <WorkbenchHumanChallengeField
               config={{ provider: "turnstile", sitekey: "example-site-key" }}
               onChange={setChallenge}
               onError={setChallengeError}
@@ -54,7 +54,7 @@ export function ChallengeFieldRoute() {
                       onChange({
                         provider: config.provider,
                         token: "example-token",
-                      } as WorkbenchChallengeResponse)
+                      } as WorkbenchHumanChallengeResponse)
                     }
                   >
                     {text.components.resolveRemoteChallenge}

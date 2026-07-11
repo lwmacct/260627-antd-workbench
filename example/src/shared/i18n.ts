@@ -1,9 +1,10 @@
 import {
   useWorkbenchLocale,
   type WorkbenchAppearanceSettingsLabels,
-  type WorkbenchCredentialLabels,
-  type WorkbenchVerificationLabels,
 } from "@lwmacct/260627-antd-workbench";
+
+interface ExampleCredentialLabels { [key: string]: unknown }
+interface ExampleVerificationLabels { codeInvalid?: string; [key: string]: unknown }
 
 interface ExampleText {
   components: {
@@ -43,14 +44,14 @@ interface ExampleText {
     back: string;
     backToLogin: string;
     challengeTypeError: string;
-    credentialLabels: WorkbenchCredentialLabels;
+    credentialLabels: ExampleCredentialLabels;
     sensitiveAction: string;
     sensitiveActionCancelled: string;
     sensitiveActionDescription: string;
     sensitiveActionTitle: string;
     sensitiveActionVerified: string;
     verificationDescription(subject?: string): string;
-    verificationLabels: WorkbenchVerificationLabels;
+    verificationLabels: ExampleVerificationLabels;
     verificationRememberMinutes: number;
   };
   dashboard: {
@@ -165,7 +166,7 @@ const zh: ExampleText = {
       code: "动态验证码",
       codeInvalid: "请输入 6 位数字验证码",
       codeRequired: "请输入 6 位动态验证码",
-      remember: (minutes) => `未来 ${minutes} 分钟内不再验证`,
+      remember: (minutes: number) => `未来 ${minutes} 分钟内不再验证`,
       submit: "验证并继续",
       title: "安全验证",
     },
@@ -301,7 +302,7 @@ const en: ExampleText = {
       modeSwitchRegister: "Create account",
       modeSwitchRegisterPrefix: "New here?",
       oauth: {
-        loginWith: (label) => ["Continue with ", label],
+        loginWith: (label: unknown) => ["Continue with ", label],
       },
       password: "Password",
       passwordContainsUsername: "Password cannot contain the username",
@@ -327,7 +328,7 @@ const en: ExampleText = {
       code: "Authenticator code",
       codeInvalid: "Enter a 6-digit numeric code",
       codeRequired: "Enter a 6-digit authenticator code",
-      remember: (minutes) => `Do not ask again for ${minutes} minutes`,
+      remember: (minutes: number) => `Do not ask again for ${minutes} minutes`,
       submit: "Verify and continue",
       title: "Security verification",
     },

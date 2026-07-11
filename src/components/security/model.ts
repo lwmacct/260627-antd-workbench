@@ -1,14 +1,5 @@
 import type { ReactNode } from "react";
 
-export type WorkbenchCredentialMode = "login" | "register";
-
-export type WorkbenchChallengeProvider = "hcaptcha" | "image" | "recaptcha" | "turnstile";
-
-export interface WorkbenchChallengeConfig {
-  provider: WorkbenchChallengeProvider;
-  sitekey?: string;
-}
-
 export interface WorkbenchOAuthProvider {
   disabled?: boolean;
   icon?: ReactNode;
@@ -16,15 +7,11 @@ export interface WorkbenchOAuthProvider {
   provider: string;
 }
 
-export interface WorkbenchCredentialConfig {
-  challenge?: false | WorkbenchChallengeConfig;
-  local?: false | {
-    loginEnabled?: boolean;
-    registrationEnabled?: boolean;
-  };
-  oauth?: false | {
-    providers: WorkbenchOAuthProvider[];
-  };
+export type WorkbenchHumanChallengeProvider = "hcaptcha" | "image" | "recaptcha" | "turnstile";
+
+export interface WorkbenchHumanChallengeConfig {
+  provider: WorkbenchHumanChallengeProvider;
+  sitekey?: string;
 }
 
 export interface WorkbenchImageChallenge {
@@ -34,32 +21,24 @@ export interface WorkbenchImageChallenge {
   provider: "image";
 }
 
-export type WorkbenchChallengeResponse =
+export type WorkbenchHumanChallengeResponse =
   | { answer: string; challengeId: string; provider: "image" }
   | { provider: "hcaptcha"; token: string }
   | { provider: "recaptcha"; token: string }
   | { provider: "turnstile"; token: string };
 
-export interface WorkbenchCredentialSubmitValues {
-  challenge?: WorkbenchChallengeResponse;
-  mode: WorkbenchCredentialMode;
+export interface WorkbenchPasswordSignInValues {
+  challenge?: WorkbenchHumanChallengeResponse;
   password: string;
   username: string;
 }
 
-export type WorkbenchVerificationPurpose =
-  | "disable"
-  | "login"
-  | "reauth"
-  | "sensitive-action"
-  | "setup";
+export interface WorkbenchPasswordSignUpValues extends WorkbenchPasswordSignInValues {
+  confirmPassword: string;
+}
 
-export type WorkbenchVerificationMethod =
-  | "email"
-  | "passkey"
-  | "recovery-code"
-  | "sms"
-  | "totp";
+export type WorkbenchCodeVerificationMethod = "email" | "recovery-code" | "sms" | "totp";
+export type WorkbenchVerificationPurpose = "disable" | "login" | "reauth" | "sensitive-action" | "setup";
 
 export interface WorkbenchVerificationRememberOption {
   defaultChecked?: boolean;
@@ -67,25 +46,39 @@ export interface WorkbenchVerificationRememberOption {
   minutes: number;
 }
 
-export interface WorkbenchVerificationRequest {
+export interface WorkbenchCodeVerificationRequest {
   description?: ReactNode;
-  method?: WorkbenchVerificationMethod;
+  inputMode?: "numeric" | "text";
+  kind: "code";
+  method: WorkbenchCodeVerificationMethod;
   purpose: WorkbenchVerificationPurpose;
   rememberOption?: false | WorkbenchVerificationRememberOption;
   subject?: ReactNode;
   title?: ReactNode;
 }
 
-export interface WorkbenchVerificationSubmitValues {
-  code?: string;
-  method: WorkbenchVerificationMethod;
+export interface WorkbenchPasskeyVerificationRequest {
+  description?: ReactNode;
+  kind: "passkey";
+  purpose: WorkbenchVerificationPurpose;
+  subject?: ReactNode;
+  title?: ReactNode;
+}
+
+export type WorkbenchVerificationRequest = WorkbenchCodeVerificationRequest | WorkbenchPasskeyVerificationRequest;
+
+export interface WorkbenchCodeVerificationValues {
+  code: string;
+  kind: "code";
+  method: WorkbenchCodeVerificationMethod;
   purpose: WorkbenchVerificationPurpose;
   remember?: boolean;
   rememberForMinutes?: number;
 }
 
-export const defaultWorkbenchCredentialConfig: Required<WorkbenchCredentialConfig> = {
-  challenge: { provider: "image" },
-  local: { loginEnabled: true, registrationEnabled: true },
-  oauth: { providers: [] },
-};
+export interface WorkbenchPasskeyVerificationValues {
+  kind: "passkey";
+  purpose: WorkbenchVerificationPurpose;
+}
+
+export type WorkbenchVerificationValues = WorkbenchCodeVerificationValues | WorkbenchPasskeyVerificationValues;

@@ -111,12 +111,11 @@ import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
 import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
 import {
-  WorkbenchChallengeField,
-  WorkbenchCredentialModal,
-  WorkbenchCredentialPage,
-  WorkbenchOAuthButtons,
-  WorkbenchVerificationModal,
-  WorkbenchVerificationPage,
+  WorkbenchCodeVerificationModal,
+  WorkbenchHumanChallengeField,
+  WorkbenchOAuthSignInPage,
+  WorkbenchPasswordSignInPage,
+  WorkbenchPasswordSignUpPage,
   WorkbenchVerificationProvider,
   useWorkbenchVerification,
 } from "@lwmacct/260627-antd-workbench/security";
@@ -159,18 +158,15 @@ example/
 | `WorkbenchThemeToggle` | 深浅色切换按钮。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 用户头像账号 Popover，支持身份信息、自定义操作和异步退出。 |
-| `WorkbenchCredentialForm` | 登录/注册纯表单，不绑定页面、弹窗或路由。 |
-| `WorkbenchCredentialPage` | 全屏登录/注册页。 |
-| `WorkbenchCredentialModal` | 弹窗登录/注册容器。 |
-| `WorkbenchCredentialDrawer` | 抽屉登录/注册容器。 |
-| `WorkbenchVerificationForm` | 通用安全验证纯表单，不绑定页面、弹窗或路由。 |
-| `WorkbenchVerificationPage` | 全屏安全验证页，可用于登录 2FA 路由。 |
-| `WorkbenchVerificationModal` | 弹窗安全验证容器，适合任意页面内触发。 |
-| `WorkbenchVerificationDrawer` | 抽屉安全验证容器，适合侧边工作流。 |
-| `WorkbenchVerificationProvider` | Promise 式安全验证编排容器，配合 `useWorkbenchVerification` 使用。 |
-| `WorkbenchOAuthButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
-| `WorkbenchAuthPage` | 统一 OAuth 检查、登录、跳转和错误状态的品牌页，不绑定请求或路由。 |
-| `WorkbenchChallengeField` | 图片验证码和远程 challenge 的通用输入控件。 |
+| `WorkbenchSecurityPage` | 安全流程共用的品牌、面板和错误布局。 |
+| `WorkbenchOAuthSignInPage` | OAuth 专用登录页，不绑定会话请求或路由。 |
+| `WorkbenchOAuthProviderButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
+| `WorkbenchPasswordSignInForm/Page/Modal/Drawer` | 本地账号密码登录的显式表单与容器。 |
+| `WorkbenchPasswordSignUpForm/Page` | 本地账号注册的显式表单与整页容器。 |
+| `WorkbenchHumanChallengeField` | 图片或远程人机挑战输入控件。 |
+| `WorkbenchCodeVerificationForm/Page/Modal/Drawer` | 邮件、短信、TOTP 和恢复码验证。 |
+| `WorkbenchPasskeyVerificationAction` | 不渲染验证码输入框的通行密钥验证操作。 |
+| `WorkbenchVerificationProvider` | 根据 `kind: "code" | "passkey"` 分流并提供 Promise 式验证编排。 |
 
 ## 主题变量
 

@@ -7,12 +7,13 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { Drawer, Modal } from "antd";
 import type {
   WorkbenchVerificationRequest,
-  WorkbenchVerificationSubmitValues,
+  WorkbenchVerificationValues,
 } from "./model";
-import { WorkbenchVerificationDrawer } from "./WorkbenchVerificationDrawer";
-import { WorkbenchVerificationModal } from "./WorkbenchVerificationModal";
+import { WorkbenchCodeVerificationForm } from "./WorkbenchCodeVerificationForm";
+import { WorkbenchPasskeyVerificationAction } from "./WorkbenchPasskeyVerificationAction";
 
 export type WorkbenchVerificationSurface = "drawer" | "modal";
 
@@ -22,14 +23,14 @@ export type WorkbenchVerificationResult =
     }
   | {
       status: "verified";
-      values: WorkbenchVerificationSubmitValues;
+      values: WorkbenchVerificationValues;
     };
 
 export interface WorkbenchVerificationProviderProps {
   children: ReactNode;
   surface?: WorkbenchVerificationSurface;
   onVerify(
-    values: WorkbenchVerificationSubmitValues,
+    values: WorkbenchVerificationValues,
     request: WorkbenchVerificationRequest,
   ): Promise<void> | void;
 }
@@ -84,7 +85,7 @@ export function WorkbenchVerificationProvider({
   }, []);
 
   const submit = useCallback(
-    async (values: WorkbenchVerificationSubmitValues) => {
+    async (values: WorkbenchVerificationValues) => {
       const current = activeRef.current;
       if (!current) {
         return;
@@ -112,29 +113,29 @@ export function WorkbenchVerificationProvider({
   return (
     <WorkbenchVerificationContext.Provider value={{ verify }}>
       {children}
-      {active ? (
-        surface === "drawer" ? (
-          <WorkbenchVerificationDrawer
-            {...active.request}
-            error={error}
-            loading={loading}
-            open
-            onClose={close}
-            onSubmit={submit}
-          />
-        ) : (
-          <WorkbenchVerificationModal
-            {...active.request}
-            error={error}
-            loading={loading}
-            open
-            onCancel={close}
-            onSubmit={submit}
-          />
-        )
+      {active ? surface === "drawer" ? (
+        <Drawer destroyOnHidden open placement="right" size={420} title={null} onClose={close}>
+          <VerificationContent error={error} loading={loading} request={active.request} onSubmit={submit} />
+        </Drawer>
+      ) : (
+        <Modal centered destroyOnHidden footer={null} open title={null} width={420} onCancel={close}>
+          <VerificationContent error={error} loading={loading} request={active.request} onSubmit={submit} />
+        </Modal>
       ) : null}
     </WorkbenchVerificationContext.Provider>
   );
+}
+
+function VerificationContent({ error, loading, request, onSubmit }: {
+  error?: ReactNode;
+  loading: boolean;
+  request: WorkbenchVerificationRequest;
+  onSubmit(values: WorkbenchVerificationValues): Promise<void> | void;
+}) {
+  if (request.kind === "passkey") {
+    return <WorkbenchPasskeyVerificationAction {...request} error={error} loading={loading} onSubmit={onSubmit} />;
+  }
+  return <WorkbenchCodeVerificationForm {...request} error={error} loading={loading} onSubmit={onSubmit} />;
 }
 
 export function useWorkbenchVerification(): WorkbenchVerificationContextValue {

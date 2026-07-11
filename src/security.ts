@@ -1,67 +1,51 @@
-export { WorkbenchChallengeField } from "./components/security/WorkbenchChallengeField";
-export { WorkbenchCredentialDrawer } from "./components/security/WorkbenchCredentialDrawer";
-export { WorkbenchCredentialForm } from "./components/security/WorkbenchCredentialForm";
-export { WorkbenchCredentialModal } from "./components/security/WorkbenchCredentialModal";
-export { WorkbenchCredentialPage } from "./components/security/WorkbenchCredentialPage";
-export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
-export {
-  WorkbenchAuthPage,
-} from "./components/security/WorkbenchAuthPage";
-export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
-export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
-export { WorkbenchVerificationModal } from "./components/security/WorkbenchVerificationModal";
-export { WorkbenchVerificationPage } from "./components/security/WorkbenchVerificationPage";
-export {
-  WorkbenchVerificationProvider,
-  useWorkbenchVerification,
-} from "./components/security/WorkbenchVerificationProvider";
-export { defaultWorkbenchCredentialConfig } from "./components/security/model";
+export { WorkbenchCodeVerificationDrawer } from "./components/security/WorkbenchCodeVerificationDrawer";
+export { WorkbenchCodeVerificationForm } from "./components/security/WorkbenchCodeVerificationForm";
+export { WorkbenchCodeVerificationModal } from "./components/security/WorkbenchCodeVerificationModal";
+export { WorkbenchCodeVerificationPage } from "./components/security/WorkbenchCodeVerificationPage";
+export { WorkbenchHumanChallengeField } from "./components/security/WorkbenchHumanChallengeField";
+export { WorkbenchOAuthProviderButtons } from "./components/security/WorkbenchOAuthProviderButtons";
+export { WorkbenchOAuthSignInPage } from "./components/security/WorkbenchOAuthSignInPage";
+export { WorkbenchPasskeyVerificationAction } from "./components/security/WorkbenchPasskeyVerificationAction";
+export { WorkbenchPasswordSignInDrawer } from "./components/security/WorkbenchPasswordSignInDrawer";
+export { WorkbenchPasswordSignInForm } from "./components/security/WorkbenchPasswordSignInForm";
+export { WorkbenchPasswordSignInModal } from "./components/security/WorkbenchPasswordSignInModal";
+export { WorkbenchPasswordSignInPage } from "./components/security/WorkbenchPasswordSignInPage";
+export { WorkbenchPasswordSignUpForm } from "./components/security/WorkbenchPasswordSignUpForm";
+export { WorkbenchPasswordSignUpPage } from "./components/security/WorkbenchPasswordSignUpPage";
+export { WorkbenchSecurityPage } from "./components/security/WorkbenchSecurityPage";
+export { WorkbenchVerificationProvider, useWorkbenchVerification } from "./components/security/WorkbenchVerificationProvider";
 
+export type { WorkbenchCodeVerificationDrawerProps } from "./components/security/WorkbenchCodeVerificationDrawer";
+export type { WorkbenchCodeVerificationFormProps } from "./components/security/WorkbenchCodeVerificationForm";
+export type { WorkbenchCodeVerificationModalProps } from "./components/security/WorkbenchCodeVerificationModal";
+export type { WorkbenchCodeVerificationPageProps } from "./components/security/WorkbenchCodeVerificationPage";
+export type { WorkbenchHumanChallengeFieldProps, WorkbenchRemoteHumanChallengeRenderProps } from "./components/security/WorkbenchHumanChallengeField";
+export type { WorkbenchOAuthProviderButtonsProps } from "./components/security/WorkbenchOAuthProviderButtons";
+export type { WorkbenchOAuthSignInPageProps } from "./components/security/WorkbenchOAuthSignInPage";
+export type { WorkbenchPasskeyVerificationActionProps } from "./components/security/WorkbenchPasskeyVerificationAction";
+export type { WorkbenchPasswordSignInDrawerProps } from "./components/security/WorkbenchPasswordSignInDrawer";
+export type { WorkbenchPasswordSignInFormProps } from "./components/security/WorkbenchPasswordSignInForm";
+export type { WorkbenchPasswordSignInModalProps } from "./components/security/WorkbenchPasswordSignInModal";
+export type { WorkbenchPasswordSignInPageProps } from "./components/security/WorkbenchPasswordSignInPage";
+export type { WorkbenchPasswordSignUpFormProps } from "./components/security/WorkbenchPasswordSignUpForm";
+export type { WorkbenchPasswordSignUpPageProps } from "./components/security/WorkbenchPasswordSignUpPage";
+export type { WorkbenchSecurityBrand, WorkbenchSecurityPageProps } from "./components/security/WorkbenchSecurityPage";
+export type { WorkbenchVerificationContextValue, WorkbenchVerificationProviderProps, WorkbenchVerificationResult, WorkbenchVerificationSurface } from "./components/security/WorkbenchVerificationProvider";
 export type {
-  WorkbenchChallengeFieldProps,
-  WorkbenchRemoteChallengeRenderProps,
-} from "./components/security/WorkbenchChallengeField";
-export type { WorkbenchCredentialDrawerProps } from "./components/security/WorkbenchCredentialDrawer";
-export type {
-  WorkbenchCredentialModeSwitchRenderProps,
-  WorkbenchCredentialFormProps,
-} from "./components/security/WorkbenchCredentialForm";
-export type { WorkbenchCredentialModalProps } from "./components/security/WorkbenchCredentialModal";
-export type { WorkbenchCredentialPageProps } from "./components/security/WorkbenchCredentialPage";
-export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
-export type {
-  WorkbenchAuthBrand,
-  WorkbenchAuthPageProps,
-  WorkbenchAuthPageState,
-} from "./components/security/WorkbenchAuthPage";
-export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
-export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";
-export type { WorkbenchVerificationModalProps } from "./components/security/WorkbenchVerificationModal";
-export type { WorkbenchVerificationPageProps } from "./components/security/WorkbenchVerificationPage";
-export type {
-  WorkbenchVerificationContextValue,
-  WorkbenchVerificationProviderProps,
-  WorkbenchVerificationResult,
-  WorkbenchVerificationSurface,
-} from "./components/security/WorkbenchVerificationProvider";
-export type {
-  WorkbenchChallengeFieldLabels,
-  WorkbenchCredentialLabels,
-  WorkbenchOAuthButtonsLabels,
-  WorkbenchVerificationLabels,
-} from "./components/security/labels";
-export type {
-  WorkbenchChallengeProvider,
-  WorkbenchChallengeConfig,
-  WorkbenchChallengeResponse,
-  WorkbenchCredentialConfig,
-  WorkbenchCredentialMode,
-  WorkbenchCredentialSubmitValues,
+  WorkbenchCodeVerificationMethod,
+  WorkbenchCodeVerificationRequest,
+  WorkbenchCodeVerificationValues,
+  WorkbenchHumanChallengeConfig,
+  WorkbenchHumanChallengeProvider,
+  WorkbenchHumanChallengeResponse,
   WorkbenchImageChallenge,
   WorkbenchOAuthProvider,
-  WorkbenchVerificationMethod,
+  WorkbenchPasskeyVerificationRequest,
+  WorkbenchPasskeyVerificationValues,
+  WorkbenchPasswordSignInValues,
+  WorkbenchPasswordSignUpValues,
   WorkbenchVerificationPurpose,
   WorkbenchVerificationRememberOption,
   WorkbenchVerificationRequest,
-  WorkbenchVerificationSubmitValues,
+  WorkbenchVerificationValues,
 } from "./components/security/model";

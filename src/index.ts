@@ -10,24 +10,7 @@ export {
 } from "./appearance/defaults";
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
 export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
-export { WorkbenchCredentialDrawer } from "./components/security/WorkbenchCredentialDrawer";
-export { WorkbenchCredentialForm } from "./components/security/WorkbenchCredentialForm";
-export { WorkbenchCredentialModal } from "./components/security/WorkbenchCredentialModal";
-export { WorkbenchCredentialPage } from "./components/security/WorkbenchCredentialPage";
-export { WorkbenchOAuthButtons } from "./components/security/WorkbenchOAuthButtons";
-export {
-  WorkbenchAuthPage,
-} from "./components/security/WorkbenchAuthPage";
-export { WorkbenchVerificationDrawer } from "./components/security/WorkbenchVerificationDrawer";
-export { WorkbenchVerificationForm } from "./components/security/WorkbenchVerificationForm";
-export { WorkbenchVerificationModal } from "./components/security/WorkbenchVerificationModal";
-export { WorkbenchVerificationPage } from "./components/security/WorkbenchVerificationPage";
-export {
-  WorkbenchVerificationProvider,
-  useWorkbenchVerification,
-} from "./components/security/WorkbenchVerificationProvider";
-export { WorkbenchChallengeField } from "./components/security/WorkbenchChallengeField";
-export { defaultWorkbenchCredentialConfig } from "./components/security/model";
+export * from "./security";
 export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";
 export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
 export { WorkbenchCenterState } from "./components/layout/WorkbenchCenterState";
@@ -66,54 +49,6 @@ export type {
   WorkbenchUserAction,
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
-export type { WorkbenchCredentialDrawerProps } from "./components/security/WorkbenchCredentialDrawer";
-export type {
-  WorkbenchCredentialModeSwitchRenderProps,
-  WorkbenchCredentialFormProps,
-} from "./components/security/WorkbenchCredentialForm";
-export type { WorkbenchCredentialModalProps } from "./components/security/WorkbenchCredentialModal";
-export type { WorkbenchCredentialPageProps } from "./components/security/WorkbenchCredentialPage";
-export type { WorkbenchOAuthButtonsProps } from "./components/security/WorkbenchOAuthButtons";
-export type {
-  WorkbenchAuthBrand,
-  WorkbenchAuthPageProps,
-  WorkbenchAuthPageState,
-} from "./components/security/WorkbenchAuthPage";
-export type { WorkbenchVerificationDrawerProps } from "./components/security/WorkbenchVerificationDrawer";
-export type { WorkbenchVerificationFormProps } from "./components/security/WorkbenchVerificationForm";
-export type { WorkbenchVerificationModalProps } from "./components/security/WorkbenchVerificationModal";
-export type { WorkbenchVerificationPageProps } from "./components/security/WorkbenchVerificationPage";
-export type {
-  WorkbenchVerificationContextValue,
-  WorkbenchVerificationProviderProps,
-  WorkbenchVerificationResult,
-  WorkbenchVerificationSurface,
-} from "./components/security/WorkbenchVerificationProvider";
-export type {
-  WorkbenchChallengeFieldProps,
-  WorkbenchRemoteChallengeRenderProps,
-} from "./components/security/WorkbenchChallengeField";
-export type {
-  WorkbenchChallengeFieldLabels,
-  WorkbenchCredentialLabels,
-  WorkbenchOAuthButtonsLabels,
-  WorkbenchVerificationLabels,
-} from "./components/security/labels";
-export type {
-  WorkbenchChallengeConfig,
-  WorkbenchChallengeResponse,
-  WorkbenchCredentialMode,
-  WorkbenchCredentialConfig,
-  WorkbenchCredentialSubmitValues,
-  WorkbenchChallengeProvider,
-  WorkbenchImageChallenge,
-  WorkbenchOAuthProvider,
-  WorkbenchVerificationMethod,
-  WorkbenchVerificationPurpose,
-  WorkbenchVerificationRememberOption,
-  WorkbenchVerificationRequest,
-  WorkbenchVerificationSubmitValues,
-} from "./components/security/model";
 export type { WorkbenchLanguageToggleProps } from "./components/controls/WorkbenchLanguageToggle";
 export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";
 export type { WorkbenchPageProps } from "./components/layout/WorkbenchPage";

@@ -39,6 +39,7 @@ function VerificationProviderCard() {
     setResult(
       await verify({
         description: text.security.sensitiveActionDescription,
+        kind: "code",
         method: "totp",
         purpose: "sensitive-action",
         rememberOption: {

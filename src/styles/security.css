@@ -28,41 +28,36 @@
   background: var(--wb-card-elevated-bg);
 }
 
-.wb-auth-page__brand {
+.wb-security__brand {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.wb-auth-page__brand h3.ant-typography {
+.wb-security__brand h3.ant-typography {
   margin: 0;
   color: var(--wb-text-strong);
 }
 
-.wb-auth-page__mark {
+.wb-security__brand-mark {
   background: var(--wb-accent);
   color: var(--wb-text-strong);
   font-weight: 700;
 }
 
-.wb-auth-page__content {
+.wb-oauth-sign-in-page__content {
   display: grid;
   min-height: 56px;
   align-content: start;
 }
 
-.wb-auth-page__providers {
-  width: 100%;
-  margin: 0;
-}
-
-.wb-auth-page__hint {
+.wb-oauth-sign-in-page__hint {
   display: block;
   margin-top: 12px;
   text-align: center;
-}
-
-.wb-auth-page__progress {
-  min-height: 40px;
 }
 
 .wb-security-form {
@@ -97,6 +92,16 @@
 .wb-security__mode-switch {
   margin: 16px 0 0;
   text-align: center;
+}
+
+.wb-security__actions {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.wb-security__terms {
+  margin-bottom: 16px;
+  color: var(--wb-text-muted);
 }
 
 .wb-security__mode-switch a,

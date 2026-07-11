@@ -2,8 +2,8 @@ import { Alert } from "antd";
 import { useState } from "react";
 import {
   WorkbenchPage,
-  WorkbenchVerificationForm,
-  type WorkbenchVerificationSubmitValues,
+  WorkbenchCodeVerificationForm,
+  type WorkbenchCodeVerificationValues,
   WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
@@ -13,7 +13,7 @@ export function VerificationFormRoute() {
   const text = useExampleText();
   const [status, setStatus] = useState("");
 
-  function submit(values: WorkbenchVerificationSubmitValues) {
+  function submit(values: WorkbenchCodeVerificationValues) {
     assertExampleVerification(values, String(text.security.verificationLabels.codeInvalid));
     setStatus(text.components.verificationSubmitted(values.method));
   }
@@ -24,8 +24,9 @@ export function VerificationFormRoute() {
       title={text.components.verificationForm}
     >
       <WorkbenchPanel>
-        <WorkbenchVerificationForm
+        <WorkbenchCodeVerificationForm
           description={text.security.sensitiveActionDescription}
+          method="totp"
           purpose="sensitive-action"
           rememberOption={{
             defaultChecked: true,

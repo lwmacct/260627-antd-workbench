@@ -3,8 +3,8 @@ import { Alert, Button, Space } from "antd";
 import { useState } from "react";
 import {
   WorkbenchPage,
-  WorkbenchVerificationDrawer,
-  type WorkbenchVerificationSubmitValues,
+  WorkbenchCodeVerificationDrawer,
+  type WorkbenchCodeVerificationValues,
   WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
@@ -15,7 +15,7 @@ export function VerificationDrawerRoute() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
 
-  function submit(values: WorkbenchVerificationSubmitValues) {
+  function submit(values: WorkbenchCodeVerificationValues) {
     assertExampleVerification(values, String(text.security.verificationLabels.codeInvalid));
     setStatus(text.components.verificationSubmitted(values.method));
     setOpen(false);
@@ -38,9 +38,10 @@ export function VerificationDrawerRoute() {
           {status ? <Alert message={status} showIcon type="success" /> : null}
         </Space>
       </WorkbenchPanel>
-      <WorkbenchVerificationDrawer
+      <WorkbenchCodeVerificationDrawer
         description={text.security.sensitiveActionDescription}
         open={open}
+        method="totp"
         purpose="sensitive-action"
         rememberOption={{ minutes: text.security.verificationRememberMinutes }}
         title={text.security.sensitiveAction}

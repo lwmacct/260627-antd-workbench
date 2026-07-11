@@ -1,25 +1,47 @@
 import type { Locale as AntdLocale } from "antd/es/locale";
+import type { ReactNode } from "react";
 import type { WorkbenchAppearanceSettingsLabels } from "../components/settings/WorkbenchAppearanceSettings";
-import type {
-  WorkbenchChallengeFieldLabels,
-  WorkbenchCredentialLabels,
-  WorkbenchOAuthButtonsLabels,
-  WorkbenchVerificationLabels,
-} from "../components/security/labels";
 
 export type WorkbenchLocale = "zh-CN" | "en-US";
 
 export interface WorkbenchMessages {
   account: { logout: string; menu: string };
   appearance: Required<WorkbenchAppearanceSettingsLabels>;
-  auth: { checking: string; retry: string; signingIn: string };
-  challenge: Required<WorkbenchChallengeFieldLabels>;
-  credential: Required<WorkbenchCredentialLabels>;
+  auth: { retry: string; signingIn: string };
+  codeVerification: {
+    code: ReactNode;
+    codeRequired: string;
+    description: ReactNode;
+    remember(minutes: number): ReactNode;
+    submit: ReactNode;
+    title: ReactNode;
+  };
+  humanChallenge: {
+    createFailed: string;
+    imageAlt: string;
+    label: ReactNode;
+    missingSitekey: ReactNode;
+    refresh: ReactNode;
+    unsupportedRemoteProvider: ReactNode;
+  };
   language: { switchLanguage: string; toggleLabel: string };
   navigation: { sectionNavigation: string };
-  oauth: Required<WorkbenchOAuthButtonsLabels>;
+  oauth: { loginWith(label: ReactNode): ReactNode };
+  passkeyVerification: { description: ReactNode; submit: ReactNode; title: ReactNode };
+  password: {
+    confirmPassword: ReactNode;
+    confirmPasswordMismatch: string;
+    confirmPasswordRequired: string;
+    password: ReactNode;
+    passwordMinLength: string;
+    passwordRequired: string;
+    username: ReactNode;
+    usernameRequired: string;
+  };
+  passwordSignIn: { description: ReactNode; submit: ReactNode; title: ReactNode };
+  passwordSignUp: { description: ReactNode; submit: ReactNode; title: ReactNode };
   theme: { switchTheme: string; switchToDark: string; switchToLight: string };
-  verification: Required<WorkbenchVerificationLabels>;
+  verification: { back: ReactNode };
 }
 
 export interface WorkbenchLocaleContextValue {

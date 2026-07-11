@@ -91,7 +91,7 @@ export function DashboardRoute() {
       </WorkbenchPanel>
       <WorkbenchVerificationProvider
         onVerify={(values) => {
-          if (!/^\d{6}$/.test(values.code ?? "")) {
+          if (values.kind === "code" && !/^\d{6}$/.test(values.code)) {
             throw new Error(String(text.security.verificationLabels.codeInvalid));
           }
         }}
@@ -124,6 +124,7 @@ function SensitiveActionCard() {
   async function handleVerify() {
     const result = await verify({
       description: text.security.sensitiveActionDescription,
+      kind: "code",
       method: "totp",
       purpose: "sensitive-action",
       rememberOption: {

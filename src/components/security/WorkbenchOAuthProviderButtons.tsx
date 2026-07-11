@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useWorkbenchLocale } from "../../locale/context";
 import type { WorkbenchOAuthProvider } from "./model";
 
-export interface WorkbenchOAuthButtonsProps {
+export interface WorkbenchOAuthProviderButtonsProps {
   block?: boolean;
   className?: string;
   disabled?: boolean;
@@ -15,7 +15,7 @@ export interface WorkbenchOAuthButtonsProps {
   onSelect(provider: WorkbenchOAuthProvider): void;
 }
 
-export function WorkbenchOAuthButtons({
+export function WorkbenchOAuthProviderButtons({
   block = true,
   className,
   disabled,
@@ -24,13 +24,8 @@ export function WorkbenchOAuthButtons({
   providers,
   size,
   onSelect,
-}: WorkbenchOAuthButtonsProps) {
+}: WorkbenchOAuthProviderButtonsProps) {
   const { messages } = useWorkbenchLocale();
-
-  if (providers.length === 0) {
-    return null;
-  }
-
   return (
     <Space className={className ?? "wb-security__oauth-buttons"} orientation="vertical">
       {providers.map((provider) => (
@@ -43,9 +38,7 @@ export function WorkbenchOAuthButtons({
           size={size}
           onClick={() => onSelect(provider)}
         >
-          {loadingProvider === provider.provider && loadingText
-            ? loadingText
-            : messages.oauth.loginWith(provider.label)}
+          {loadingProvider === provider.provider && loadingText ? loadingText : messages.oauth.loginWith(provider.label)}
         </Button>
       ))}
     </Space>
@@ -53,11 +46,7 @@ export function WorkbenchOAuthButtons({
 }
 
 function defaultOAuthIcon(provider: string): ReactNode {
-  if (provider === "github") {
-    return <GithubOutlined />;
-  }
-  if (provider === "google") {
-    return <GoogleOutlined />;
-  }
+  if (provider === "github") return <GithubOutlined />;
+  if (provider === "google") return <GoogleOutlined />;
   return <LoginOutlined />;
 }
