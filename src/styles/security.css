@@ -28,25 +28,41 @@
   background: var(--wb-card-elevated-bg);
 }
 
-.wb-oauth-sign-in__brand {
+.wb-auth-page__brand {
   margin-bottom: 20px;
   text-align: center;
 }
 
-.wb-oauth-sign-in__brand h3.ant-typography {
+.wb-auth-page__brand h3.ant-typography {
   margin: 0;
   color: var(--wb-text-strong);
 }
 
-.wb-oauth-sign-in__mark {
+.wb-auth-page__mark {
   background: var(--wb-accent);
   color: var(--wb-text-strong);
   font-weight: 700;
 }
 
-.wb-oauth-sign-in__providers {
+.wb-auth-page__content {
+  display: grid;
+  min-height: 56px;
+  align-content: start;
+}
+
+.wb-auth-page__providers {
   width: 100%;
   margin: 0;
+}
+
+.wb-auth-page__hint {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.wb-auth-page__progress {
+  min-height: 40px;
 }
 
 .wb-security-form {

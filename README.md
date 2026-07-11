@@ -169,8 +169,7 @@ example/
 | `WorkbenchVerificationDrawer` | 抽屉安全验证容器，适合侧边工作流。 |
 | `WorkbenchVerificationProvider` | Promise 式安全验证编排容器，配合 `useWorkbenchVerification` 使用。 |
 | `WorkbenchOAuthButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
-| `WorkbenchOAuthSignInPage` | 纯 OAuth 全屏登录页，不绑定请求或路由。 |
-| `WorkbenchAuthCheckingPage` | 认证状态检查中的全屏加载页。 |
+| `WorkbenchAuthPage` | 统一 OAuth 检查、登录、跳转和错误状态的品牌页，不绑定请求或路由。 |
 | `WorkbenchChallengeField` | 图片验证码和远程 challenge 的通用输入控件。 |
 
 ## 主题变量

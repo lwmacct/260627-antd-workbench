@@ -10,7 +10,7 @@ const zh: WorkbenchMessages = {
     radius: "圆角", reset: "重置", scheme: "配色", soft: "柔和", spacious: "宽松", surface: "表面",
     system: "跟随系统", tinted: "染色表面",
   },
-  auth: { retry: "重新检查" },
+  auth: { checking: "正在确认登录状态…", retry: "重新检查", signingIn: "正在登录…" },
   challenge: {
     captcha: "验证码", captchaCreateFailed: "认证挑战生成失败", refresh: "刷新验证码",
     remoteChallengeConfigured: "远程验证码已配置", remoteChallengeMissingSitekey: "远程验证码缺少站点公钥",
@@ -46,7 +46,7 @@ const en: WorkbenchMessages = {
     radius: "Radius", reset: "Reset", scheme: "Scheme", soft: "Soft", spacious: "Spacious", surface: "Surface",
     system: "System", tinted: "Tinted surface",
   },
-  auth: { retry: "Check again" },
+  auth: { checking: "Confirming sign-in status…", retry: "Check again", signingIn: "Signing in…" },
   challenge: {
     captcha: "Verification code", captchaCreateFailed: "Failed to create authentication challenge", refresh: "Refresh code",
     remoteChallengeConfigured: "Remote challenge configured", remoteChallengeMissingSitekey: "Remote challenge site key is missing",

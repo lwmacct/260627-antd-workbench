@@ -9,6 +9,7 @@ export interface WorkbenchOAuthButtonsProps {
   className?: string;
   disabled?: boolean;
   loadingProvider?: string;
+  loadingText?: ReactNode;
   providers: WorkbenchOAuthProvider[];
   size?: ButtonProps["size"];
   onSelect(provider: WorkbenchOAuthProvider): void;
@@ -19,6 +20,7 @@ export function WorkbenchOAuthButtons({
   className,
   disabled,
   loadingProvider,
+  loadingText,
   providers,
   size,
   onSelect,
@@ -41,7 +43,9 @@ export function WorkbenchOAuthButtons({
           size={size}
           onClick={() => onSelect(provider)}
         >
-          {messages.oauth.loginWith(provider.label)}
+          {loadingProvider === provider.provider && loadingText
+            ? loadingText
+            : messages.oauth.loginWith(provider.label)}
         </Button>
       ))}
     </Space>

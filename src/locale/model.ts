@@ -12,7 +12,7 @@ export type WorkbenchLocale = "zh-CN" | "en-US";
 export interface WorkbenchMessages {
   account: { logout: string; menu: string };
   appearance: Required<WorkbenchAppearanceSettingsLabels>;
-  auth: { retry: string };
+  auth: { checking: string; retry: string; signingIn: string };
   challenge: Required<WorkbenchChallengeFieldLabels>;
   credential: Required<WorkbenchCredentialLabels>;
   language: { switchLanguage: string; toggleLabel: string };
