@@ -24,7 +24,7 @@ export interface WorkbenchMessages {
     refresh: ReactNode;
     unsupportedRemoteProvider: ReactNode;
   };
-  language: { switchLanguage: string; toggleLabel: string };
+  language: { switchLanguage: string };
   navigation: { sectionNavigation: string };
   oauth: { loginWith(label: ReactNode): ReactNode };
   passkeyVerification: { description: ReactNode; submit: ReactNode; title: ReactNode };

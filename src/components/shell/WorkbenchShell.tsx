@@ -5,7 +5,7 @@ import type { WorkbenchNavEntry } from "../../navigation/model";
 import { WorkbenchHeader, type WorkbenchBrand } from "./WorkbenchHeader";
 
 export interface WorkbenchShellProps {
-  actions?: ReactNode;
+  account?: ReactNode;
   brand: WorkbenchBrand;
   children: ReactNode;
   className?: string;
@@ -14,11 +14,12 @@ export interface WorkbenchShellProps {
   nav: WorkbenchNavEntry[];
   selectedNavKey?: string;
   selectedNavKeys?: string[];
+  utilities?: ReactNode;
   onSelectNav(key: string): void;
 }
 
 export function WorkbenchShell({
-  actions,
+  account,
   brand,
   children,
   className,
@@ -27,16 +28,18 @@ export function WorkbenchShell({
   nav,
   selectedNavKey,
   selectedNavKeys,
+  utilities,
   onSelectNav,
 }: WorkbenchShellProps) {
   return (
     <Layout className={cx("wb-shell", className)}>
       <WorkbenchHeader
-        actions={actions}
+        account={account}
         brand={brand}
         nav={nav}
         selectedNavKey={selectedNavKey}
         selectedNavKeys={selectedNavKeys}
+        utilities={utilities}
         onSelectNav={onSelectNav}
       />
       <Layout.Content
@@ -51,4 +54,3 @@ export function WorkbenchShell({
     </Layout>
   );
 }
-

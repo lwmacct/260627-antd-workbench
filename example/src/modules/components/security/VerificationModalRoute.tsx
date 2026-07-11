@@ -27,7 +27,7 @@ export function VerificationModalRoute() {
       title={text.components.verificationModal}
     >
       <WorkbenchPanel>
-        <Space className="example-components-actions" direction="vertical" size={12}>
+        <Space className="example-components-actions" orientation="vertical" size={12}>
           <Button
             icon={<SafetyCertificateOutlined />}
             type="primary"

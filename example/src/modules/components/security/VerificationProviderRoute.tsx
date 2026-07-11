@@ -54,7 +54,7 @@ function VerificationProviderCard() {
 
   return (
     <WorkbenchPanel>
-      <Space className="example-components-actions" direction="vertical" size={12}>
+      <Space className="example-components-actions" orientation="vertical" size={12}>
         <Typography.Text type="secondary">
           {text.components.verificationProviderDescription}
         </Typography.Text>

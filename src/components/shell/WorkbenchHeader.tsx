@@ -5,6 +5,7 @@ import { cx } from "../../shared/cx";
 import { getNavItemLabel } from "../../navigation/find";
 import type { WorkbenchNavEntry } from "../../navigation/model";
 import { toAntdMenuItems } from "../../navigation/toAntdMenu";
+import { WorkbenchHeaderUtilities } from "./WorkbenchHeaderUtilities";
 
 export interface WorkbenchBrand {
   ariaLabel?: string;
@@ -15,7 +16,7 @@ export interface WorkbenchBrand {
 }
 
 export interface WorkbenchHeaderProps {
-  actions?: ReactNode;
+  account?: ReactNode;
   brand: WorkbenchBrand;
   className?: string;
   mobileNavFallback?: ReactNode;
@@ -23,11 +24,12 @@ export interface WorkbenchHeaderProps {
   navAriaLabel?: string;
   selectedNavKey?: string;
   selectedNavKeys?: string[];
+  utilities?: ReactNode;
   onSelectNav(key: string): void;
 }
 
 export function WorkbenchHeader({
-  actions,
+  account,
   brand,
   className,
   mobileNavFallback = "导航",
@@ -35,6 +37,7 @@ export function WorkbenchHeader({
   navAriaLabel = "主导航",
   selectedNavKey,
   selectedNavKeys,
+  utilities,
   onSelectNav,
 }: WorkbenchHeaderProps) {
   const selectedKeys = selectedNavKeys ?? (selectedNavKey ? [selectedNavKey] : []);
@@ -79,7 +82,12 @@ export function WorkbenchHeader({
         </Dropdown>
       </nav>
 
-      <div className="wb-header__actions">{actions}</div>
+      {utilities || account ? (
+        <div className="wb-header__end">
+          {utilities ? <WorkbenchHeaderUtilities>{utilities}</WorkbenchHeaderUtilities> : null}
+          {account ? <div className="wb-header__account">{account}</div> : null}
+        </div>
+      ) : null}
     </header>
   );
 }

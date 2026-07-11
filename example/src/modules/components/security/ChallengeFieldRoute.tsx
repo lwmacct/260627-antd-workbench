@@ -22,7 +22,7 @@ export function ChallengeFieldRoute() {
       <Row gutter={[12, 12]}>
         <Col xs={24} lg={12}>
           <WorkbenchPanel title={text.components.imageChallenge}>
-            <Space className="example-components-actions" direction="vertical" size={10}>
+            <Space className="example-components-actions" orientation="vertical" size={10}>
               <WorkbenchHumanChallengeField
                 config={{ provider: "image" }}
                 createImageChallenge={createExampleImageChallenge}
@@ -45,7 +45,7 @@ export function ChallengeFieldRoute() {
               onChange={setChallenge}
               onError={setChallengeError}
               renderRemoteChallenge={({ config, onChange }) => (
-                <Space className="example-remote-challenge" direction="vertical" size={10}>
+                <Space className="example-remote-challenge" orientation="vertical" size={10}>
                   <Typography.Text type="secondary">
                     {text.components.remoteChallengeAdapter(config.provider)}
                   </Typography.Text>

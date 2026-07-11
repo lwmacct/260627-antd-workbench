@@ -154,7 +154,7 @@ function SensitiveActionCard() {
       }
       title={text.security.sensitiveActionTitle}
     >
-      <Space className="example-sensitive-action" direction="vertical" size={12}>
+      <Space className="example-sensitive-action" orientation="vertical" size={12}>
         <Typography.Text type="secondary">
           {text.security.sensitiveActionDescription}
         </Typography.Text>

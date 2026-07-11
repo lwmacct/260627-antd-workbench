@@ -1,5 +1,11 @@
 .wb-user-menu__trigger.ant-btn {
   display: inline-grid;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   place-items: center;
 }
 

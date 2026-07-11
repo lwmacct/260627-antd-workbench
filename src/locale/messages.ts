@@ -3,7 +3,7 @@ import zhCN from "antd/locale/zh_CN";
 import type { WorkbenchLocale, WorkbenchMessages } from "./model";
 
 const zh: WorkbenchMessages = {
-  account: { logout: "退出此工具", menu: "用户菜单" },
+  account: { logout: "退出登录", menu: "用户菜单" },
   appearance: {
     accent: "强调色", black: "纯黑", compact: "紧凑", comfortable: "舒适", customAccent: "自定义强调色",
     dark: "深色", deep: "深色表面", density: "密度", light: "浅色", mode: "主题", preview: "预览",
@@ -19,7 +19,7 @@ const zh: WorkbenchMessages = {
     createFailed: "认证挑战生成失败", imageAlt: "验证码", label: "验证码", missingSitekey: "远程验证码缺少站点公钥",
     refresh: "刷新验证码", unsupportedRemoteProvider: "远程验证码需要业务应用提供适配器",
   },
-  language: { switchLanguage: "切换语言", toggleLabel: "中 / EN" },
+  language: { switchLanguage: "切换语言" },
   navigation: { sectionNavigation: "分区导航" },
   oauth: { loginWith: (label) => ["使用 ", label, " 登录"] },
   passkeyVerification: { description: "使用设备上的通行密钥确认你的身份。", submit: "使用通行密钥验证", title: "通行密钥验证" },
@@ -34,7 +34,7 @@ const zh: WorkbenchMessages = {
 };
 
 const en: WorkbenchMessages = {
-  account: { logout: "Sign out of this tool", menu: "User menu" },
+  account: { logout: "Sign out", menu: "User menu" },
   appearance: {
     accent: "Accent", black: "Black", compact: "Compact", comfortable: "Comfortable", customAccent: "Custom accent",
     dark: "Dark", deep: "Deep surface", density: "Density", light: "Light", mode: "Theme", preview: "Preview",
@@ -51,7 +51,7 @@ const en: WorkbenchMessages = {
     missingSitekey: "The remote challenge site key is missing", refresh: "Refresh code",
     unsupportedRemoteProvider: "The application must provide a remote challenge adapter",
   },
-  language: { switchLanguage: "Switch language", toggleLabel: "EN / 中" },
+  language: { switchLanguage: "Switch language" },
   navigation: { sectionNavigation: "Section navigation" },
   oauth: { loginWith: (label) => ["Sign in with ", label] },
   passkeyVerification: { description: "Confirm your identity with a passkey on this device.", submit: "Verify with passkey", title: "Passkey verification" },

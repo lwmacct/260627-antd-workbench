@@ -38,10 +38,11 @@
 
 .wb-header__brand,
 .wb-header__nav,
-.wb-header__actions {
+.wb-header__end,
+.wb-header-utilities,
+.wb-header__account {
   display: flex;
   align-items: center;
-  gap: 8px;
   min-width: 0;
 }
 
@@ -91,10 +92,46 @@
   justify-content: flex-start;
 }
 
-.wb-header__actions {
+.wb-header__end {
   flex: 0 0 auto;
+  gap: 8px;
   justify-content: flex-end;
   white-space: nowrap;
+}
+
+.wb-header-utilities {
+  gap: 8px;
+}
+
+.wb-header__account .wb-user-menu__trigger.ant-btn {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+}
+
+.wb-header-action.ant-btn {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-color: var(--wb-header-border, var(--wb-border));
+  border-radius: 6px;
+  background: transparent;
+  color: var(--wb-text-secondary);
+  box-shadow: none;
+}
+
+.wb-header-action.ant-btn:hover,
+.wb-header-action.ant-btn:focus-visible {
+  border-color: var(--wb-accent-hover);
+  background: var(--wb-hover-bg);
+  color: var(--wb-text-strong);
+}
+
+.wb-header-action.ant-btn:active {
+  border-color: var(--wb-accent);
+  background: var(--wb-active-bg);
+  color: var(--wb-text-strong);
 }
 
 .wb-header__nav .ant-menu {
@@ -105,6 +142,7 @@
 }
 
 .wb-header__nav .ant-menu-horizontal {
+  flex-wrap: nowrap;
   justify-content: flex-start;
   line-height: 56px;
 }
@@ -179,4 +217,3 @@
 .wb-header__nav-mobile.ant-btn .anticon {
   color: inherit !important;
 }
-

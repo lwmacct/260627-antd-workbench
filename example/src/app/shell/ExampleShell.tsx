@@ -51,26 +51,28 @@ export function ExampleShell() {
 
   return (
     <WorkbenchShell
-      actions={
+      account={
+        <WorkbenchUserMenu
+          actions={[
+            {
+              icon: <GithubOutlined />,
+              key: "source",
+              label: text.shell.source,
+            },
+          ]}
+          user={{
+            displayName: "Ada Lovelace",
+            provider: "GitHub",
+            providerIcon: <GithubOutlined />,
+            username: "ada-lovelace",
+          }}
+          onLogout={() => undefined}
+        />
+      }
+      utilities={
         <>
           <WorkbenchThemeToggle />
           <WorkbenchLanguageToggle />
-          <WorkbenchUserMenu
-            actions={[
-              {
-                icon: <GithubOutlined />,
-                key: "source",
-                label: text.shell.source,
-              },
-            ]}
-            user={{
-              displayName: "Ada Lovelace",
-              provider: "GitHub",
-              providerIcon: <GithubOutlined />,
-              username: "ada-lovelace",
-            }}
-            onLogout={() => undefined}
-          />
         </>
       }
       brand={{ name: "Workbench", version: "2.0.0" }}

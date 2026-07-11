@@ -15,9 +15,8 @@ export function WorkbenchThemeToggle() {
     <Tooltip title={title}>
       <Button
         aria-label={title}
+        className="wb-header-action"
         icon={dark ? <SunOutlined /> : <MoonOutlined />}
-        shape="circle"
-        type="text"
         onClick={toggleThemeMode}
       />
     </Tooltip>

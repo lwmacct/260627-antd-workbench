@@ -50,14 +50,16 @@ export function App() {
   return (
     <WorkbenchProvider defaultLocale="zh-CN" localeStorageKey="my-tool.locale">
       <WorkbenchShell
-        actions={
+        account={
+          <WorkbenchUserMenu
+            user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
+            onLogout={() => console.log("logout")}
+          />
+        }
+        utilities={
           <>
             <WorkbenchThemeToggle />
             <WorkbenchLanguageToggle />
-            <WorkbenchUserMenu
-              user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
-              onLogout={() => console.log("logout")}
-            />
           </>
         }
         brand={{ name: "Workbench", version: "2.0.0" }}
@@ -150,6 +152,7 @@ example/
 | `WorkbenchProvider` | 组合 appearance、locale、Ant Design `ConfigProvider`、CSS 变量和持久化。 |
 | `WorkbenchShell` | 全屏应用外壳，包含顶部栏和可滚动内容区。 |
 | `WorkbenchHeader` | 独立顶部栏组件，通常由 `WorkbenchShell` 内部使用。 |
+| `WorkbenchHeaderUtilities` | 顶部栏工具按钮容器，统一尺寸、边框与间距。 |
 | `WorkbenchPage` | 页面标题、描述、操作区和内容容器。 |
 | `WorkbenchPanel` | 标准内容面板，基于 Ant Design `Card`，用于业务页面里的信息块、表单和表格容器。 |
 | `WorkbenchSectionLayout` | 设置页或分组页面的侧边导航布局。 |
