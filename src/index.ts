@@ -47,7 +47,10 @@ export type {
 } from "./appearance/model";
 export type {
   WorkbenchUser,
-  WorkbenchUserAction,
+  WorkbenchUserMenuActionItem,
+  WorkbenchUserMenuGroup,
+  WorkbenchUserMenuItem,
+  WorkbenchUserMenuLinkItem,
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
 export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";

@@ -51,8 +51,12 @@ export function App() {
     <WorkbenchProvider defaultLocale="zh-CN" localeStorageKey="my-tool.locale">
       <WorkbenchShell
         account={
-          <WorkbenchUserMenu
-            user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
+            <WorkbenchUserMenu
+              groups={[{
+                key: "account",
+                items: [{ href: "/settings", key: "settings", kind: "link", label: "设置" }],
+              }]}
+              user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
             onLogout={() => console.log("logout")}
           />
         }
@@ -160,7 +164,7 @@ example/
 | `WorkbenchAppearanceSettings` | 外观设置面板，必须在 `WorkbenchProvider` 下使用。 |
 | `WorkbenchThemeToggle` | 深浅色切换按钮。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
-| `WorkbenchUserMenu` | 用户头像账号 Popover，支持身份信息、自定义操作和异步退出。 |
+| `WorkbenchUserMenu` | 固定 256px 的用户菜单，支持身份信息、分组链接、异步操作和退出登录。 |
 | `WorkbenchSecurityPage` | 安全流程共用的品牌、面板和错误布局。 |
 | `WorkbenchOAuthSignInPage` | OAuth 专用登录页，不绑定会话请求或路由。 |
 | `WorkbenchOAuthProviderButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |

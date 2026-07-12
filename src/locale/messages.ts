@@ -3,7 +3,7 @@ import zhCN from "antd/locale/zh_CN";
 import type { WorkbenchLocale, WorkbenchMessages } from "./model";
 
 const zh: WorkbenchMessages = {
-  account: { logout: "退出登录", menu: "用户菜单" },
+  account: { logout: "退出登录", openMenu: "打开用户导航菜单" },
   appearance: {
     accent: "强调色", black: "纯黑", compact: "紧凑", comfortable: "舒适", customAccent: "自定义强调色",
     dark: "深色", deep: "深色表面", density: "密度", light: "浅色", mode: "主题", preview: "预览",
@@ -34,7 +34,7 @@ const zh: WorkbenchMessages = {
 };
 
 const en: WorkbenchMessages = {
-  account: { logout: "Sign out", menu: "User menu" },
+  account: { logout: "Sign out", openMenu: "Open user navigation menu" },
   appearance: {
     accent: "Accent", black: "Black", compact: "Compact", comfortable: "Comfortable", customAccent: "Custom accent",
     dark: "Dark", deep: "Deep surface", density: "Density", light: "Light", mode: "Theme", preview: "Preview",

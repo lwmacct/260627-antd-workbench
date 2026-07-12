@@ -53,13 +53,18 @@ export function ExampleShell() {
     <WorkbenchShell
       account={
         <WorkbenchUserMenu
-          actions={[
+          groups={[{
+            key: "resources",
+            items: [
             {
+              href: "https://github.com/lwmacct/260627-antd-workbench",
               icon: <GithubOutlined />,
+              kind: "link",
               key: "source",
               label: text.shell.source,
             },
-          ]}
+            ],
+          }]}
           user={{
             displayName: "Ada Lovelace",
             provider: "GitHub",

@@ -1,6 +1,6 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.50.260712",
+  "version": "0.51.260712",
   "private": false,
   "packageManager": "pnpm@11.11.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
