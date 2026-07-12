@@ -1,4 +1,5 @@
 export { WorkbenchCodeVerificationDrawer } from "./components/security/WorkbenchCodeVerificationDrawer";
+export { WorkbenchAccessDeniedPage } from "./components/security/WorkbenchAccessDeniedPage";
 export { WorkbenchCodeVerificationForm } from "./components/security/WorkbenchCodeVerificationForm";
 export { WorkbenchCodeVerificationModal } from "./components/security/WorkbenchCodeVerificationModal";
 export { WorkbenchCodeVerificationPage } from "./components/security/WorkbenchCodeVerificationPage";
@@ -16,6 +17,7 @@ export { WorkbenchSecurityPage } from "./components/security/WorkbenchSecurityPa
 export { WorkbenchVerificationProvider, useWorkbenchVerification } from "./components/security/WorkbenchVerificationProvider";
 
 export type { WorkbenchCodeVerificationDrawerProps } from "./components/security/WorkbenchCodeVerificationDrawer";
+export type { WorkbenchAccessDeniedPageProps } from "./components/security/WorkbenchAccessDeniedPage";
 export type { WorkbenchCodeVerificationFormProps } from "./components/security/WorkbenchCodeVerificationForm";
 export type { WorkbenchCodeVerificationModalProps } from "./components/security/WorkbenchCodeVerificationModal";
 export type { WorkbenchCodeVerificationPageProps } from "./components/security/WorkbenchCodeVerificationPage";

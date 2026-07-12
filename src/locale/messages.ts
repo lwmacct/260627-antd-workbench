@@ -3,6 +3,7 @@ import zhCN from "antd/locale/zh_CN";
 import type { WorkbenchLocale, WorkbenchMessages } from "./model";
 
 const zh: WorkbenchMessages = {
+  accessDenied: { description: "当前账号无法访问此应用。", title: "没有访问权限" },
   account: { logout: "退出登录", openMenu: "打开用户导航菜单" },
   appearance: {
     accent: "强调色", black: "纯黑", compact: "紧凑", comfortable: "舒适", customAccent: "自定义强调色",
@@ -34,6 +35,7 @@ const zh: WorkbenchMessages = {
 };
 
 const en: WorkbenchMessages = {
+  accessDenied: { description: "Your current account cannot access this application.", title: "Access denied" },
   account: { logout: "Sign out", openMenu: "Open user navigation menu" },
   appearance: {
     accent: "Accent", black: "Black", compact: "Compact", comfortable: "Comfortable", customAccent: "Custom accent",

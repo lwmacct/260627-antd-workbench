@@ -8,6 +8,7 @@ export const securityRoutes: RouteObject = {
     { index: true, element: <Navigate to="login" replace /> },
     { path: "login", element: <CredentialRoute mode="login" /> },
     { path: "oauth", element: <CredentialRoute mode="oauth" /> },
+    { path: "access-denied", element: <CredentialRoute mode="access-denied" /> },
     { path: "register", element: <CredentialRoute mode="register" /> },
     { path: "verify", element: <VerificationRoute /> },
   ],

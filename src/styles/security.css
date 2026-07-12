@@ -60,6 +60,78 @@
   text-align: center;
 }
 
+.wb-access-denied-page__content {
+  display: grid;
+  gap: 16px;
+}
+
+.wb-access-denied-page__message {
+  text-align: center;
+}
+
+.wb-access-denied-page__message h4.ant-typography {
+  margin: 0 0 6px;
+  color: var(--wb-text-strong);
+  font-size: 18px;
+}
+
+.wb-access-denied-page__identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--wb-border);
+  border-bottom: 1px solid var(--wb-border);
+}
+
+.wb-access-denied-page__identity-meta {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  max-width: calc(100% - 56px);
+  gap: 3px;
+}
+
+.wb-access-denied-page__identity-meta strong,
+.wb-access-denied-page__identity-meta > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wb-access-denied-page__identity-meta strong {
+  color: var(--wb-text-strong);
+}
+
+.wb-access-denied-page__identity-meta > span {
+  color: var(--wb-text-muted);
+}
+
+.wb-access-denied-page__provider-icon {
+  display: inline-flex;
+  margin-right: 5px;
+  vertical-align: -0.125em;
+}
+
+.wb-access-denied-page__provider-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.wb-access-denied-page__actions {
+  display: flex;
+  justify-content: center;
+}
+
 .wb-security-form {
   width: 100%;
 }

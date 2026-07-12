@@ -117,6 +117,7 @@ import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
 import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
 import {
+  WorkbenchAccessDeniedPage,
   WorkbenchCodeVerificationModal,
   WorkbenchHumanChallengeField,
   WorkbenchOAuthSignInPage,
@@ -166,6 +167,7 @@ example/
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 固定 256px 的用户菜单，支持身份信息、分组链接、异步操作和退出登录。 |
 | `WorkbenchSecurityPage` | 安全流程共用的品牌、面板和错误布局。 |
+| `WorkbenchAccessDeniedPage` | 展示当前身份和拒绝访问状态的通用页面，不绑定认证协议或 provider。 |
 | `WorkbenchOAuthSignInPage` | OAuth 专用登录页，不绑定会话请求或路由。 |
 | `WorkbenchOAuthProviderButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
 | `WorkbenchPasswordSignInForm/Page/Modal/Drawer` | 本地账号密码登录的显式表单与容器。 |

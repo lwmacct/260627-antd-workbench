@@ -5,6 +5,7 @@ import type { WorkbenchAppearanceSettingsLabels } from "../components/settings/W
 export type WorkbenchLocale = "zh-CN" | "en-US";
 
 export interface WorkbenchMessages {
+  accessDenied: { description: ReactNode; title: ReactNode };
   account: { logout: string; openMenu: string };
   appearance: Required<WorkbenchAppearanceSettingsLabels>;
   auth: { retry: string; signingIn: string };
