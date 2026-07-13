@@ -171,6 +171,14 @@
   text-align: center;
 }
 
+.wb-token-sign-in__oauth .ant-divider {
+  margin: 16px 0;
+}
+
+.wb-token-sign-in__oauth .wb-security__oauth-buttons {
+  margin-bottom: 0;
+}
+
 .wb-security__terms {
   margin-bottom: 16px;
   color: var(--wb-text-muted);

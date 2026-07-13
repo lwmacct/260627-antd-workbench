@@ -14,6 +14,8 @@ export { WorkbenchPasswordSignInPage } from "./components/security/WorkbenchPass
 export { WorkbenchPasswordSignUpForm } from "./components/security/WorkbenchPasswordSignUpForm";
 export { WorkbenchPasswordSignUpPage } from "./components/security/WorkbenchPasswordSignUpPage";
 export { WorkbenchSecurityPage } from "./components/security/WorkbenchSecurityPage";
+export { WorkbenchTokenSignInForm } from "./components/security/WorkbenchTokenSignInForm";
+export { WorkbenchTokenSignInPage } from "./components/security/WorkbenchTokenSignInPage";
 export { WorkbenchVerificationProvider, useWorkbenchVerification } from "./components/security/WorkbenchVerificationProvider";
 
 export type { WorkbenchCodeVerificationDrawerProps } from "./components/security/WorkbenchCodeVerificationDrawer";
@@ -32,6 +34,8 @@ export type { WorkbenchPasswordSignInPageProps } from "./components/security/Wor
 export type { WorkbenchPasswordSignUpFormProps } from "./components/security/WorkbenchPasswordSignUpForm";
 export type { WorkbenchPasswordSignUpPageProps } from "./components/security/WorkbenchPasswordSignUpPage";
 export type { WorkbenchSecurityBrand, WorkbenchSecurityPageProps } from "./components/security/WorkbenchSecurityPage";
+export type { WorkbenchTokenSignInFormProps, WorkbenchTokenSignInOAuthOptions } from "./components/security/WorkbenchTokenSignInForm";
+export type { WorkbenchTokenSignInPageProps } from "./components/security/WorkbenchTokenSignInPage";
 export type { WorkbenchVerificationContextValue, WorkbenchVerificationProviderProps, WorkbenchVerificationResult, WorkbenchVerificationSurface } from "./components/security/WorkbenchVerificationProvider";
 export type {
   WorkbenchCodeVerificationMethod,
@@ -46,6 +50,7 @@ export type {
   WorkbenchPasskeyVerificationValues,
   WorkbenchPasswordSignInValues,
   WorkbenchPasswordSignUpValues,
+  WorkbenchTokenSignInValues,
   WorkbenchVerificationPurpose,
   WorkbenchVerificationRememberOption,
   WorkbenchVerificationRequest,

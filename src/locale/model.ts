@@ -8,7 +8,7 @@ export interface WorkbenchMessages {
   accessDenied: { description: ReactNode; title: ReactNode };
   account: { logout: string; openMenu: string };
   appearance: Required<WorkbenchAppearanceSettingsLabels>;
-  auth: { retry: string; signingIn: string };
+  auth: { alternative: ReactNode; retry: string; signingIn: string };
   codeVerification: {
     code: ReactNode;
     codeRequired: string;
@@ -42,6 +42,13 @@ export interface WorkbenchMessages {
   passwordSignIn: { description: ReactNode; submit: ReactNode; title: ReactNode };
   passwordSignUp: { description: ReactNode; submit: ReactNode; title: ReactNode };
   theme: { switchTheme: string; switchToDark: string; switchToLight: string };
+  tokenSignIn: {
+    description: ReactNode;
+    submit: ReactNode;
+    title: ReactNode;
+    token: ReactNode;
+    tokenRequired: string;
+  };
   verification: { back: ReactNode };
 }
 

@@ -29,6 +29,7 @@ interface ExampleText {
     remoteChallenge: string;
     remoteChallengeAdapter(provider: string): string;
     resolveRemoteChallenge: string;
+    tokenSubmitted: string;
     verificationForm: string;
     verificationFormDescription: string;
     verificationGroup: string;
@@ -50,6 +51,7 @@ interface ExampleText {
     sensitiveActionDescription: string;
     sensitiveActionTitle: string;
     sensitiveActionVerified: string;
+    tokenRejected: string;
     verificationDescription(subject?: string): string;
     verificationLabels: ExampleVerificationLabels;
     verificationRememberMinutes: number;
@@ -139,6 +141,7 @@ const zh: ExampleText = {
     remoteChallenge: "远程 Challenge 适配器",
     remoteChallengeAdapter: (provider) => `${provider} 由业务应用渲染，这里演示 adapter 接入点。`,
     resolveRemoteChallenge: "模拟通过",
+    tokenSubmitted: "访问令牌已提交。",
     verificationForm: "验证表单",
     verificationFormDescription: "纯验证表单适合嵌入自定义面板，并由业务控制提交结果。",
     verificationGroup: "验证",
@@ -160,6 +163,7 @@ const zh: ExampleText = {
     sensitiveActionDescription: "页面内敏感操作通过 Provider 拉起验证弹窗，验证成功后再继续业务动作。",
     sensitiveActionTitle: "页面内验证",
     sensitiveActionVerified: "验证通过，可以继续执行敏感操作。",
+    tokenRejected: "示例认证服务拒绝了该访问令牌。",
     verificationDescription: (subject) =>
       subject ? `请输入 ${subject} 的安全验证码。` : "请输入安全验证码以继续操作。",
     verificationLabels: {
@@ -261,6 +265,7 @@ const en: ExampleText = {
     remoteChallengeAdapter: (provider) =>
       `${provider} is rendered by the app; this shows the adapter point.`,
     resolveRemoteChallenge: "Resolve",
+    tokenSubmitted: "Access token submitted.",
     verificationForm: "Verification form",
     verificationFormDescription:
       "The verification form can be embedded in a custom panel while the app owns submit handling.",
@@ -320,6 +325,7 @@ const en: ExampleText = {
       "Sensitive in-page actions can request verification through the provider before continuing.",
     sensitiveActionTitle: "In-page verification",
     sensitiveActionVerified: "Verification passed. The sensitive action can continue.",
+    tokenRejected: "The example authentication service rejected this access token.",
     verificationDescription: (subject) =>
       subject
         ? `Enter the security code for ${subject}.`

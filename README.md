@@ -123,6 +123,7 @@ import {
   WorkbenchOAuthSignInPage,
   WorkbenchPasswordSignInPage,
   WorkbenchPasswordSignUpPage,
+  WorkbenchTokenSignInPage,
   WorkbenchVerificationProvider,
   useWorkbenchVerification,
 } from "@lwmacct/260627-antd-workbench/security";
@@ -172,6 +173,7 @@ example/
 | `WorkbenchOAuthProviderButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
 | `WorkbenchPasswordSignInForm/Page/Modal/Drawer` | 本地账号密码登录的显式表单与容器。 |
 | `WorkbenchPasswordSignUpForm/Page` | 本地账号注册的显式表单与整页容器。 |
+| `WorkbenchTokenSignInForm/Page` | 访问令牌登录的显式表单与整页容器，可选组合 OAuth provider，不绑定请求、路由或会话实现。 |
 | `WorkbenchHumanChallengeField` | 图片或远程人机挑战输入控件。 |
 | `WorkbenchCodeVerificationForm/Page/Modal/Drawer` | 邮件、短信、TOTP 和恢复码验证。 |
 | `WorkbenchPasskeyVerificationAction` | 不渲染验证码输入框的通行密钥验证操作。 |

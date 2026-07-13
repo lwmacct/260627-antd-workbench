@@ -33,6 +33,10 @@ export interface WorkbenchPasswordSignInValues {
   username: string;
 }
 
+export interface WorkbenchTokenSignInValues {
+  token: string;
+}
+
 export interface WorkbenchPasswordSignUpValues extends WorkbenchPasswordSignInValues {
   confirmPassword: string;
 }

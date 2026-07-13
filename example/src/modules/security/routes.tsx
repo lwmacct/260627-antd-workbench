@@ -10,6 +10,7 @@ export const securityRoutes: RouteObject = {
     { path: "oauth", element: <CredentialRoute mode="oauth" /> },
     { path: "access-denied", element: <CredentialRoute mode="access-denied" /> },
     { path: "register", element: <CredentialRoute mode="register" /> },
+    { path: "token", element: <CredentialRoute mode="token" /> },
     { path: "verify", element: <VerificationRoute /> },
   ],
 };
