@@ -31,12 +31,12 @@ import "@lwmacct/260627-antd-workbench/styles.css";
 
 ```tsx
 import {
+  WorkbenchAppearanceButton,
   WorkbenchLanguageToggle,
   WorkbenchPage,
   WorkbenchPanel,
   WorkbenchProvider,
   WorkbenchShell,
-  WorkbenchThemeToggle,
   WorkbenchUserMenu,
   type WorkbenchNavEntry,
 } from "@lwmacct/260627-antd-workbench";
@@ -62,7 +62,7 @@ export function App() {
         }
         utilities={
           <>
-            <WorkbenchThemeToggle />
+            <WorkbenchAppearanceButton />
             <WorkbenchLanguageToggle />
           </>
         }
@@ -83,7 +83,7 @@ export function App() {
 ## 中英文
 
 Workbench 严格支持 `zh-CN` 和 `en-US`。Provider 内置两套 Ant Design locale 和 Workbench
-组件文案；语言按钮、主题按钮、账户菜单、移动端导航、外观设置及安全组件会自动随 locale
+组件文案；语言按钮、外观设置入口、账户菜单、移动端导航及安全组件会自动随 locale
 切换，消费方无需逐个传入 labels。
 
 ```tsx
@@ -164,7 +164,7 @@ example/
 | `WorkbenchSectionLayout` | 设置页或分组页面的侧边导航布局。 |
 | `WorkbenchSplitWorkspace` | 通用侧栏加工作区布局。 |
 | `WorkbenchAppearanceSettings` | 外观设置面板，必须在 `WorkbenchProvider` 下使用。 |
-| `WorkbenchThemeToggle` | 深浅色切换按钮。 |
+| `WorkbenchAppearanceButton` | 顶部栏外观设置按钮及响应式抽屉，支持受控和非受控状态。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 固定 256px 的用户菜单，支持身份信息、分组链接、异步操作和退出登录。 |
 | `WorkbenchSecurityPage` | 安全流程共用的品牌、面板和错误布局。 |

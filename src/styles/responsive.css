@@ -28,6 +28,10 @@
 }
 
 @media (max-width: 760px) {
+  .wb-appearance-drawer .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+
   .wb-section {
     display: flex !important;
     flex-direction: column !important;

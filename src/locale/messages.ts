@@ -11,6 +11,7 @@ const zh: WorkbenchMessages = {
     radius: "圆角", reset: "重置", scheme: "配色", soft: "柔和", spacious: "宽松", surface: "表面",
     system: "跟随系统", tinted: "染色表面",
   },
+  appearanceControl: { open: "打开外观设置", title: "外观设置" },
   auth: { alternative: "或", retry: "重新检查", signingIn: "正在登录…" },
   codeVerification: {
     code: "验证码", codeRequired: "请输入验证码", description: "请输入安全验证码以继续操作。",
@@ -30,7 +31,6 @@ const zh: WorkbenchMessages = {
   },
   passwordSignIn: { description: "使用本地账号登录", submit: "登录", title: "登录" },
   passwordSignUp: { description: "创建一个本地账号", submit: "创建账号", title: "注册" },
-  theme: { switchTheme: "切换主题", switchToDark: "切换深色模式", switchToLight: "切换浅色模式" },
   tokenSignIn: {
     description: "输入访问令牌以继续", submit: "登录", title: "访问令牌登录",
     token: "访问令牌", tokenRequired: "请输入访问令牌",
@@ -47,6 +47,7 @@ const en: WorkbenchMessages = {
     radius: "Radius", reset: "Reset", scheme: "Scheme", soft: "Soft", spacious: "Spacious", surface: "Surface",
     system: "System", tinted: "Tinted surface",
   },
+  appearanceControl: { open: "Open appearance settings", title: "Appearance settings" },
   auth: { alternative: "or", retry: "Check again", signingIn: "Signing in…" },
   codeVerification: {
     code: "Verification code", codeRequired: "Enter the verification code", description: "Enter a security verification code to continue.",
@@ -68,7 +69,6 @@ const en: WorkbenchMessages = {
   },
   passwordSignIn: { description: "Sign in with a local account", submit: "Sign in", title: "Sign in" },
   passwordSignUp: { description: "Create a local account", submit: "Create account", title: "Create account" },
-  theme: { switchTheme: "Switch theme", switchToDark: "Switch to dark mode", switchToLight: "Switch to light mode" },
   tokenSignIn: {
     description: "Enter your access token to continue", submit: "Sign in", title: "Access token sign in",
     token: "Access token", tokenRequired: "Enter an access token",

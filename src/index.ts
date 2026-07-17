@@ -11,8 +11,8 @@ export {
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
 export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
 export * from "./security";
+export { WorkbenchAppearanceButton } from "./components/controls/WorkbenchAppearanceButton";
 export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";
-export { WorkbenchThemeToggle } from "./components/controls/WorkbenchThemeToggle";
 export { WorkbenchCenterState } from "./components/layout/WorkbenchCenterState";
 export { WorkbenchPage } from "./components/layout/WorkbenchPage";
 export { WorkbenchPanel } from "./components/layout/WorkbenchPanel";
@@ -53,6 +53,7 @@ export type {
   WorkbenchUserMenuLinkItem,
   WorkbenchUserMenuProps,
 } from "./components/account/WorkbenchUserMenu";
+export type { WorkbenchAppearanceButtonProps } from "./components/controls/WorkbenchAppearanceButton";
 export type { WorkbenchCenterStateProps } from "./components/layout/WorkbenchCenterState";
 export type { WorkbenchPageProps } from "./components/layout/WorkbenchPage";
 export type { WorkbenchPanelProps } from "./components/layout/WorkbenchPanel";

@@ -7,9 +7,9 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import {
+  WorkbenchAppearanceButton,
   WorkbenchLanguageToggle,
   WorkbenchShell,
-  WorkbenchThemeToggle,
   WorkbenchUserMenu,
   type WorkbenchShellProps,
 } from "@lwmacct/260627-antd-workbench";
@@ -56,13 +56,13 @@ export function ExampleShell() {
           groups={[{
             key: "resources",
             items: [
-            {
-              href: "https://github.com/lwmacct/260627-antd-workbench",
-              icon: <GithubOutlined />,
-              kind: "link",
-              key: "source",
-              label: text.shell.source,
-            },
+              {
+                href: "https://github.com/lwmacct/260627-antd-workbench",
+                icon: <GithubOutlined />,
+                kind: "link",
+                key: "source",
+                label: text.shell.source,
+              },
             ],
           }]}
           user={{
@@ -76,7 +76,7 @@ export function ExampleShell() {
       }
       utilities={
         <>
-          <WorkbenchThemeToggle />
+          <WorkbenchAppearanceButton />
           <WorkbenchLanguageToggle />
         </>
       }

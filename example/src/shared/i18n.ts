@@ -1,7 +1,4 @@
-import {
-  useWorkbenchLocale,
-  type WorkbenchAppearanceSettingsLabels,
-} from "@lwmacct/260627-antd-workbench";
+import { useWorkbenchLocale } from "@lwmacct/260627-antd-workbench";
 
 interface ExampleCredentialLabels { [key: string]: unknown }
 interface ExampleVerificationLabels { codeInvalid?: string; [key: string]: unknown }
@@ -74,10 +71,6 @@ interface ExampleText {
     title: string;
   };
   settings: {
-    appearance: string;
-    appearanceCard: string;
-    appearanceDescription: string;
-    appearanceLabels: WorkbenchAppearanceSettingsLabels;
     email: string;
     group: string;
     name: string;
@@ -194,10 +187,6 @@ const zh: ExampleText = {
     title: "总览",
   },
   settings: {
-    appearance: "外观",
-    appearanceCard: "主题样式",
-    appearanceDescription: "库内置外观面板由使用方按需放置。",
-    appearanceLabels: {},
     email: "邮箱",
     group: "系统设置",
     name: "姓名",
@@ -358,30 +347,6 @@ const en: ExampleText = {
     title: "Dashboard",
   },
   settings: {
-    appearance: "Appearance",
-    appearanceCard: "Theme",
-    appearanceDescription: "The built-in appearance panel can be placed by the app.",
-    appearanceLabels: {
-      accent: "Accent",
-      black: "Black",
-      compact: "Compact",
-      comfortable: "Comfortable",
-      customAccent: "Custom accent",
-      dark: "Dark",
-      deep: "Deep",
-      density: "Density",
-      light: "Light",
-      mode: "Mode",
-      preview: "Preview",
-      radius: "Radius",
-      reset: "Reset",
-      scheme: "Scheme",
-      soft: "Soft",
-      spacious: "Spacious",
-      surface: "Surface",
-      system: "System",
-      tinted: "Tinted",
-    },
     email: "Email",
     group: "System settings",
     name: "Name",

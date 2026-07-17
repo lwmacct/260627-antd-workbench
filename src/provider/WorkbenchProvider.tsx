@@ -60,7 +60,6 @@ export interface WorkbenchAppearanceContextValue {
   resolvedMode: WorkbenchResolvedThemeMode;
   setAppearance(appearance: WorkbenchAppearancePatch): void;
   setThemeMode(themeMode: WorkbenchThemeMode): void;
-  toggleThemeMode(): void;
 }
 
 const WorkbenchAppearanceContext = createContext<WorkbenchAppearanceContextValue | null>(null);
@@ -150,14 +149,6 @@ export function WorkbenchProvider({
       },
       setThemeMode(themeMode) {
         setLocalAppearance((current) => normalizeWorkbenchAppearance({ ...current, mode: themeMode }));
-      },
-      toggleThemeMode() {
-        setLocalAppearance((current) =>
-          normalizeWorkbenchAppearance({
-            ...current,
-            mode: resolveWorkbenchThemeMode(current.mode, systemMode) === "dark" ? "light" : "dark",
-          }),
-        );
       },
     }),
     [appearance, palette, resolvedDefaultAppearance, resolvedMode, systemMode],

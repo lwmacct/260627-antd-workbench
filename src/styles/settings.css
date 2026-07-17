@@ -4,6 +4,10 @@
   min-width: 0;
 }
 
+.wb-appearance-drawer .ant-drawer-body {
+  padding-bottom: 32px;
+}
+
 .wb-appearance-settings__field {
   display: grid;
   grid-template-columns: minmax(96px, 0.25fr) minmax(0, 1fr);
@@ -205,4 +209,3 @@
 .wb-appearance-settings__preview-table span:last-child {
   border-bottom: 0;
 }
-

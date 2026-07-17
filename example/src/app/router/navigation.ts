@@ -2,7 +2,7 @@ export const examplePaths = {
   components: "/components/credential-form",
   dashboard: "/dashboard",
   security: "/security/login",
-  settings: "/settings/appearance",
+  settings: "/settings/profile",
   workspace: "/workspace/services",
 } as const;
 
