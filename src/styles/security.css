@@ -23,7 +23,7 @@
 }
 
 .wb-security__panel {
-  width: min(400px, 100%);
+  width: min(350px, 100%);
   border-color: var(--wb-border);
   background: var(--wb-card-elevated-bg);
 }
