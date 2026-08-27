@@ -234,3 +234,8 @@
   min-height: 32px;
   color: var(--wb-text-muted);
 }
+
+.wb-security__remote-challenge-host {
+  display: flex;
+  justify-content: center;
+}

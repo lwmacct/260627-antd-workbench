@@ -28,7 +28,9 @@ export function WorkbenchHumanChallengeField(props: WorkbenchHumanChallengeField
   const resetKey = props.resetKey ?? 0;
   const handleError = useCallback((message: string) => props.onError?.(message), [props.onError]);
   if (props.config.provider !== "image") {
-    if (props.renderRemoteChallenge) return props.renderRemoteChallenge({ config: props.config, disabled: props.disabled, onChange: props.onChange, onError: handleError, resetKey });
+    if (props.renderRemoteChallenge) {
+      return <div className="wb-security__remote-challenge-host">{props.renderRemoteChallenge({ config: props.config, disabled: props.disabled, onChange: props.onChange, onError: handleError, resetKey })}</div>;
+    }
     return <div className="wb-security__remote-challenge">{props.config.sitekey ? messages.humanChallenge.unsupportedRemoteProvider : messages.humanChallenge.missingSitekey}</div>;
   }
   if (!props.createImageChallenge) return <div className="wb-security__remote-challenge">{messages.humanChallenge.createFailed}</div>;
