@@ -59,9 +59,9 @@ export function WorkbenchTokenSignInForm({
           name="token"
           rules={[{ required: true, message: messages.tokenSignIn.tokenRequired }]}
         >
-          <Input.Password autoComplete="current-password" disabled={loading || oauthPending} prefix={<KeyOutlined />} />
+          <Input.Password autoComplete="current-password" disabled={loading || oauthPending} prefix={<KeyOutlined />} size="large" />
         </Form.Item>
-        <Button block disabled={oauthPending} htmlType="submit" loading={loading} type="primary">
+        <Button block disabled={oauthPending} htmlType="submit" loading={loading} size="large" type="primary">
           {messages.tokenSignIn.submit}
         </Button>
         {retry && onRetry ? (

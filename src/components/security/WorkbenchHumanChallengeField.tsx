@@ -55,8 +55,8 @@ function ImageChallengeField({ createImageChallenge, disabled, labels, resetKey,
   useEffect(() => { void refresh(); }, [refresh, resetKey]);
   useEffect(() => { onChange(challenge && answer.trim() ? { answer, challengeId: challenge.challengeId, provider: "image" } : undefined); }, [answer, challenge, onChange]);
   return <div className="wb-security__captcha-row">
-    <Input autoComplete="off" className="wb-security__captcha-input" disabled={disabled || loading} value={answer} onChange={(event: ChangeEvent<HTMLInputElement>) => setAnswer(event.target.value)} />
-    <Button aria-label={String(labels.refresh)} className="wb-security__captcha-button" disabled={disabled || loading} htmlType="button" onClick={() => void refresh()}>
+    <Input autoComplete="off" className="wb-security__captcha-input" disabled={disabled || loading} size="large" value={answer} onChange={(event: ChangeEvent<HTMLInputElement>) => setAnswer(event.target.value)} />
+    <Button aria-label={String(labels.refresh)} className="wb-security__captcha-button" disabled={disabled || loading} htmlType="button" onClick={() => void refresh()} size="large">
       {challenge ? <img alt={String(labels.imageAlt)} src={challenge.image} /> : <ReloadOutlined />}
     </Button>
   </div>;

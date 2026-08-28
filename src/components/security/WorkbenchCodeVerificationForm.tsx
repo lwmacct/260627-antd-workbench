@@ -44,10 +44,10 @@ export function WorkbenchCodeVerificationForm({ className, description, error, i
     {error ? <Alert className="wb-security__alert" message={error} showIcon type="error" /> : null}
     <Form<CodeFormValues> clearOnDestroy form={form} initialValues={{ remember: defaultRemember }} layout="vertical" requiredMark={false} onFinish={(values: CodeFormValues) => void submit(values)}>
       <Form.Item label={messages.codeVerification.code} name="code" rules={[{ required: true, message: messages.codeVerification.codeRequired }]}>
-        <Input autoComplete="one-time-code" disabled={loading} inputMode={inputMode} prefix={<LockOutlined />} />
+        <Input autoComplete="one-time-code" disabled={loading} inputMode={inputMode} prefix={<LockOutlined />} size="large" />
       </Form.Item>
       {rememberEnabled ? <Form.Item name="remember" valuePropName="checked"><Checkbox disabled={loading}>{messages.codeVerification.remember(rememberMinutes)}</Checkbox></Form.Item> : null}
-      <Button block htmlType="submit" loading={loading} type="primary">{messages.codeVerification.submit}</Button>
+      <Button block htmlType="submit" loading={loading} size="large" type="primary">{messages.codeVerification.submit}</Button>
     </Form>
   </div>;
 }

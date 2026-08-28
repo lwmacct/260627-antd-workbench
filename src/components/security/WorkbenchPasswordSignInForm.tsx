@@ -81,10 +81,10 @@ export function WorkbenchPasswordSignInForm({
         onFinish={(values: SignInFormValues) => void submit(values)}
       >
         <Form.Item label={messages.password.username} name="username" rules={[{ required: true, message: messages.password.usernameRequired }]}>
-          <Input autoComplete="username" disabled={loading} prefix={<UserOutlined />} />
+          <Input autoComplete="username" disabled={loading} prefix={<UserOutlined />} size="large" />
         </Form.Item>
         <Form.Item label={messages.password.password} name="password" rules={[{ required: true, message: messages.password.passwordRequired }]}>
-          <Input.Password autoComplete="current-password" disabled={loading} prefix={<LockOutlined />} />
+          <Input.Password autoComplete="current-password" disabled={loading} prefix={<LockOutlined />} size="large" />
         </Form.Item>
         {challengeConfig ? (
           <Form.Item label={messages.humanChallenge.label} required>
@@ -99,7 +99,7 @@ export function WorkbenchPasswordSignInForm({
             />
           </Form.Item>
         ) : null}
-        <Button block disabled={Boolean(challengeConfig) && !challenge} htmlType="submit" loading={loading} type="primary">
+        <Button block disabled={Boolean(challengeConfig) && !challenge} htmlType="submit" loading={loading} size="large" type="primary">
           {messages.passwordSignIn.submit}
         </Button>
       </Form>
