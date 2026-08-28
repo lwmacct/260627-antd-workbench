@@ -7,7 +7,7 @@ import {
   WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
-import { createExampleImageChallenge } from "./demo";
+import { createExampleImageChallenge } from "../../../shared/securityDemo";
 
 export function ChallengeFieldRoute() {
   const text = useExampleText();

@@ -7,7 +7,7 @@ import {
   WorkbenchPanel,
 } from "@lwmacct/260627-antd-workbench";
 import { useExampleText } from "../../../shared/i18n";
-import { assertExampleVerification } from "./demo";
+import { assertExampleVerification } from "../../../shared/securityDemo";
 
 export function VerificationFormRoute() {
   const text = useExampleText();
