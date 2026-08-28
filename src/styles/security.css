@@ -22,10 +22,39 @@
   background: var(--wb-bg);
 }
 
-.wb-security__panel {
+.wb-security__layout {
   width: min(350px, 100%);
+}
+
+.wb-security__layout--with-aside {
+  display: grid;
+  overflow: hidden;
+  width: min(900px, 100%);
+  grid-template-columns: minmax(340px, 400px) minmax(240px, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-control-radius, 6px);
+  background: var(--wb-card-elevated-bg);
+}
+
+.wb-security__panel {
+  width: 100%;
   border-color: var(--wb-border);
   background: var(--wb-card-elevated-bg);
+}
+
+.wb-security__aside {
+  min-width: 0;
+  padding: 28px 32px;
+  border-left: 1px solid var(--wb-border);
+  background: transparent;
+}
+
+.wb-security__layout--with-aside .wb-security__panel {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .wb-security__brand {
@@ -238,4 +267,15 @@
 .wb-security__remote-challenge-host {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 760px) {
+  .wb-security__layout--with-aside {
+    display: block;
+    width: min(420px, 100%);
+  }
+
+  .wb-security__layout--with-aside .wb-security__aside {
+    display: none;
+  }
 }

@@ -6,12 +6,14 @@ import {
 } from "./WorkbenchTokenSignInForm";
 
 export interface WorkbenchTokenSignInPageProps extends WorkbenchTokenSignInFormProps {
+  aside?: WorkbenchSecurityPageProps["aside"];
   brand?: WorkbenchSecurityPageProps["brand"];
   panelClassName?: string;
   panelExtra?: WorkbenchSecurityPageProps["panelExtra"];
 }
 
 export function WorkbenchTokenSignInPage({
+  aside,
   brand,
   className,
   error,
@@ -21,6 +23,7 @@ export function WorkbenchTokenSignInPage({
 }: WorkbenchTokenSignInPageProps) {
   return (
     <WorkbenchSecurityPage
+      aside={aside}
       brand={brand}
       className={className}
       error={error}

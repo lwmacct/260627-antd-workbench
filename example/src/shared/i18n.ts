@@ -60,6 +60,14 @@ interface ExampleText {
     backToLogin: string;
     challengeTypeError: string;
     credentialLabels: ExampleCredentialLabels;
+    promo: {
+      benefits: string[];
+      description: string;
+      eyebrow: string;
+      metric: string;
+      metricLabel: string;
+      title: string;
+    };
     sensitiveAction: string;
     sensitiveActionCancelled: string;
     sensitiveActionDescription: string;
@@ -185,6 +193,14 @@ const zh: ExampleText = {
     backToLogin: "返回登录",
     challengeTypeError: "验证码类型不匹配",
     credentialLabels: {},
+    promo: {
+      benefits: ["统一管理账号与权限", "关键操作全程可追溯", "从登录开始保持专注"],
+      description: "让团队从一个清晰、可靠的入口开始每一天的工作。",
+      eyebrow: "Workbench for teams",
+      metric: "99.9%",
+      metricLabel: "稳定运行承诺",
+      title: "把工作带到一个更清晰的空间",
+    },
     sensitiveAction: "敏感操作验证",
     sensitiveActionCancelled: "验证已取消，操作未执行。",
     sensitiveActionDescription: "页面内敏感操作通过 Provider 拉起验证弹窗，验证成功后再继续业务动作。",
@@ -358,6 +374,14 @@ const en: ExampleText = {
       registerTitle: "Register",
       username: "Username",
       usernameRequired: "Enter your username",
+    },
+    promo: {
+      benefits: ["Manage identities and access in one place", "Keep sensitive actions traceable", "Start every session with less noise"],
+      description: "Give your team a clear, dependable place to begin the workday.",
+      eyebrow: "Workbench for teams",
+      metric: "99.9%",
+      metricLabel: "reliability target",
+      title: "A clearer space for focused work",
     },
     sensitiveAction: "Sensitive action verification",
     sensitiveActionCancelled: "Verification was cancelled. No action was applied.",

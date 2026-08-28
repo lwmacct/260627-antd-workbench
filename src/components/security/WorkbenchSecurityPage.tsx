@@ -10,6 +10,7 @@ export interface WorkbenchSecurityBrand {
 }
 
 export interface WorkbenchSecurityPageProps {
+  aside?: ReactNode;
   brand?: WorkbenchSecurityBrand;
   children: ReactNode;
   className?: string;
@@ -19,6 +20,7 @@ export interface WorkbenchSecurityPageProps {
 }
 
 export function WorkbenchSecurityPage({
+  aside,
   brand,
   children,
   className,
@@ -28,20 +30,23 @@ export function WorkbenchSecurityPage({
 }: WorkbenchSecurityPageProps) {
   return (
     <main className={cx("wb-security", className)}>
-      <Card className={cx("wb-security__panel", panelClassName)}>
-        {panelExtra ? <div className="wb-security__panel-extra">{panelExtra}</div> : null}
-        {brand ? (
-          <div className="wb-security__brand">
-            <Avatar className="wb-security__brand-mark" size={64}>
-              {brand.mark ?? toMark(brand.name)}
-            </Avatar>
-            <Typography.Title level={3}>{brand.name}</Typography.Title>
-            {brand.description ? <Typography.Text type="secondary">{brand.description}</Typography.Text> : null}
-          </div>
-        ) : null}
-        {error ? <Alert className="wb-security__alert" message={error} showIcon type="error" /> : null}
-        {children}
-      </Card>
+      <div className={cx("wb-security__layout", aside ? "wb-security__layout--with-aside" : undefined)}>
+        <Card className={cx("wb-security__panel", panelClassName)}>
+          {panelExtra ? <div className="wb-security__panel-extra">{panelExtra}</div> : null}
+          {brand ? (
+            <div className="wb-security__brand">
+              <Avatar className="wb-security__brand-mark" size={64}>
+                {brand.mark ?? toMark(brand.name)}
+              </Avatar>
+              <Typography.Title level={3}>{brand.name}</Typography.Title>
+              {brand.description ? <Typography.Text type="secondary">{brand.description}</Typography.Text> : null}
+            </div>
+          ) : null}
+          {error ? <Alert className="wb-security__alert" message={error} showIcon type="error" /> : null}
+          {children}
+        </Card>
+        {aside ? <aside className="wb-security__aside">{aside}</aside> : null}
+      </div>
     </main>
   );
 }

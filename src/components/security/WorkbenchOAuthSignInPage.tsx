@@ -10,6 +10,7 @@ import {
 import type { WorkbenchOAuthProvider } from "./model";
 
 export interface WorkbenchOAuthSignInPageProps {
+  aside?: WorkbenchSecurityPageProps["aside"];
   brand: WorkbenchSecurityBrand;
   className?: string;
   error?: ReactNode;
@@ -24,6 +25,7 @@ export interface WorkbenchOAuthSignInPageProps {
 }
 
 export function WorkbenchOAuthSignInPage({
+  aside,
   brand,
   className,
   error,
@@ -38,7 +40,7 @@ export function WorkbenchOAuthSignInPage({
 }: WorkbenchOAuthSignInPageProps) {
   const { messages } = useWorkbenchLocale();
   return (
-    <WorkbenchSecurityPage brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={panelExtra}>
+    <WorkbenchSecurityPage aside={aside} brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={panelExtra}>
       <div aria-live="polite" className="wb-oauth-sign-in-page__content">
         <WorkbenchOAuthProviderButtons
           disabled={Boolean(pendingProvider)}

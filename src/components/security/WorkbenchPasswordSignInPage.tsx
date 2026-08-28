@@ -6,14 +6,15 @@ import {
 } from "./WorkbenchPasswordSignInForm";
 
 export interface WorkbenchPasswordSignInPageProps extends WorkbenchPasswordSignInFormProps {
+  aside?: WorkbenchSecurityPageProps["aside"];
   brand?: WorkbenchSecurityPageProps["brand"];
   panelClassName?: string;
   panelExtra?: WorkbenchSecurityPageProps["panelExtra"];
 }
 
-export function WorkbenchPasswordSignInPage({ brand, className, error, panelClassName, panelExtra, ...formProps }: WorkbenchPasswordSignInPageProps) {
+export function WorkbenchPasswordSignInPage({ aside, brand, className, error, panelClassName, panelExtra, ...formProps }: WorkbenchPasswordSignInPageProps) {
   return (
-    <WorkbenchSecurityPage brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={panelExtra}>
+    <WorkbenchSecurityPage aside={aside} brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={panelExtra}>
       <WorkbenchPasswordSignInForm {...formProps} />
     </WorkbenchSecurityPage>
   );

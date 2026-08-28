@@ -4,14 +4,15 @@ import { WorkbenchCodeVerificationForm, type WorkbenchCodeVerificationFormProps 
 import { WorkbenchSecurityPage, type WorkbenchSecurityPageProps } from "./WorkbenchSecurityPage";
 
 export interface WorkbenchCodeVerificationPageProps extends WorkbenchCodeVerificationFormProps {
+  aside?: WorkbenchSecurityPageProps["aside"];
   brand?: WorkbenchSecurityPageProps["brand"];
   panelClassName?: string;
   panelExtra?: WorkbenchSecurityPageProps["panelExtra"];
   onBack?(): void;
 }
 
-export function WorkbenchCodeVerificationPage({ brand, className, error, panelClassName, panelExtra, onBack, ...formProps }: WorkbenchCodeVerificationPageProps) {
+export function WorkbenchCodeVerificationPage({ aside, brand, className, error, panelClassName, panelExtra, onBack, ...formProps }: WorkbenchCodeVerificationPageProps) {
   const { messages } = useWorkbenchLocale();
   const extra = panelExtra ?? (onBack ? <Button type="text" onClick={onBack}>{messages.verification.back}</Button> : undefined);
-  return <WorkbenchSecurityPage brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={extra}><WorkbenchCodeVerificationForm {...formProps} /></WorkbenchSecurityPage>;
+  return <WorkbenchSecurityPage aside={aside} brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={extra}><WorkbenchCodeVerificationForm {...formProps} /></WorkbenchSecurityPage>;
 }

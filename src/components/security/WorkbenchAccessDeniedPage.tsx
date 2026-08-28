@@ -10,6 +10,7 @@ import {
 } from "./WorkbenchSecurityPage";
 
 export interface WorkbenchAccessDeniedPageProps {
+  aside?: WorkbenchSecurityPageProps["aside"];
   actions?: ReactNode;
   brand: WorkbenchSecurityBrand;
   className?: string;
@@ -24,6 +25,7 @@ export interface WorkbenchAccessDeniedPageProps {
 }
 
 export function WorkbenchAccessDeniedPage({
+  aside,
   actions,
   brand,
   className,
@@ -39,7 +41,7 @@ export function WorkbenchAccessDeniedPage({
   const { messages } = useWorkbenchLocale();
   const displayName = identity.displayName ?? identity.username;
   return (
-    <WorkbenchSecurityPage brand={brand} className={className} panelClassName={panelClassName} panelExtra={panelExtra}>
+    <WorkbenchSecurityPage aside={aside} brand={brand} className={className} panelClassName={panelClassName} panelExtra={panelExtra}>
       <div className="wb-access-denied-page__content">
         <div className="wb-access-denied-page__message">
           <Typography.Title level={4}>{title ?? messages.accessDenied.title}</Typography.Title>
