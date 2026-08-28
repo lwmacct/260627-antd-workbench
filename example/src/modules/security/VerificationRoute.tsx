@@ -47,9 +47,9 @@ export function VerificationRoute() {
           className="example-security-back"
           icon={<ArrowLeftOutlined />}
           type="text"
-          onClick={() => navigate(purpose === "login" ? "/security/login" : returnTo)}
+          onClick={() => navigate(examplePaths.components)}
         >
-          {purpose === "login" ? text.security.backToLogin : text.security.back}
+          {text.security.back}
         </Button>
       }
       purpose={purpose}

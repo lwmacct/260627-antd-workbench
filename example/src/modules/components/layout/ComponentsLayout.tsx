@@ -19,9 +19,11 @@ type ComponentSectionKey =
   | "verification-drawer"
   | "verification-form"
   | "verification-modal"
-  | "verification-provider";
+  | "verification-provider"
+  | "pages";
 
 const componentSectionKeys = [
+  "pages",
   "credential-form",
   "credential-modal",
   "credential-drawer",
@@ -39,6 +41,18 @@ export function ComponentsLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const nav: WorkbenchNavEntry[] = [
+    {
+      children: [
+        {
+          icon: <LoginOutlined />,
+          key: "pages",
+          label: text.components.pages,
+        },
+      ],
+      key: "pages",
+      label: text.components.pagesGroup,
+      type: "group",
+    },
     {
       children: [
         {
@@ -118,5 +132,5 @@ function activeSection(pathname: string): ComponentSectionKey {
   const key = pathname.split("/")[2];
   return componentKeys.has(key as ComponentSectionKey)
     ? (key as ComponentSectionKey)
-    : "credential-form";
+    : "pages";
 }

@@ -1,19 +1,26 @@
 export const examplePaths = {
-  components: "/components/credential-form",
+  components: "/components/pages",
   dashboard: "/dashboard",
-  security: "/security/login",
+  pages: {
+    accessDenied: "/pages/access-denied",
+    login: "/pages/login",
+    oauth: "/pages/oauth",
+    register: "/pages/register",
+    token: "/pages/token",
+    verify: "/pages/verify",
+  },
   settings: "/settings/profile",
   workspace: "/workspace/services",
 } as const;
 
-export type TopNavKey = "components" | "dashboard" | "security" | "settings" | "workspace";
+export type TopNavKey = "components" | "dashboard" | "pages" | "settings" | "workspace";
 
 export function topNavFromPathname(pathname: string): TopNavKey {
   if (pathname.startsWith("/components")) {
     return "components";
   }
-  if (pathname.startsWith("/security")) {
-    return "security";
+  if (pathname.startsWith("/pages")) {
+    return "pages";
   }
   if (pathname.startsWith("/settings")) {
     return "settings";

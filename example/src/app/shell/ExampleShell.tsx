@@ -22,7 +22,7 @@ type ShellNav = WorkbenchShellProps["nav"];
 const navTargets: Record<TopNavKey, string> = {
   dashboard: examplePaths.dashboard,
   components: examplePaths.components,
-  security: examplePaths.security,
+  pages: examplePaths.pages.login,
   settings: examplePaths.settings,
   workspace: examplePaths.workspace,
 };
@@ -39,7 +39,7 @@ export function ExampleShell() {
     { icon: <BlockOutlined />, key: "components", label: text.shell.components },
     { icon: <ExperimentOutlined />, key: "workspace", label: text.shell.workspace },
     { icon: <SettingOutlined />, key: "settings", label: text.shell.settings },
-    { icon: <LoginOutlined />, key: "security", label: text.shell.security },
+    { icon: <LoginOutlined />, key: "pages", label: text.shell.pages },
   ];
 
   function handleSelectNav(key: string) {

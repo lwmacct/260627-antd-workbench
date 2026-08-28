@@ -3,7 +3,11 @@ import { Avatar, Button, Typography } from "antd";
 import type { ReactNode } from "react";
 import type { WorkbenchUser } from "../account/WorkbenchUserMenu";
 import { useWorkbenchLocale } from "../../locale/context";
-import { WorkbenchSecurityPage, type WorkbenchSecurityBrand } from "./WorkbenchSecurityPage";
+import {
+  WorkbenchSecurityPage,
+  type WorkbenchSecurityBrand,
+  type WorkbenchSecurityPageProps,
+} from "./WorkbenchSecurityPage";
 
 export interface WorkbenchAccessDeniedPageProps {
   actions?: ReactNode;
@@ -14,6 +18,7 @@ export interface WorkbenchAccessDeniedPageProps {
   logoutLabel?: ReactNode;
   logoutLoading?: boolean;
   panelClassName?: string;
+  panelExtra?: WorkbenchSecurityPageProps["panelExtra"];
   title?: ReactNode;
   onLogout?(): void;
 }
@@ -27,13 +32,14 @@ export function WorkbenchAccessDeniedPage({
   logoutLabel,
   logoutLoading,
   panelClassName,
+  panelExtra,
   title,
   onLogout,
 }: WorkbenchAccessDeniedPageProps) {
   const { messages } = useWorkbenchLocale();
   const displayName = identity.displayName ?? identity.username;
   return (
-    <WorkbenchSecurityPage brand={brand} className={className} panelClassName={panelClassName}>
+    <WorkbenchSecurityPage brand={brand} className={className} panelClassName={panelClassName} panelExtra={panelExtra}>
       <div className="wb-access-denied-page__content">
         <div className="wb-access-denied-page__message">
           <Typography.Title level={4}>{title ?? messages.accessDenied.title}</Typography.Title>

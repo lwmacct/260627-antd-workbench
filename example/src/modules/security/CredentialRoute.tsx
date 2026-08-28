@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined, GithubOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import type { ReactNode } from "react";
 import { WorkbenchAccessDeniedPage, WorkbenchOAuthSignInPage, WorkbenchPasswordSignInPage, WorkbenchPasswordSignUpPage, WorkbenchTokenSignInPage } from "@lwmacct/260627-antd-workbench";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,15 +10,15 @@ import { useExampleText } from "../../shared/i18n";
 export function CredentialRoute({ mode }: { mode: "access-denied" | "login" | "oauth" | "register" | "token" }) {
   const text = useExampleText();
   const navigate = useNavigate();
-  const panelExtra = <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => navigate(examplePaths.dashboard)}>{text.security.back}</Button>;
-  if (mode === "access-denied") return <WorkbenchAccessDeniedPage brand={{ name: "Workbench" }} identity={{ avatarUrl: "https://avatars.githubusercontent.com/u/583231?v=4", displayName: "The Octocat", provider: "GitHub", providerIcon: <GithubOutlined />, username: "octocat" }} onLogout={() => navigate("/security/oauth")} />;
-  if (mode === "oauth") return <WorkbenchOAuthSignInPage brand={{ name: "Workbench" }} providers={[{ label: "GitHub", provider: "github" }, { label: "Google", provider: "google" }]} onSelectProvider={() => navigate(examplePaths.dashboard)} />;
-  if (mode === "register") return <WorkbenchPasswordSignUpPage panelExtra={panelExtra} actions={<Button type="link" onClick={() => navigate("/security/login")}>{text.security.backToLogin}</Button>} onSubmit={() => navigate(examplePaths.dashboard)} />;
-  if (mode === "token") return <TokenCredentialRoute />;
-  return <WorkbenchPasswordSignInPage panelExtra={panelExtra} actions={<Button type="link" onClick={() => navigate("/security/register")}>Register</Button>} onSubmit={() => navigate(examplePaths.dashboard)} />;
+  const panelExtra = <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => navigate(examplePaths.components)}>{text.security.back}</Button>;
+  if (mode === "access-denied") return <WorkbenchAccessDeniedPage brand={{ name: "Workbench" }} identity={{ avatarUrl: "https://avatars.githubusercontent.com/u/583231?v=4", displayName: "The Octocat", provider: "GitHub", providerIcon: <GithubOutlined />, username: "octocat" }} panelExtra={panelExtra} onLogout={() => navigate(examplePaths.pages.oauth)} />;
+  if (mode === "oauth") return <WorkbenchOAuthSignInPage brand={{ name: "Workbench" }} panelExtra={panelExtra} providers={[{ label: "GitHub", provider: "github" }, { label: "Google", provider: "google" }]} onSelectProvider={() => navigate(examplePaths.dashboard)} />;
+  if (mode === "register") return <WorkbenchPasswordSignUpPage panelExtra={panelExtra} actions={<Button type="link" onClick={() => navigate(examplePaths.pages.login)}>{text.security.backToLogin}</Button>} onSubmit={() => navigate(examplePaths.dashboard)} />;
+  if (mode === "token") return <TokenCredentialRoute panelExtra={panelExtra} />;
+  return <WorkbenchPasswordSignInPage panelExtra={panelExtra} actions={<Button type="link" onClick={() => navigate(examplePaths.pages.register)}>Register</Button>} onSubmit={() => navigate(examplePaths.dashboard)} />;
 }
 
-function TokenCredentialRoute() {
+function TokenCredentialRoute({ panelExtra }: { panelExtra: ReactNode }) {
   const text = useExampleText();
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
@@ -33,6 +34,7 @@ function TokenCredentialRoute() {
   return <WorkbenchTokenSignInPage
     error={error}
     loading={loading}
+    panelExtra={panelExtra}
     oauth={{
       pendingProvider,
       providers: [{ label: "GitHub", provider: "github" }],

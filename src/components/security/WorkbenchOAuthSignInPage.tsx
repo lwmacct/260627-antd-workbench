@@ -2,7 +2,11 @@ import { Button, Typography } from "antd";
 import type { ReactNode } from "react";
 import { useWorkbenchLocale } from "../../locale/context";
 import { WorkbenchOAuthProviderButtons } from "./WorkbenchOAuthProviderButtons";
-import { WorkbenchSecurityPage, type WorkbenchSecurityBrand } from "./WorkbenchSecurityPage";
+import {
+  WorkbenchSecurityPage,
+  type WorkbenchSecurityBrand,
+  type WorkbenchSecurityPageProps,
+} from "./WorkbenchSecurityPage";
 import type { WorkbenchOAuthProvider } from "./model";
 
 export interface WorkbenchOAuthSignInPageProps {
@@ -11,6 +15,7 @@ export interface WorkbenchOAuthSignInPageProps {
   error?: ReactNode;
   hint?: ReactNode;
   panelClassName?: string;
+  panelExtra?: WorkbenchSecurityPageProps["panelExtra"];
   pendingProvider?: string;
   providers: WorkbenchOAuthProvider[];
   retry?: boolean;
@@ -24,6 +29,7 @@ export function WorkbenchOAuthSignInPage({
   error,
   hint,
   panelClassName,
+  panelExtra,
   pendingProvider,
   providers,
   retry,
@@ -32,7 +38,7 @@ export function WorkbenchOAuthSignInPage({
 }: WorkbenchOAuthSignInPageProps) {
   const { messages } = useWorkbenchLocale();
   return (
-    <WorkbenchSecurityPage brand={brand} className={className} error={error} panelClassName={panelClassName}>
+    <WorkbenchSecurityPage brand={brand} className={className} error={error} panelClassName={panelClassName} panelExtra={panelExtra}>
       <div aria-live="polite" className="wb-oauth-sign-in-page__content">
         <WorkbenchOAuthProviderButtons
           disabled={Boolean(pendingProvider)}

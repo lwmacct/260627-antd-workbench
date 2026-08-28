@@ -66,3 +66,70 @@
 .example-remote-challenge {
   width: 100%;
 }
+
+.example-pages__list {
+  display: grid;
+}
+
+.example-pages__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--wb-border-soft);
+}
+
+.example-pages__item:first-child {
+  padding-top: 0;
+}
+
+.example-pages__item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.example-pages__icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  border-radius: var(--wb-control-radius, 6px);
+  background: var(--wb-accent-softer);
+  color: var(--wb-accent-hover);
+}
+
+.example-pages__body {
+  min-width: 0;
+}
+
+.example-pages__heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.example-pages__link {
+  color: var(--wb-text-strong);
+  font-weight: 600;
+}
+
+.example-pages__open {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  border-radius: var(--wb-control-radius, 6px);
+  color: var(--wb-accent-hover);
+}
+
+.example-pages__open:hover {
+  background: var(--wb-accent-softer);
+}
+
+.example-pages__path-hint {
+  display: block;
+  margin-top: 12px;
+}

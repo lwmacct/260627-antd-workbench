@@ -1,9 +1,9 @@
 import { Navigate, type RouteObject } from "react-router-dom";
-import { CredentialRoute } from "./CredentialRoute";
-import { VerificationRoute } from "./VerificationRoute";
+import { CredentialRoute } from "../security/CredentialRoute";
+import { VerificationRoute } from "../security/VerificationRoute";
 
-export const securityRoutes: RouteObject = {
-  path: "security",
+export const pagesRoutes: RouteObject = {
+  path: "pages",
   children: [
     { index: true, element: <Navigate to="login" replace /> },
     { path: "login", element: <CredentialRoute mode="login" /> },

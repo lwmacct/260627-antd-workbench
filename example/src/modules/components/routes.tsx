@@ -1,5 +1,6 @@
 import { Navigate, type RouteObject } from "react-router-dom";
 import { ComponentsLayout } from "./layout/ComponentsLayout";
+import { PagesRoute } from "./pages/PagesRoute";
 import { ChallengeFieldRoute } from "./security/ChallengeFieldRoute";
 import { CredentialDrawerRoute } from "./security/CredentialDrawerRoute";
 import { CredentialFormRoute } from "./security/CredentialFormRoute";
@@ -13,7 +14,8 @@ export const componentsRoutes: RouteObject = {
   path: "components",
   element: <ComponentsLayout />,
   children: [
-    { index: true, element: <Navigate to="credential-form" replace /> },
+    { index: true, element: <Navigate to="pages" replace /> },
+    { path: "pages", element: <PagesRoute /> },
     { path: "credential-form", element: <CredentialFormRoute /> },
     { path: "credential-modal", element: <CredentialModalRoute /> },
     { path: "credential-drawer", element: <CredentialDrawerRoute /> },

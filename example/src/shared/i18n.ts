@@ -19,6 +19,23 @@ interface ExampleText {
     credentialSubmitted(mode: string, username: string): string;
     imageChallenge: string;
     oauthSelected(provider: string): string;
+    openPage: string;
+    pages: string;
+    pagesAccessDenied: string;
+    pagesAccessDeniedDescription: string;
+    pagesDescription: string;
+    pagesGroup: string;
+    pagesLogin: string;
+    pagesLoginDescription: string;
+    pagesOAuth: string;
+    pagesOAuthDescription: string;
+    pagesPathHint: string;
+    pagesRegister: string;
+    pagesRegisterDescription: string;
+    pagesToken: string;
+    pagesTokenDescription: string;
+    pagesVerify: string;
+    pagesVerifyDescription: string;
     openCredentialDrawer: string;
     openCredentialModal: string;
     openVerificationDrawer: string;
@@ -85,7 +102,7 @@ interface ExampleText {
   shell: {
     components: string;
     dashboard: string;
-    security: string;
+    pages: string;
     source: string;
     settings: string;
     workspace: string;
@@ -127,6 +144,23 @@ const zh: ExampleText = {
       `${mode === "register" ? "注册" : "登录"}提交：${username}`,
     imageChallenge: "图片验证码",
     oauthSelected: (provider) => `选择了 ${provider} 登录。`,
+    openPage: "打开页面",
+    pages: "页面",
+    pagesAccessDenied: "拒绝访问",
+    pagesAccessDeniedDescription: "展示当前身份无权访问资源时的整页状态。",
+    pagesDescription: "集中查看示例应用中的整页流程入口。",
+    pagesGroup: "页面",
+    pagesLogin: "登录",
+    pagesLoginDescription: "本地账号密码登录，入口为 /pages/login。",
+    pagesOAuth: "OAuth 登录",
+    pagesOAuthDescription: "选择外部身份提供商完成登录。",
+    pagesPathHint: "页面路由统一使用 /pages 前缀。",
+    pagesRegister: "注册",
+    pagesRegisterDescription: "创建本地账号并进入控制台。",
+    pagesToken: "访问令牌登录",
+    pagesTokenDescription: "使用访问令牌登录，并演示 OAuth 组合入口。",
+    pagesVerify: "安全验证",
+    pagesVerifyDescription: "提交一次性验证码完成安全验证。",
     openCredentialDrawer: "打开登录抽屉",
     openCredentialModal: "打开登录弹窗",
     openVerificationDrawer: "打开验证抽屉",
@@ -147,7 +181,7 @@ const zh: ExampleText = {
     verificationSubmitted: (method) => `${method} 验证已提交。`,
   },
   security: {
-    back: "返回总览",
+    back: "返回页面入口",
     backToLogin: "返回登录",
     challengeTypeError: "验证码类型不匹配",
     credentialLabels: {},
@@ -201,7 +235,7 @@ const zh: ExampleText = {
   shell: {
     components: "组件",
     dashboard: "总览",
-    security: "安全",
+    pages: "页面",
     settings: "设置",
     source: "源码",
     workspace: "工作区",
@@ -246,6 +280,23 @@ const en: ExampleText = {
     credentialSubmitted: (mode, username) => `${mode} submitted for ${username}.`,
     imageChallenge: "Image challenge",
     oauthSelected: (provider) => `${provider} login selected.`,
+    openPage: "Open page",
+    pages: "Pages",
+    pagesAccessDenied: "Access denied",
+    pagesAccessDeniedDescription: "A full-page state for identities without resource access.",
+    pagesDescription: "Browse the full-page flow entry points in this example app.",
+    pagesGroup: "Pages",
+    pagesLogin: "Sign in",
+    pagesLoginDescription: "Local username and password sign-in at /pages/login.",
+    pagesOAuth: "OAuth sign-in",
+    pagesOAuthDescription: "Choose an external identity provider to continue.",
+    pagesPathHint: "Page routes use the /pages prefix.",
+    pagesRegister: "Register",
+    pagesRegisterDescription: "Create a local account and enter the console.",
+    pagesToken: "Token sign-in",
+    pagesTokenDescription: "Sign in with an access token and optional OAuth providers.",
+    pagesVerify: "Security verification",
+    pagesVerifyDescription: "Complete a security flow with a one-time code.",
     openCredentialDrawer: "Open credential drawer",
     openCredentialModal: "Open credential modal",
     openVerificationDrawer: "Open verification drawer",
@@ -271,7 +322,7 @@ const en: ExampleText = {
     verificationSubmitted: (method) => `${method} verification submitted.`,
   },
   security: {
-    back: "Back to dashboard",
+    back: "Back to page catalog",
     backToLogin: "Back to sign in",
     challengeTypeError: "Challenge type mismatch",
     credentialLabels: {
@@ -361,7 +412,7 @@ const en: ExampleText = {
   shell: {
     components: "Components",
     dashboard: "Dashboard",
-    security: "Security",
+    pages: "Pages",
     settings: "Settings",
     source: "Source",
     workspace: "Workspace",
