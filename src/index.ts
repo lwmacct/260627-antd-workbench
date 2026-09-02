@@ -10,6 +10,7 @@ export {
 } from "./appearance/defaults";
 export { normalizeWorkbenchAppearance } from "./appearance/normalize";
 export { WorkbenchUserMenu } from "./components/account/WorkbenchUserMenu";
+export * from "./identity";
 export * from "./security";
 export { WorkbenchAppearanceButton } from "./components/controls/WorkbenchAppearanceButton";
 export { WorkbenchLanguageToggle } from "./components/controls/WorkbenchLanguageToggle";

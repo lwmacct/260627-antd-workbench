@@ -1,6 +1,6 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.62.260828",
+  "version": "0.63.260903",
   "private": false,
   "packageManager": "pnpm@12.0.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
@@ -24,6 +24,10 @@
       "import": "./dist/index.js"
     },
     "./global.css": "./dist/global.css",
+    "./identity": {
+      "types": "./dist/identity.d.ts",
+      "import": "./dist/identity.js"
+    },
     "./navigation": {
       "types": "./dist/navigation.d.ts",
       "import": "./dist/navigation.js"

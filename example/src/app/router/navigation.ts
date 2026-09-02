@@ -3,6 +3,8 @@ export const examplePaths = {
   dashboard: "/dashboard",
   pages: {
     accessDenied: "/pages/access-denied",
+    identityLogin: "/pages/identity-login",
+    identityRegister: "/pages/identity-register",
     login: "/pages/login",
     oauth: "/pages/oauth",
     register: "/pages/register",

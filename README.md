@@ -102,6 +102,9 @@ Workbench 严格支持 `zh-CN` 和 `en-US`。Provider 内置两套 Ant Design lo
 Workbench 只翻译公共组件。业务应用应通过 `useWorkbenchLocale()` 读取严格类型的 locale，
 并据此选择自己的中英文业务词典。
 
+Identity 页面也是纯 UI 边界。宿主应用负责提供 profile、config、session 数据以及异步回调；
+包内不包含 fetch、React Query、路由或短信/邮件 Provider。
+
 ## 公开入口
 
 主入口导出所有稳定 API：
@@ -114,6 +117,12 @@ import { WorkbenchProvider, WorkbenchShell } from "@lwmacct/260627-antd-workbenc
 
 ```ts
 import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
+import {
+  WorkbenchIdentityProfilePage,
+  WorkbenchIdentitySessionsPage,
+  WorkbenchIdentitySignInPage,
+  WorkbenchIdentitySignUpPage,
+} from "@lwmacct/260627-antd-workbench/identity";
 import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
 import {
@@ -136,6 +145,7 @@ src/
   components/
     account/
     controls/
+    identity/
     layout/
     security/
     settings/
@@ -170,6 +180,11 @@ example/
 | `WorkbenchAppearanceButton` | 顶部栏外观设置按钮及响应式抽屉，支持受控和非受控状态。 |
 | `WorkbenchLanguageToggle` | locale 切换按钮。 |
 | `WorkbenchUserMenu` | 固定 256px 的用户菜单，支持身份信息、分组链接、异步操作和退出登录。 |
+| `WorkbenchIdentitySignInPage` | Identity 密码登录页，使用单一 identifier 字段接受用户名、已验证手机号或已验证邮箱。 |
+| `WorkbenchIdentitySignUpPage` | Identity 注册页，只包含用户名、密码、确认密码和可选人机挑战。 |
+| `WorkbenchIdentityProfilePage` | 当前用户资料及独立手机号、邮箱验证绑定页面，不绑定请求实现。 |
+| `WorkbenchIdentityPasswordPage` | 修改本地密码页面，密码策略和提交行为由宿主注入。 |
+| `WorkbenchIdentitySessionsPage` | 当前用户会话列表及单个、批量撤销操作。 |
 | `WorkbenchSecurityPage` | 安全流程共用的品牌、面板、错误布局和可选右侧内容区域。 |
 | `WorkbenchAccessDeniedPage` | 展示当前身份和拒绝访问状态的通用页面，不绑定认证协议或 provider。 |
 | `WorkbenchOAuthSignInPage` | OAuth 专用登录页，不绑定会话请求或路由。 |
@@ -208,7 +223,7 @@ pnpm run dev
 
 示例应用位于 `example/`，通过包名导入本库，开发时由 `vite.example.config.ts` alias 到本地 `src/`。
 
-示例首页包含 `WorkbenchVerificationProvider` 的页面内敏感操作验证；`Components` 导航使用左侧菜单拆分展示 `security` 表单、弹窗、抽屉、Provider、challenge 控件和 `/components/pages` 页面入口目录。整页认证流程统一位于 `/pages/*`，登录入口为 `/pages/login`，并包含注册、OAuth、访问令牌、拒绝访问和二次验证流程。
+示例首页包含 `WorkbenchVerificationProvider` 的页面内敏感操作验证；`Components` 导航使用左侧菜单拆分展示 `security` 表单、弹窗、抽屉、Provider、challenge 控件和 `/components/pages` 页面入口目录。整页认证流程统一位于 `/pages/*`，登录入口为 `/pages/login`，并包含注册、OAuth、访问令牌、拒绝访问、二次验证以及 identity 登录/注册流程。`/settings/*` 展示 identity 资料、密码和会话页面。
 
 ## 开发
 

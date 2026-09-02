@@ -25,6 +25,10 @@ interface ExampleText {
     pagesAccessDeniedDescription: string;
     pagesDescription: string;
     pagesGroup: string;
+    pagesIdentityLogin: string;
+    pagesIdentityLoginDescription: string;
+    pagesIdentityRegister: string;
+    pagesIdentityRegisterDescription: string;
     pagesLogin: string;
     pagesLoginDescription: string;
     pagesOAuth: string;
@@ -103,9 +107,11 @@ interface ExampleText {
     notificationsCard: string;
     notificationsDescription: string;
     operationsAlert: string;
+    password: string;
     profile: string;
     profileDescription: string;
     role: string;
+    sessions: string;
   };
   shell: {
     components: string;
@@ -158,6 +164,10 @@ const zh: ExampleText = {
     pagesAccessDeniedDescription: "展示当前身份无权访问资源时的整页状态。",
     pagesDescription: "集中查看示例应用中的整页流程入口。",
     pagesGroup: "页面",
+    pagesIdentityLogin: "Identity 登录",
+    pagesIdentityLoginDescription: "使用用户名、已验证手机号或已验证邮箱登录。",
+    pagesIdentityRegister: "Identity 注册",
+    pagesIdentityRegisterDescription: "严格只包含用户名和密码，不包含手机号或邮箱。",
     pagesLogin: "登录",
     pagesLoginDescription: "本地账号密码登录，入口为 /pages/login。",
     pagesOAuth: "OAuth 登录",
@@ -244,9 +254,11 @@ const zh: ExampleText = {
     notificationsCard: "通知策略",
     notificationsDescription: "通知页演示分区导航下的另一个表单页面。",
     operationsAlert: "运行告警",
+    password: "修改密码",
     profile: "账号",
     profileDescription: "账号页是 settings 模块下的普通子路由。",
     role: "角色",
+    sessions: "登录会话",
   },
   shell: {
     components: "组件",
@@ -302,6 +314,10 @@ const en: ExampleText = {
     pagesAccessDeniedDescription: "A full-page state for identities without resource access.",
     pagesDescription: "Browse the full-page flow entry points in this example app.",
     pagesGroup: "Pages",
+    pagesIdentityLogin: "Identity sign-in",
+    pagesIdentityLoginDescription: "Sign in with a username, verified phone, or verified email.",
+    pagesIdentityRegister: "Identity register",
+    pagesIdentityRegisterDescription: "Strict username and password registration without phone or email.",
     pagesLogin: "Sign in",
     pagesLoginDescription: "Local username and password sign-in at /pages/login.",
     pagesOAuth: "OAuth sign-in",
@@ -429,9 +445,11 @@ const en: ExampleText = {
     notificationsCard: "Notification policy",
     notificationsDescription: "A second form page under grouped section navigation.",
     operationsAlert: "Operations alerts",
+    password: "Change password",
     profile: "Account",
     profileDescription: "A normal child route under the settings module.",
     role: "Role",
+    sessions: "Login sessions",
   },
   shell: {
     components: "Components",

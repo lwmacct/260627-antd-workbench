@@ -1,4 +1,4 @@
-import { BellOutlined, UserOutlined } from "@ant-design/icons";
+import { BellOutlined, KeyOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 import {
   WorkbenchSectionLayout,
   type WorkbenchNavEntry,
@@ -6,9 +6,9 @@ import {
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useExampleText } from "../../../shared/i18n";
 
-type SettingsSectionKey = "notifications" | "profile";
+type SettingsSectionKey = "notifications" | "password" | "profile" | "sessions";
 
-const settingsSectionKeys = ["profile", "notifications"] as const;
+const settingsSectionKeys = ["profile", "password", "sessions", "notifications"] as const;
 
 const settingsKeys = new Set<SettingsSectionKey>(
   settingsSectionKeys,
@@ -22,6 +22,8 @@ export function SettingsLayout() {
     {
       children: [
         { icon: <UserOutlined />, key: "profile", label: text.settings.profile },
+        { icon: <KeyOutlined />, key: "password", label: text.settings.password },
+        { icon: <LoginOutlined />, key: "sessions", label: text.settings.sessions },
         { icon: <BellOutlined />, key: "notifications", label: text.settings.notifications },
       ],
       key: "settings",

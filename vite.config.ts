@@ -14,6 +14,7 @@ export default defineConfig({
     lib: {
       entry: {
         global: "src/styles/global.css",
+        identity: "src/identity.ts",
         index: "src/index.ts",
         navigation: "src/navigation.ts",
         provider: "src/provider.ts",

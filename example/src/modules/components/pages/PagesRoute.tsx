@@ -23,6 +23,12 @@ export function PagesRoute() {
       path: examplePaths.pages.login,
     },
     {
+      description: text.components.pagesIdentityLoginDescription,
+      icon: <LockOutlined />,
+      label: text.components.pagesIdentityLogin,
+      path: examplePaths.pages.identityLogin,
+    },
+    {
       description: text.components.pagesOAuthDescription,
       icon: <SafetyCertificateOutlined />,
       label: text.components.pagesOAuth,
@@ -33,6 +39,12 @@ export function PagesRoute() {
       icon: <LockOutlined />,
       label: text.components.pagesRegister,
       path: examplePaths.pages.register,
+    },
+    {
+      description: text.components.pagesIdentityRegisterDescription,
+      icon: <LockOutlined />,
+      label: text.components.pagesIdentityRegister,
+      path: examplePaths.pages.identityRegister,
     },
     {
       description: text.components.pagesTokenDescription,
