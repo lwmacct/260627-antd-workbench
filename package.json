@@ -1,8 +1,8 @@
 {
   "name": "@lwmacct/260627-antd-workbench",
-  "version": "0.63.260903",
+  "version": "0.64.261020",
   "private": false,
-  "packageManager": "pnpm@12.0.0",
+  "packageManager": "pnpm@12.14.0",
   "description": "Opinionated React and Ant Design workbench shell, layout, and theme primitives.",
   "scripts": {
     "build": "vite build && tsc -p tsconfig.json --emitDeclarationOnly",
@@ -69,16 +69,16 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@ant-design/icons": "^6.3.2",
-    "@types/node": "^26.4.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
-    "@vitejs/plugin-react": "^6.1.0",
-    "antd": "^6.6.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2",
+    "@ant-design/icons": "^6.3.4",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "antd": "^6.6.7",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4",
     "typescript": "^7.0.2",
-    "vite": "^8.2.2"
+    "vite": "^8.3.4"
   }
 }

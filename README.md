@@ -1,8 +1,15 @@
 # @lwmacct/260627-antd-workbench
 
-面向高密度运营后台的 React + Ant Design workbench 基础组件库。
+面向高密度运营后台的 React 19 与 Ant Design 6 workbench 基础组件库. 本仓库发布一个 npm 包; `src/` 是库源码和发布边界, `example/` 是不参与发布的消费方示例.
 
-本仓库仍然只发布一个 npm 包。`src/` 是库源码和发布边界，`example/` 是可运行的消费方示例应用，不参与 npm 发布。
+## Agent skills
+
+仓库中的复杂开发流程以 Agent Skills 方式维护. 处理以下任务时, 先读取对应入口:
+
+- Identity 页面维护, 宿主接入或共享包边界评审: [.agents/skills/workbench-identity-pages/SKILL.md](.agents/skills/workbench-identity-pages/SKILL.md)
+- 在宿主 Vite 应用中临时联调未发布源码: [.agents/skills/workbench-vite-source-alias/SKILL.md](.agents/skills/workbench-vite-source-alias/SKILL.md)
+
+技能入口会按需指向更详细的 references, 避免把所有场景一次性加载进上下文.
 
 ## 安装
 
@@ -11,16 +18,14 @@ pnpm add react react-dom antd @ant-design/icons
 pnpm add @lwmacct/260627-antd-workbench
 ```
 
-## 样式入口
-
-全屏 workbench 应用推荐导入：
+全屏 workbench 应用导入:
 
 ```tsx
 import "antd/dist/reset.css";
 import "@lwmacct/260627-antd-workbench/global.css";
 ```
 
-只使用组件样式时导入：
+只使用组件样式时导入:
 
 ```tsx
 import "antd/dist/reset.css";
@@ -37,7 +42,6 @@ import {
   WorkbenchPanel,
   WorkbenchProvider,
   WorkbenchShell,
-  WorkbenchUserMenu,
   type WorkbenchNavEntry,
 } from "@lwmacct/260627-antd-workbench";
 
@@ -50,26 +54,16 @@ export function App() {
   return (
     <WorkbenchProvider defaultLocale="zh-CN" localeStorageKey="my-tool.locale">
       <WorkbenchShell
-        account={
-            <WorkbenchUserMenu
-              groups={[{
-                key: "account",
-                items: [{ href: "/settings", key: "settings", kind: "link", label: "设置" }],
-              }]}
-              user={{ displayName: "Ada Lovelace", provider: "GitHub", username: "ada" }}
-            onLogout={() => console.log("logout")}
-          />
-        }
+        brand={{ name: "Workbench" }}
+        nav={nav}
+        selectedNavKey="dashboard"
+        onSelectNav={(key) => console.log(key)}
         utilities={
           <>
             <WorkbenchAppearanceButton />
             <WorkbenchLanguageToggle />
           </>
         }
-        brand={{ name: "Workbench", version: "2.0.0" }}
-        nav={nav}
-        selectedNavKey="dashboard"
-        onSelectNav={(key) => console.log(key)}
       >
         <WorkbenchPage title="Dashboard">
           <WorkbenchPanel title="Queue">业务页面内容</WorkbenchPanel>
@@ -80,166 +74,32 @@ export function App() {
 }
 ```
 
-## 中英文
+## 公开入口与边界
 
-Workbench 严格支持 `zh-CN` 和 `en-US`。Provider 内置两套 Ant Design locale 和 Workbench
-组件文案；语言按钮、外观设置入口、账户菜单、移动端导航及安全组件会自动随 locale
-切换，消费方无需逐个传入 labels。
-
-```tsx
-<WorkbenchProvider
-  defaultLocale="zh-CN"
-  localeStorageKey="my-tool.locale"
-  onLocaleChange={(locale) => console.log(locale)}
->
-  <App />
-</WorkbenchProvider>
-```
-
-首次语言按“有效持久化值、浏览器语言、`defaultLocale`”选择。非法持久化值会回退到受支持
-语言并自动修正。需要受控状态时传入 `locale="en-US"` 和 `onLocaleChange`。
-
-Workbench 只翻译公共组件。业务应用应通过 `useWorkbenchLocale()` 读取严格类型的 locale，
-并据此选择自己的中英文业务词典。
-
-Identity 页面也是纯 UI 边界。宿主应用负责提供 profile、config、session 数据以及异步回调；
-包内不包含 fetch、React Query、路由或短信/邮件 Provider。
-
-## 公开入口
-
-主入口导出所有稳定 API：
-
-```ts
-import { WorkbenchProvider, WorkbenchShell } from "@lwmacct/260627-antd-workbench";
-```
-
-也可以按模块导入：
+主入口导出稳定 API. 也可以按模块导入:
 
 ```ts
 import { WorkbenchProvider } from "@lwmacct/260627-antd-workbench/provider";
-import {
-  WorkbenchIdentityProfilePage,
-  WorkbenchIdentitySessionsPage,
-  WorkbenchIdentitySignInPage,
-  WorkbenchIdentitySignUpPage,
-} from "@lwmacct/260627-antd-workbench/identity";
-import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
+import { WorkbenchIdentityProfilePage } from "@lwmacct/260627-antd-workbench/identity";
 import { findNavItem } from "@lwmacct/260627-antd-workbench/navigation";
-import {
-  WorkbenchAccessDeniedPage,
-  WorkbenchCodeVerificationModal,
-  WorkbenchHumanChallengeField,
-  WorkbenchOAuthSignInPage,
-  WorkbenchPasswordSignInPage,
-  WorkbenchPasswordSignUpPage,
-  WorkbenchTokenSignInPage,
-  WorkbenchVerificationProvider,
-  useWorkbenchVerification,
-} from "@lwmacct/260627-antd-workbench/security";
+import { WorkbenchVerificationProvider } from "@lwmacct/260627-antd-workbench/security";
+import { createWorkbenchPalette } from "@lwmacct/260627-antd-workbench/theme";
 ```
 
-## 目录结构
+Workbench 严格支持 `zh-CN` 与 `en-US`, 但只翻译公共组件文案. 业务应用通过 `useWorkbenchLocale()` 读取 locale, 并维护自己的业务词典.
 
-```text
-src/
-  components/
-    account/
-    controls/
-    identity/
-    layout/
-    security/
-    settings/
-    shell/
-  appearance/
-  locale/
-  navigation/
-  provider/
-  shared/
-  styles/
-  theme/
-example/
-  src/
-    modules/
-      components/pages/  # /components/pages 页面入口目录
-      pages/             # /pages/* 整页流程路由
-```
+Identity 与 security 页面保持纯 UI 边界. 宿主提供数据, 配置, 导航和异步回调; 包内不包含 fetch, React Query, React Router, 短信或邮件 Provider.
 
-## 核心组件
-
-| 导出 | 说明 |
-| --- | --- |
-| `WorkbenchProvider` | 组合 appearance、locale、Ant Design `ConfigProvider`、CSS 变量和持久化。 |
-| `WorkbenchShell` | 全屏应用外壳，包含顶部栏和可滚动内容区。 |
-| `WorkbenchHeader` | 独立顶部栏组件，通常由 `WorkbenchShell` 内部使用。 |
-| `WorkbenchHeaderUtilities` | 顶部栏工具按钮容器，统一尺寸、边框与间距。 |
-| `WorkbenchPage` | 页面标题、描述、操作区和内容容器。 |
-| `WorkbenchPanel` | 标准内容面板，基于 Ant Design `Card`，用于业务页面里的信息块、表单和表格容器。 |
-| `WorkbenchSectionLayout` | 设置页或分组页面的侧边导航布局。 |
-| `WorkbenchSplitWorkspace` | 通用侧栏加工作区布局。 |
-| `WorkbenchAppearanceSettings` | 外观设置面板，必须在 `WorkbenchProvider` 下使用。 |
-| `WorkbenchAppearanceButton` | 顶部栏外观设置按钮及响应式抽屉，支持受控和非受控状态。 |
-| `WorkbenchLanguageToggle` | locale 切换按钮。 |
-| `WorkbenchUserMenu` | 固定 256px 的用户菜单，支持身份信息、分组链接、异步操作和退出登录。 |
-| `WorkbenchIdentitySignInPage` | Identity 密码登录页，使用单一 identifier 字段接受用户名、已验证手机号或已验证邮箱。 |
-| `WorkbenchIdentitySignUpPage` | Identity 注册页，只包含用户名、密码、确认密码和可选人机挑战。 |
-| `WorkbenchIdentityProfilePage` | 当前用户资料及独立手机号、邮箱验证绑定页面，不绑定请求实现。 |
-| `WorkbenchIdentityPasswordPage` | 修改本地密码页面，密码策略和提交行为由宿主注入。 |
-| `WorkbenchIdentitySessionsPage` | 当前用户会话列表及单个、批量撤销操作。 |
-| `WorkbenchSecurityPage` | 安全流程共用的品牌、面板、错误布局和可选右侧内容区域。 |
-| `WorkbenchAccessDeniedPage` | 展示当前身份和拒绝访问状态的通用页面，不绑定认证协议或 provider。 |
-| `WorkbenchOAuthSignInPage` | OAuth 专用登录页，不绑定会话请求或路由。 |
-| `WorkbenchOAuthProviderButtons` | OAuth provider 按钮组，只负责渲染和选择回调。 |
-| `WorkbenchPasswordSignInForm/Page/Modal/Drawer` | 本地账号密码登录的显式表单与容器。 |
-| `WorkbenchPasswordSignUpForm/Page` | 本地账号注册的显式表单与整页容器。 |
-| `WorkbenchTokenSignInForm/Page` | 访问令牌登录的显式表单与整页容器，可选组合 OAuth provider，不绑定请求、路由或会话实现。 |
-| `WorkbenchHumanChallengeField` | 图片或远程人机挑战输入控件。 |
-| `WorkbenchCodeVerificationForm/Page/Modal/Drawer` | 邮件、短信、TOTP 和恢复码验证。 |
-| `WorkbenchPasskeyVerificationAction` | 不渲染验证码输入框的通行密钥验证操作。 |
-| `WorkbenchVerificationProvider` | 根据 `kind: "code" | "passkey"` 分流并提供 Promise 式验证编排。 |
-
-## 主题变量
-
-`WorkbenchProvider` 会向根元素写入 `data-workbench-*` 属性和 `--wb-*` CSS 变量，例如：
-
-- `--wb-bg`
-- `--wb-workbench-bg`
-- `--wb-header-bg`
-- `--wb-sidebar-bg`
-- `--wb-card-bg`
-- `--wb-border`
-- `--wb-text`
-- `--wb-accent`
-- `--wb-control-radius`
-
-公共主题变量只使用 `--wb-*` 命名空间。业务应用不应把这些 token 复制成 `--app-*`
-等自定义别名；页面面板优先使用 `WorkbenchPanel` 或 Ant Design token，避免在业务 CSS
-中覆盖卡片背景和边框颜色。
-
-## 示例应用
-
-```bash
-pnpm run dev
-```
-
-示例应用位于 `example/`，通过包名导入本库，开发时由 `vite.example.config.ts` alias 到本地 `src/`。
-
-示例首页包含 `WorkbenchVerificationProvider` 的页面内敏感操作验证；`Components` 导航使用左侧菜单拆分展示 `security` 表单、弹窗、抽屉、Provider、challenge 控件和 `/components/pages` 页面入口目录。整页认证流程统一位于 `/pages/*`，登录入口为 `/pages/login`，并包含注册、OAuth、访问令牌、拒绝访问、二次验证以及 identity 登录/注册流程。`/settings/*` 展示 identity 资料、密码和会话页面。
+`WorkbenchProvider` 会写入 `data-workbench-*` 属性与 `--wb-*` CSS 变量. 业务样式优先使用 `WorkbenchPanel`, Ant Design token 或这些公共变量, 不要复制成应用专属别名.
 
 ## 开发
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm run typecheck
+npm run typecheck
 pnpm run build
 pnpm run build:example
+pnpm run dev
 ```
 
-发版前运行：
-
-```bash
-pnpm run typecheck
-pnpm run build
-task git:tag:next
-```
-
-新增能力优先保持通用 API，避免把单一业务项目的特化逻辑写入本包。
+修改共享库后必须先运行 `npm run typecheck` 与 `pnpm run build`. 只有明确需要发布新版本时, 才在检查通过后运行 `task git:tag:next`.
